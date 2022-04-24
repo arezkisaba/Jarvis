@@ -4,6 +4,7 @@ pool:
 variables:
   environment: Development
   solution: '$(Build.SourcesDirectory)/Jarvis/**/*.sln'
+  buildPlatform: 'x64'
   buildConfiguration: 'Release'
   appPackageDir: '$(Build.ArtifactStagingDirectory)/AppPackages'
   msiPackageDir: '$(Build.ArtifactStagingDirectory)/MSI'
@@ -77,7 +78,7 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '$(Build.SourcesDirectory)/Jarvis/Jarvis/Jarvis/*.csproj'
-    arguments: '--no-restore -c $(buildConfiguration) -o $(appPackageDir)/Jarvis/Lib.Wix.Setup/Artifacts /p:PublishSingleFile=true --self-contained false '
+    arguments: '--no-restore -c $(buildConfiguration) -r "win-$(buildPlatform)" -o $(appPackageDir)/Jarvis/Lib.Wix.Setup/Artifacts /p:PublishSingleFile=true --self-contained false '
     zipAfterPublish: false
     modifyOutputPath: false
 
