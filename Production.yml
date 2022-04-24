@@ -13,20 +13,6 @@ variables:
 
 steps:
 
-######################### Initialization #########################
-
-- checkout: git://BabylonTools/Lib@master
-  enabled: true
-  displayName: Lib pull
-  
-- task: PowerShell@2
-  enabled: true
-  displayName: Github Sync
-  inputs:
-    targetType: 'inline'
-    script: 'git push --force https://$(GithubUsername):$(GithubPassword)@github.com/arezkisaba/Lib.git HEAD:main'
-    workingDirectory: '$(Build.SourcesDirectory)/Lib'
-    
 - checkout: self
   enabled: true
   displayName: Jarvis pull
@@ -38,7 +24,11 @@ steps:
     targetType: 'inline'
     script: 'git push --force https://$(GithubUsername):$(GithubPassword)@github.com/arezkisaba/Jarvis.git HEAD:main'
     workingDirectory: '$(Build.SourcesDirectory)/Jarvis'
-
+    
+- checkout: git://BabylonTools/Lib@master
+  enabled: true
+  displayName: Lib pull
+  
 - task: NuGetToolInstaller@1
   enabled: true
   displayName: Nuget installation
@@ -58,8 +48,6 @@ steps:
     packageType: 'sdk'
     version: '6.0.101'
     includePreviewVersions: false
-
-######################### Jarvis #########################
 
 - task: CopyFiles@2
   enabled: true
@@ -101,8 +89,6 @@ steps:
     configuration: '$(buildConfiguration)'
     msbuildArguments: '/p:RunWixToolsOutOfProc=true /p:ProductName="Jarvis" /p:ProductVersion="$(buildVersion)" /p:UpgradeCode="$(msiUpgradeCode)" /p:HandleStartup="True" /p:Environment="$(environment)"'
     
-######################### FINALIZATION #########################
-
 - task: CopyFiles@2
   enabled: true
   displayName: MSI Copy
