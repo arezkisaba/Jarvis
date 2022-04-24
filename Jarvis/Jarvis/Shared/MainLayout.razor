@@ -1,0 +1,34 @@
+﻿@inherits LayoutComponentBase
+
+<CascadingValue Value="AppName">
+    <PageTitle>@AppName</PageTitle>
+    <div>
+        <div class="top-row">
+            <a href="#">@AppName</a>
+        </div>
+
+        <div class="page">
+            <div class="sidebar">
+                <NavMenu />
+            </div>
+
+            <main class="content px-4">
+                @Body
+            </main>
+        </div>
+    </div>
+</CascadingValue>
+
+@code {
+    [Inject]
+    public AppSettings AppSettings { get; set; }
+
+    public string AppName { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        AppName = AppSettings.appName;
+    }
+}

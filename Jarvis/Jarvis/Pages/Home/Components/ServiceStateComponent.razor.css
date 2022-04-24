@@ -1,0 +1,43 @@
+﻿.cart-title {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.cart-subtitle {
+    color: #666666;
+    font-size: 0.9em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.dot {
+    height: 40px;
+    width: 40px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    display: block;
+}
+
+    .dot:hover {
+        cursor: pointer;
+    }
+
+    .dot.active {
+        background-color: #69ff6e;
+    }
+
+    .dot.inactive {
+        background-color: #ff4747;
+    }
+
+    .dot.pending {
+        background-color: #7a7a7a;
+    }
+
+    .dot .spinner-border {
+        width: 1rem;
+        height: 1rem;
+        color: white;
+        margin-left: -3px;
+    }

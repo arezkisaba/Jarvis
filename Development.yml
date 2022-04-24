@@ -1,0 +1,126 @@
+trigger:
+- develop
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  environment: Development
+  solution: '$(Build.SourcesDirectory)/Jarvis/**/*.sln'
+  buildPlatform: 'x64'
+  buildConfiguration: 'Release'
+  appPackageDir: '$(Build.ArtifactStagingDirectory)/AppPackages'
+  msiPackageDir: '$(Build.ArtifactStagingDirectory)/MSI'
+  buildVersion: '1.0.0.$(Build.BuildId)'
+  msiUpgradeCode: 0a71bd75-c571-4155-a1ac-bd6d13680710
+
+steps:
+
+######################### Initialization #########################
+
+- checkout: git://Lib/Lib
+  enabled: true
+  displayName: Lib pull
+
+#- task: PowerShell@2
+#  enabled: true
+#  displayName: Github Sync
+#  inputs:
+#    targetType: 'inline'
+#    script: 'git push --force https://$(GithubUsername):$(GithubPassword)@github.com/arezkisaba/Lib.git HEAD:main'
+#    workingDirectory: '$(Build.SourcesDirectory)/Lib'
+
+- checkout: git://Jarvis/Jarvis
+  enabled: true
+  displayName: Jarvis pull
+
+#- task: PowerShell@2
+#  enabled: true
+#  displayName: Github Sync
+#  inputs:
+#    targetType: 'inline'
+#    script: 'git push --force https://$(GithubUsername):$(GithubPassword)@github.com/arezkisaba/Jarvis.git HEAD:main'
+#    workingDirectory: '$(Build.SourcesDirectory)/Jarvis'
+
+- task: NuGetToolInstaller@1
+  enabled: true
+  displayName: Nuget installation
+
+- task: NuGetCommand@2
+  enabled: true
+  displayName: Nuget restore
+  inputs:
+    command: 'restore'
+    restoreSolution: '$(solution)'
+    feedsToUse: 'select'
+    vstsFeed: 'f48150d8-bc5e-41fc-9295-d308720814c6'
+
+- task: UseDotNet@2
+  displayName: 'Use .NET6'
+  inputs:
+    packageType: 'sdk'
+    version: '6.0.101'
+    includePreviewVersions: false
+
+######################### Jarvis #########################
+
+- task: CopyFiles@2
+  enabled: true
+  displayName: (Jarvis) Wix copy
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/Lib/Lib/Lib.Wix'
+    Contents: '**'
+    TargetFolder: '$(appPackageDir)/Jarvis'
+    CleanTargetFolder: true
+    OverWrite: true
+
+- task: DotNetCoreCLI@2
+  enabled: true
+  displayName: (Jarvis) Publish
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '$(Build.SourcesDirectory)/Jarvis/Jarvis/Jarvis/*.csproj'
+    arguments: '-c $(buildConfiguration) -r "win-$(buildPlatform)" -o $(appPackageDir)/Jarvis/Lib.Wix.Setup/Artifacts /p:PublishSingleFile=true --self-contained false --no-restore'
+    zipAfterPublish: false
+    modifyOutputPath: false
+
+- task: CopyFiles@2
+  enabled: true
+  displayName: (Jarvis) Resources copy
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/Jarvis/Jarvis/Jarvis/Resources'
+    Contents: '**/*.ico'
+    TargetFolder: '$(appPackageDir)/Jarvis/Lib.Wix.Setup/Artifacts'
+    OverWrite: true
+    flattenFolders: true
+
+- task: MSBuild@1
+  enabled: true
+  displayName: (Jarvis) Wix build
+  inputs:
+    solution: '$(appPackageDir)/Jarvis/Lib.Wix.Setup/Lib.Wix.Setup.wixproj'
+    platform: 'x86'
+    configuration: '$(buildConfiguration)'
+    msbuildArguments: '/p:RunWixToolsOutOfProc=true /p:ProductName="Jarvis-$(environment)" /p:ProductVersion="$(buildVersion)" /p:UpgradeCode="$(msiUpgradeCode)" /p:HandleStartup="True" /p:Environment="$(environment)"'
+    
+######################### FINALIZATION #########################
+
+- task: CopyFiles@2
+  enabled: true
+  displayName: MSI Copy
+  inputs:
+    SourceFolder: '$(appPackageDir)'
+    Contents: '**/*.msi'
+    TargetFolder: '$(msiPackageDir)'
+    CleanTargetFolder: true
+    OverWrite: true
+    flattenFolders: true
+
+- task: PublishBuildArtifacts@1
+  enabled: true
+  displayName: Artifacts publish
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

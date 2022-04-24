@@ -1,0 +1,79 @@
+@page "/"
+
+@using Jarvis.Pages.Home.Components
+@inherits Jarvis.BlazorPageComponentBase
+
+<PageTitle>@PageTitle</PageTitle>
+
+@if (MediaStorageStateViewModel == null || MediaStorageStateViewModel.Folders == null)
+{
+    <div class="loader container d-flex">
+        <div class="align-self-center">
+            <div class="spinner-border" role="status" />
+        </div>
+    </div>
+}
+else
+{
+    <section>
+        <div class='row'>
+            <div class='col-12 col-md-4 mb-4'>
+                <div class="card h-100">
+                    <div class="card-body">
+                        <ServiceStateComponent IsActive=@GameControllerClientStateViewModel.IsActive Title=@GameControllerClientStateViewModel.Title Subtitle=@GameControllerClientStateViewModel.Subtitle />
+                    </div>
+                </div>
+            </div>
+            <div class='col-12 col-md-4 mb-4'>
+                <div class="card h-100">
+                    <div class="card-body">
+                        <ServiceStateComponent OnStatusChangeRequestedCallback=@ToggleVPNClientStatusAsync IsActive=@VPNClientStateViewModel.IsActive Title=@VPNClientStateViewModel.Title Subtitle=@VPNClientStateViewModel.Subtitle />
+                    </div>
+                </div>
+            </div>
+            <div class='col-12 col-md-4 mb-4'>
+                <div class="card h-100">
+                    <div class="card-body">
+                        <ServiceStateComponent OnStatusChangeRequestedCallback=@ToggleTorrentClientStatusAsync IsActive=@TorrentClientStateViewModel.IsActive Title=@TorrentClientStateViewModel.Title Subtitle=@TorrentClientStateViewModel.Subtitle />
+                    </div>
+                </div>
+            </div>
+            <div class='col-12 col-md-6 mb-4'>
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@MediaStorageStateViewModel.Title</h5>
+                        <hr />
+                        <div id="chart-container">
+                            <div id="container">
+                                <div id="chart" style="@MediaStorageStateViewModel.PieChartCssStyle" />
+                            </div>
+
+                            @*<div id="chart-core" class="align-items-center" />*@
+                            <div id="legend">
+                                @foreach (var folder in MediaStorageStateViewModel.Folders)
+                                {
+                                    <div class="entry">
+                                        <div style="background-color:@folder.Color" class="entry-color"></div>
+                                        <div class="entry-text">@folder.DisplayName</div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class='col-12 col-md-6 mb-4'>
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">PUBLIC IP ADDRESS</h5>
+                        <hr />
+                        <div class="ipaddress d-flex flex-column flex-grow-1 justify-content-center">
+                            @PublicIPAddress
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

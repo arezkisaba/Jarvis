@@ -1,0 +1,34 @@
+@inherits Jarvis.BlazorComponentBase
+
+@if (HasPendingAction)
+{
+    <div class="dot pending container d-flex" @onclick=OnStatusChangeRequested>
+        <div class="align-self-center">
+            <div class="spinner-border" role="status" />
+        </div>
+    </div>
+}
+else
+{
+    if (IsActive)
+    {
+        <div class="dot active container d-flex" @onclick=OnStatusChangeRequested>
+            <div class="align-self-center">
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="dot inactive container d-flex" @onclick=OnStatusChangeRequested>
+            <div class="align-self-center">
+            </div>
+        </div>
+    }
+}
+
+<div class="cart-title">
+    @Title
+</div>
+<div class="cart-subtitle">
+    @Subtitle
+</div>
