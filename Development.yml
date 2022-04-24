@@ -99,7 +99,7 @@ steps:
     solution: '$(appPackageDir)/Jarvis/Lib.Wix.Setup/Lib.Wix.Setup.wixproj'
     platform: 'x86'
     configuration: '$(buildConfiguration)'
-    msbuildArguments: '/p:RunWixToolsOutOfProc=true /p:ProductName="Jarvis-$(environment)" /p:ProductVersion="$(buildVersion)" /p:UpgradeCode="$(msiUpgradeCode)" /p:HandleStartup="True" /p:Environment="$(environment)"'
+    msbuildArguments: '/p:RunWixToolsOutOfProc=true /p:ProductName="Jarvis" /p:ProductVersion="$(buildVersion)" /p:UpgradeCode="$(msiUpgradeCode)" /p:HandleStartup="True" /p:Environment="$(environment)"'
     
 ######################### FINALIZATION #########################
 
