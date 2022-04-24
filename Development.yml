@@ -1,13 +1,9 @@
-trigger:
-- develop
-
 pool:
   vmImage: 'windows-latest'
 
 variables:
   environment: Development
   solution: '$(Build.SourcesDirectory)/Jarvis/**/*.sln'
-  buildPlatform: 'x64'
   buildConfiguration: 'Release'
   appPackageDir: '$(Build.ArtifactStagingDirectory)/AppPackages'
   msiPackageDir: '$(Build.ArtifactStagingDirectory)/MSI'
@@ -18,29 +14,29 @@ steps:
 
 ######################### Initialization #########################
 
-- checkout: git://Lib/Lib
+- checkout: git://BabylonTools/Lib
   enabled: true
   displayName: Lib pull
-
-#- task: PowerShell@2
-#  enabled: true
-#  displayName: Github Sync
-#  inputs:
-#    targetType: 'inline'
-#    script: 'git push --force https://$(GithubUsername):$(GithubPassword)@github.com/arezkisaba/Lib.git HEAD:main'
-#    workingDirectory: '$(Build.SourcesDirectory)/Lib'
-
-- checkout: git://Jarvis/Jarvis
+  
+- task: PowerShell@2
+  enabled: true
+  displayName: Github Sync
+  inputs:
+    targetType: 'inline'
+    script: 'git push --force https://$(GithubUsername):$(GithubPassword)@github.com/arezkisaba/Lib.git HEAD:main'
+    workingDirectory: '$(Build.SourcesDirectory)/Lib'
+    
+- checkout: git://BabylonTools/Jarvis
   enabled: true
   displayName: Jarvis pull
-
-#- task: PowerShell@2
-#  enabled: true
-#  displayName: Github Sync
-#  inputs:
-#    targetType: 'inline'
-#    script: 'git push --force https://$(GithubUsername):$(GithubPassword)@github.com/arezkisaba/Jarvis.git HEAD:main'
-#    workingDirectory: '$(Build.SourcesDirectory)/Jarvis'
+  
+- task: PowerShell@2
+  enabled: true
+  displayName: Github Sync
+  inputs:
+    targetType: 'inline'
+    script: 'git push --force https://$(GithubUsername):$(GithubPassword)@github.com/arezkisaba/Jarvis.git HEAD:main'
+    workingDirectory: '$(Build.SourcesDirectory)/Jarvis'
 
 - task: NuGetToolInstaller@1
   enabled: true
@@ -81,7 +77,7 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '$(Build.SourcesDirectory)/Jarvis/Jarvis/Jarvis/*.csproj'
-    arguments: '-c $(buildConfiguration) -r "win-$(buildPlatform)" -o $(appPackageDir)/Jarvis/Lib.Wix.Setup/Artifacts /p:PublishSingleFile=true --self-contained false --no-restore'
+    arguments: '--no-restore -c $(buildConfiguration) -o $(appPackageDir)/Jarvis/Lib.Wix.Setup/Artifacts /p:PublishSingleFile=true --self-contained false '
     zipAfterPublish: false
     modifyOutputPath: false
 

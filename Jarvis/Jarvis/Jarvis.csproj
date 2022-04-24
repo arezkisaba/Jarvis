@@ -2,7 +2,6 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0-windows</TargetFramework>
-		<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
 		<Nullable>disable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>26b638b2-fd52-4451-895f-69ff2e8b5757</UserSecretsId>
