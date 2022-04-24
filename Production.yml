@@ -1,6 +1,3 @@
-trigger:
-- master
-
 pool:
   vmImage: 'windows-latest'
 
@@ -18,10 +15,10 @@ steps:
 
 ######################### Initialization #########################
 
-- checkout: git://Lib/Lib@refs/heads/master
+- checkout: git://BabylonTools/Lib
   enabled: true
   displayName: Lib pull
-
+  
 - task: PowerShell@2
   enabled: true
   displayName: Github Sync
@@ -29,18 +26,18 @@ steps:
     targetType: 'inline'
     script: 'git push --force https://$(GithubUsername):$(GithubPassword)@github.com/arezkisaba/Lib.git HEAD:main'
     workingDirectory: '$(Build.SourcesDirectory)/Lib'
-
-- checkout: git://BabylonTools/BabylonTools
+    
+- checkout: git://BabylonTools/Jarvis
   enabled: true
-  displayName: BabylonTools pull
-
+  displayName: Jarvis pull
+  
 - task: PowerShell@2
   enabled: true
   displayName: Github Sync
   inputs:
     targetType: 'inline'
-    script: 'git push --force https://$(GithubUsername):$(GithubPassword)@github.com/arezkisaba/BabylonTools.git HEAD:main'
-    workingDirectory: '$(Build.SourcesDirectory)/BabylonTools'
+    script: 'git push --force https://$(GithubUsername):$(GithubPassword)@github.com/arezkisaba/Jarvis.git HEAD:main'
+    workingDirectory: '$(Build.SourcesDirectory)/Jarvis'
 
 - task: NuGetToolInstaller@1
   enabled: true
@@ -70,7 +67,7 @@ steps:
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)/Lib/Lib/Lib.Wix'
     Contents: '**'
-    TargetFolder: '$(appPackageDir)/BabylonTools.Jarvis'
+    TargetFolder: '$(appPackageDir)/Jarvis'
     CleanTargetFolder: true
     OverWrite: true
 
@@ -80,8 +77,8 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    projects: '$(Build.SourcesDirectory)/BabylonTools/BabylonTools/BabylonTools.Jarvis/*.csproj'
-    arguments: '-c $(buildConfiguration) -r "win-$(buildPlatform)" -o $(appPackageDir)/BabylonTools.Jarvis/Lib.Wix.Setup/Artifacts /p:PublishSingleFile=true --self-contained false --no-restore'
+    projects: '$(Build.SourcesDirectory)/Jarvis/Jarvis/Jarvis/*.csproj'
+    arguments: '--no-restore -c $(buildConfiguration) -r "win-$(buildPlatform)" -o $(appPackageDir)/Jarvis/Lib.Wix.Setup/Artifacts /p:PublishSingleFile=true --self-contained false '
     zipAfterPublish: false
     modifyOutputPath: false
 
@@ -89,9 +86,9 @@ steps:
   enabled: true
   displayName: (Jarvis) Resources copy
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/BabylonTools/BabylonTools/BabylonTools.Jarvis/Resources'
+    SourceFolder: '$(Build.SourcesDirectory)/Jarvis/Jarvis/Jarvis/Resources'
     Contents: '**/*.ico'
-    TargetFolder: '$(appPackageDir)/BabylonTools.Jarvis/Lib.Wix.Setup/Artifacts'
+    TargetFolder: '$(appPackageDir)/Jarvis/Lib.Wix.Setup/Artifacts'
     OverWrite: true
     flattenFolders: true
 
@@ -99,10 +96,10 @@ steps:
   enabled: true
   displayName: (Jarvis) Wix build
   inputs:
-    solution: '$(appPackageDir)/BabylonTools.Jarvis/Lib.Wix.Setup/Lib.Wix.Setup.wixproj'
+    solution: '$(appPackageDir)/Jarvis/Lib.Wix.Setup/Lib.Wix.Setup.wixproj'
     platform: 'x86'
     configuration: '$(buildConfiguration)'
-    msbuildArguments: '/p:RunWixToolsOutOfProc=true /p:ProductName="Jarvis-$(environment)" /p:ProductVersion="$(buildVersion)" /p:UpgradeCode="$(msiUpgradeCode)" /p:HandleStartup="True" /p:Environment="$(environment)"'
+    msbuildArguments: '/p:RunWixToolsOutOfProc=true /p:ProductName="Jarvis" /p:ProductVersion="$(buildVersion)" /p:UpgradeCode="$(msiUpgradeCode)" /p:HandleStartup="True" /p:Environment="$(environment)"'
     
 ######################### FINALIZATION #########################
 
