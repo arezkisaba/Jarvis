@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_Documentation", "01_Documentation", "{803400A7-6E02-4569-879C-5BB7343F5A07}"
 	ProjectSection(SolutionItems) = preProject
 		01_Documentation\Documentation.txt = 01_Documentation\Documentation.txt
+		01_Documentation\Todo.txt = 01_Documentation\Todo.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 _Libs", "02 _Libs", "{BB25217A-8C49-4126-BF29-3B8CA29AD16D}"

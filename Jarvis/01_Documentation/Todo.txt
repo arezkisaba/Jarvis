@@ -1,0 +1,7 @@
+- Interface de saisie des credentials & DataProtection OU injection depuis les releases
+- Génération des MSI depuis la Release
+- Isoler paramètres variables appsettings
+- Radial charts
+- Vérifier les niveaux de logs
+- Sherlock
+- Gestionnaire de taches
