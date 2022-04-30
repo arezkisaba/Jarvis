@@ -36,4 +36,15 @@ public sealed class SecureAppSettingsViewModel
         PlexUsername = model.PlexUsername;
         PlexPassword = model.PlexPassword;
     }
+
+    public SecureAppSettings ToDomain()
+    {
+        return new SecureAppSettings(
+            OpenVPNUsername,
+            OpenVPNPassword,
+            TmdbApiKey,
+            TmdbAccessToken,
+            PlexUsername,
+            PlexPassword);
+    }
 }

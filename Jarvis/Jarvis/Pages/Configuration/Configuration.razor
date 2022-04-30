@@ -14,43 +14,59 @@
 }
 else
 {
-    <section>
-        <div class='row'>
-            <div class='col-12 col-md-6'>
-                <div class="card h-100">
-                    <div class="card-body">
+    <section class="container d-flex h-100">
+        <div class="align-self-center">
+            <div class="card h-100">
+                <div class="card-body">
+                    <EditForm EditContext="@EditContext" OnValidSubmit="@HandleOnValidSubmitAsync">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
                         <div class="row">
-                            <EditForm EditContext="@editContext" OnValidSubmit="@HandleOnValidSubmit">
-                                <DataAnnotationsValidator />
-                                <ValidationSummary />
+                            <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.OpenVPNUsername)">OpenVPNUsername</label>
-                                    <InputText id="@nameof(SecureAppSettingsViewModel.OpenVPNUsername)" @bind-Value="SecureAppSettingsViewModel.OpenVPNUsername" class="form-control" placeholder="Enter OpenVPN username" />
+                                    <label for="@nameof(SecureAppSettingsViewModel.OpenVPNUsername)">OpenVPN username</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.OpenVPNUsername)" @bind-Value="SecureAppSettingsViewModel.OpenVPNUsername" class="form-control" placeholder="Enter OpenVPN username" />
                                 </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.OpenVPNPassword)">OpenVPNPassword</label>
+                                    <label for="@nameof(SecureAppSettingsViewModel.OpenVPNPassword)">OpenVPN password</label>
                                     <InputText type="password" id="@nameof(SecureAppSettingsViewModel.OpenVPNPassword)" @bind-Value="SecureAppSettingsViewModel.OpenVPNPassword" class="form-control" placeholder="Enter OpenVPN password" />
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.TmdbApiKey)">TmdbApiKey</label>
-                                    <InputText id="@nameof(SecureAppSettingsViewModel.TmdbApiKey)" @bind-Value="SecureAppSettingsViewModel.TmdbApiKey" class="form-control" placeholder="Enter TMDB api key" />
+                                    <label for="@nameof(SecureAppSettingsViewModel.TmdbApiKey)">TMDB api key</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.TmdbApiKey)" @bind-Value="SecureAppSettingsViewModel.TmdbApiKey" class="form-control" placeholder="Enter TMDB api key" />
                                 </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.TmdbAccessToken)">TmdbAccessToken</label>
-                                    <InputText id="@nameof(SecureAppSettingsViewModel.TmdbAccessToken)" @bind-Value="SecureAppSettingsViewModel.TmdbAccessToken" class="form-control" placeholder="Enter TMDB access token" />
+                                    <label for="@nameof(SecureAppSettingsViewModel.TmdbAccessToken)">TMDB access token</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.TmdbAccessToken)" @bind-Value="SecureAppSettingsViewModel.TmdbAccessToken" class="form-control" placeholder="Enter TMDB access token" />
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.PlexUsername)">PlexUsername</label>
-                                    <InputText id="@nameof(SecureAppSettingsViewModel.PlexUsername)" @bind-Value="SecureAppSettingsViewModel.PlexUsername" class="form-control" placeholder="Enter Plex username" />
+                                    <label for="@nameof(SecureAppSettingsViewModel.PlexUsername)">Plex username</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.PlexUsername)" @bind-Value="SecureAppSettingsViewModel.PlexUsername" class="form-control" placeholder="Enter Plex username" />
                                 </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.PlexPassword)">PlexPassword</label>
+                                    <label for="@nameof(SecureAppSettingsViewModel.PlexPassword)">Plex password</label>
                                     <InputText type="password" id="@nameof(SecureAppSettingsViewModel.PlexPassword)" @bind-Value="SecureAppSettingsViewModel.PlexPassword" class="form-control" placeholder="Enter Plex password" />
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </EditForm>
+                            </div>
                         </div>
-                    </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </EditForm>
                 </div>
             </div>
         </div>

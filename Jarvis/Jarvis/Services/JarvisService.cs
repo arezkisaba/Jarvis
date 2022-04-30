@@ -62,8 +62,8 @@ public class JarvisService
 
         _ = Task.Run(() => StartArcomShieldAsync());
 
-        ////await VPNClientBackgroundAgent.StartClientAsync();
-        ////await TorrentClientBackgroundAgent.StartClientAsync();
+        await VPNClientBackgroundAgent.StartClientAsync();
+        await TorrentClientBackgroundAgent.StartClientAsync();
     }
 
     public async Task StopAsync()

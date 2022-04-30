@@ -14,10 +14,6 @@ public class SecureAppSettings
 
     public string PlexPassword { get; set; }
 
-    public SecureAppSettings()
-    {
-    }
-
     public SecureAppSettings(
         string openVPNUsername,
         string openVPNPassword,

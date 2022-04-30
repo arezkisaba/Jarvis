@@ -5,7 +5,6 @@
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<Nullable>disable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<UserSecretsId>26b638b2-fd52-4451-895f-69ff2e8b5757</UserSecretsId>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<ApplicationIcon>Resources\logo.ico</ApplicationIcon>
 	</PropertyGroup>

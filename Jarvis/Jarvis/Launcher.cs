@@ -30,17 +30,13 @@ public class Launcher
         var tokensFile = StorageHelper.GetTokensFile(appSettings.appdataDirectory);
         if (!File.Exists(tokensFile))
         {
-            var serialized = Serializer.JsonSerialize(new Tokens());
             File.Create(tokensFile).Close();
-            File.WriteAllText(tokensFile, serialized);
         }
 
         var secureAppSettingsFile = StorageHelper.GetSecureAppSettingsFile(appSettings.appdataDirectory);
         if (!File.Exists(secureAppSettingsFile))
         {
-            var serialized = Serializer.JsonSerialize(new SecureAppSettings());
             File.Create(secureAppSettingsFile).Close();
-            File.WriteAllText(secureAppSettingsFile, serialized);
         }
 
         var tokens = Serializer.JsonDeserialize<Tokens>(File.ReadAllText(tokensFile));

@@ -17,28 +17,28 @@ else
 {
     <section>
         <div class='row'>
-            <div class='col-12 col-md-4 mb-4'>
+            <div class='col-12 col-lg-4 mb-4'>
                 <div class="card h-100">
                     <div class="card-body">
                         <ServiceStateComponent IsActive=@GameControllerClientStateViewModel.IsActive Title=@GameControllerClientStateViewModel.Title Subtitle=@GameControllerClientStateViewModel.Subtitle />
                     </div>
                 </div>
             </div>
-            <div class='col-12 col-md-4 mb-4'>
+            <div class='col-12 col-lg-4 mb-4'>
                 <div class="card h-100">
                     <div class="card-body">
                         <ServiceStateComponent OnStatusChangeRequestedCallback=@ToggleVPNClientStatusAsync IsActive=@VPNClientStateViewModel.IsActive Title=@VPNClientStateViewModel.Title Subtitle=@VPNClientStateViewModel.Subtitle />
                     </div>
                 </div>
             </div>
-            <div class='col-12 col-md-4 mb-4'>
+            <div class='col-12 col-lg-4 mb-4'>
                 <div class="card h-100">
                     <div class="card-body">
                         <ServiceStateComponent OnStatusChangeRequestedCallback=@ToggleTorrentClientStatusAsync IsActive=@TorrentClientStateViewModel.IsActive Title=@TorrentClientStateViewModel.Title Subtitle=@TorrentClientStateViewModel.Subtitle />
                     </div>
                 </div>
             </div>
-            <div class='col-12 col-md-6 mb-4'>
+            <div class='col-12 col-lg-6 mb-4'>
                 <div class="card h-100">
                     <div class="card-body">
                         <h5 class="card-title">@MediaStorageStateViewModel.Title</h5>
@@ -63,7 +63,7 @@ else
                     </div>
                 </div>
             </div>
-            <div class='col-12 col-md-6 mb-4'>
+            <div class='col-12 col-lg-6 mb-4'>
                 <div class="card h-100">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">PUBLIC IP ADDRESS</h5>

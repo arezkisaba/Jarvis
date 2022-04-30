@@ -8,47 +8,28 @@ public partial class Configuration : BlazorPageComponentBase
     [Inject]
     public ISecureAppSettingsService SecureAppSettingsService { get; set; }
 
+    [Inject]
+    public IVPNClientBackgroundAgent VPNClientBackgroundAgent { get; set; }
+
     public SecureAppSettingsViewModel SecureAppSettingsViewModel { get; set; }
 
-    private EditContext editContext;
+    public EditContext EditContext { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         PageTitle = "Configuration";
         var secureAppSettings = await SecureAppSettingsService.ReadAsync();
         SecureAppSettingsViewModel = new SecureAppSettingsViewModel(secureAppSettings);
-        editContext = new(SecureAppSettingsViewModel);
-        ////editContext.OnFieldChanged += OnEditContextOnFieldChanged;
-        ////editContext.OnValidationRequested += OnEditContextOnValidationRequested;
+        EditContext = new(SecureAppSettingsViewModel);
     }
 
     public void Dispose()
     {
-        if (editContext is not null)
-        {
-            ////editContext.OnFieldChanged -= OnEditContextOnFieldChanged;
-            ////editContext.OnValidationRequested -= OnEditContextOnValidationRequested;
-        }
+        // Unsuscribe
     }
 
-    private void HandleOnValidSubmit()
+    public async Task HandleOnValidSubmitAsync()
     {
-    }
-
-    private void OnEditContextOnFieldChanged(
-        object sender,
-        FieldChangedEventArgs e)
-    {
-        ////if (editContext is not null)
-        ////{
-        ////    IsFormInvalid = !editContext.Validate();
-        ////    StateHasChanged();
-        ////}
-    }
-
-    private void OnEditContextOnValidationRequested(
-        object sender,
-        ValidationRequestedEventArgs e)
-    {
+        await SecureAppSettingsService.WriteAsync(SecureAppSettingsViewModel.ToDomain());
     }
 }

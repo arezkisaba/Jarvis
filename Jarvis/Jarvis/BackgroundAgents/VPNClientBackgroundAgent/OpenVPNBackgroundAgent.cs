@@ -8,9 +8,9 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
     private const int timeoutDelay = 30;
 
     private readonly AppSettings _appSettings;
-    private readonly SecureAppSettings _secrets;
     private readonly ILogger<OpenVPNBackgroundAgent> _logger;
     private readonly IProcessManager _processManager;
+    private readonly ISecureAppSettingsService _secureAppSettingsService;
     private CancellationTokenSource _cancellationTokenSource;
 
     public VPNClientStateModel CurrentState { get; set; }
@@ -19,14 +19,14 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
 
     public OpenVPNBackgroundAgent(
         AppSettings appSettings,
-        SecureAppSettings secrets,
         ILogger<OpenVPNBackgroundAgent> logger,
-        IProcessManager processManager)
+        IProcessManager processManager,
+        ISecureAppSettingsService secureAppSettingsService)
     {
         _appSettings = appSettings;
-        _secrets = secrets;
         _logger = logger;
         _processManager = processManager;
+        _secureAppSettingsService = secureAppSettingsService;
     }
 
     public void StartBackgroundLoop()
@@ -71,9 +71,10 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
             process.BeginErrorReadLine();
 
             await Task.Delay(1000);
-            process.StandardInput.WriteLine(_secrets.OpenVPNUsername);
+            var secureAppSettings = await _secureAppSettingsService.ReadAsync();
+            process.StandardInput.WriteLine(secureAppSettings.OpenVPNUsername);
             await Task.Delay(1000);
-            process.StandardInput.WriteLine(_secrets.OpenVPNPassword);
+            process.StandardInput.WriteLine(secureAppSettings.OpenVPNPassword);
 
             var counter = 0;
             while (!CurrentState.IsActive)
