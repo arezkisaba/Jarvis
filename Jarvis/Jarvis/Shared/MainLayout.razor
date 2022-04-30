@@ -1,10 +1,10 @@
 ﻿@inherits LayoutComponentBase
 
 <CascadingValue Value="AppName">
-    <PageTitle>@AppName</PageTitle>
+    <PageTitle>@AppName.ToUpperInvariant()</PageTitle>
     <div>
         <div class="top-row">
-            <a href="#">@AppName</a>
+            <a href="#">@AppName.ToUpperInvariant()</a>
         </div>
 
         <div class="page">

@@ -8,7 +8,7 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
     private const int timeoutDelay = 30;
 
     private readonly AppSettings _appSettings;
-    private readonly Secrets _secrets;
+    private readonly SecureAppSettings _secrets;
     private readonly ILogger<OpenVPNBackgroundAgent> _logger;
     private readonly IProcessManager _processManager;
     private CancellationTokenSource _cancellationTokenSource;
@@ -19,7 +19,7 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
 
     public OpenVPNBackgroundAgent(
         AppSettings appSettings,
-        Secrets secrets,
+        SecureAppSettings secrets,
         ILogger<OpenVPNBackgroundAgent> logger,
         IProcessManager processManager)
     {

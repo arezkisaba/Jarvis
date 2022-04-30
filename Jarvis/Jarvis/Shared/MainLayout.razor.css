@@ -77,3 +77,17 @@ main {
     margin: 0 auto !important;
     align-self: center !important;
 }
+
+::deep .validation-errors {
+    color: #721C24;
+    background-color: #f8d7da;
+    border: solid 1px #f5c6cb;
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+}
+
+    ::deep .validation-errors li {
+        list-style-type: none;
+    }

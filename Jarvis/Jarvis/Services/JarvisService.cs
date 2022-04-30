@@ -1,6 +1,3 @@
-using Lib.Core;
-using System.Text.RegularExpressions;
-
 namespace Jarvis;
 
 public class JarvisService
@@ -63,10 +60,10 @@ public class JarvisService
         VPNClientBackgroundAgent.StartBackgroundLoop();
         TorrentClientBackgroundAgent.StartBackgroundLoop();
 
-        await VPNClientBackgroundAgent.StartClientAsync();
-        await TorrentClientBackgroundAgent.StartClientAsync();
-
         _ = Task.Run(() => StartArcomShieldAsync());
+
+        ////await VPNClientBackgroundAgent.StartClientAsync();
+        ////await TorrentClientBackgroundAgent.StartClientAsync();
     }
 
     public async Task StopAsync()
@@ -109,6 +106,11 @@ public class JarvisService
         {
             try
             {
+                if (VPNClientBackgroundAgent.CurrentState == null || TorrentClientBackgroundAgent.CurrentState == null)
+                {
+                    continue;
+                }
+
                 if (VPNClientBackgroundAgent.CurrentState.IsActive && !TorrentClientBackgroundAgent.CurrentState.IsActive)
                 {
                     await TorrentClientBackgroundAgent.StartClientAsync();
