@@ -14,9 +14,15 @@ public partial class Downloads : BlazorPageComponentBase
         PageTitle = "Downloads";
 
         DownloadsViewModel = new DownloadsViewModel();
-        DownloadsViewModel.IsLoadingChanged += async (sender, isLoading) => await UpdateUIAsync();
+        DownloadsViewModel.IsLoadingChangedActionAsync = async (isLoading) =>
+        {
+            await UpdateUIAsync();
+        };
         DownloadsViewModel.SearchPatternChangedActionAsync = async (searchPattern) =>
         {
+            var torrent9TorrentScrapperService = new Torrent9TorrentScrapperService("https://www.torrent9.nl");
+            var response = await torrent9TorrentScrapperService.GetStringAsync(searchPattern);
+            var items = torrent9TorrentScrapperService.GetTorrentsFromHtml(response);
             await Task.Delay(5000);
         };
     }

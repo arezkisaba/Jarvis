@@ -4,7 +4,7 @@ namespace Jarvis;
 
 public sealed class DownloadsViewModel
 {
-    public event EventHandler<bool> IsLoadingChanged;
+    public Func<bool, Task> IsLoadingChangedActionAsync;
     public Func<string, Task> SearchPatternChangedActionAsync;
 
     private readonly ActionDebouncer _debouncer;
@@ -18,7 +18,10 @@ public sealed class DownloadsViewModel
             if (value != _isLoading)
             {
                 _isLoading = value;
-                IsLoadingChanged?.Invoke(this, IsLoading);
+                Task.Run(async () =>
+                {
+                    await IsLoadingChangedActionAsync(IsLoading);
+                });
             }
         }
     }
