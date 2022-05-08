@@ -1,8 +1,4 @@
-﻿.loader.container {
-    height: calc(100vh - 3.5rem);
-}
-
-.card-title {
+﻿.card-title {
     text-align: center;
     margin-bottom: 0px;
 }

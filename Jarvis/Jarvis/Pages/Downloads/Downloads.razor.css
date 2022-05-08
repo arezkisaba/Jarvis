@@ -1,1 +1,21 @@
-﻿
+﻿#search-form button {
+    width: 100%;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.one {
+    flex: 1 1 auto;
+}
+
+.two {
+    flex: 1 1 auto;
+}
+
+.three {
+    flex: 1 1 auto;
+}

@@ -22,11 +22,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Lib.Core" Version="1.1.4" />
+		<PackageReference Include="Lib.Core" Version="1.1.7" />
 		<PackageReference Include="Lib.Win32" Version="1.1.4" />
 		<PackageReference Include="Lib.ApiServices.Plex" Version="1.1.0" />
 		<PackageReference Include="Lib.ApiServices.Tmdb" Version="1.1.0" />
-		<PackageReference Include="Lib.ApiServices.Trakt" Version="1.1.0" />
+		<PackageReference Include="Lib.ApiServices.Trakt" Version="1.1.1" />
 		<PackageReference Include="Lib.ApiServices.Transmission" Version="1.1.0" />
 		<PackageReference Include="InputSimulatorCore" Version="1.0.5" />
 		<PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />

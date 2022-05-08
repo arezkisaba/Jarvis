@@ -5,32 +5,19 @@ namespace Jarvis.Pages.Downloads;
 public partial class Downloads : BlazorPageComponentBase
 {
     [Inject]
-    public WeatherForecastService ForecastService { get; set; }
+    public IMediaCenterService MediaCenterService { get; set; }
 
-    public WeatherForecast[] forecasts;
-
-    public int CurrentCount { get; set; } = 0;
-
-    public void IncrementCount()
-    {
-        CurrentCount++;
-        _ = InitInternalAsync();
-    }
-
-    public async Task InitInternalAsync()
-    {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-    }
+    public DownloadsViewModel DownloadsViewModel { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         PageTitle = "Downloads";
-        await InitInternalAsync();
-    }
 
-    protected override Task OnAfterRenderAsync(
-        bool firstRender)
-    {
-        return base.OnAfterRenderAsync(firstRender);
+        DownloadsViewModel = new DownloadsViewModel();
+        DownloadsViewModel.IsLoadingChanged += async (sender, isLoading) => await UpdateUIAsync();
+        DownloadsViewModel.SearchPatternChangedActionAsync = async (searchPattern) =>
+        {
+            await Task.Delay(5000);
+        };
     }
 }
