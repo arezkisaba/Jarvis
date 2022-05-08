@@ -10,6 +10,7 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
     private readonly AppSettings _appSettings;
     private readonly ILogger<OpenVPNBackgroundAgent> _logger;
     private readonly IProcessManager _processManager;
+    private readonly INetworkManager _networkManager;
     private readonly ISecureAppSettingsService _secureAppSettingsService;
     private CancellationTokenSource _cancellationTokenSource;
 
@@ -21,11 +22,13 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
         AppSettings appSettings,
         ILogger<OpenVPNBackgroundAgent> logger,
         IProcessManager processManager,
+        INetworkManager networkManager,
         ISecureAppSettingsService secureAppSettingsService)
     {
         _appSettings = appSettings;
         _logger = logger;
         _processManager = processManager;
+        _networkManager = networkManager;
         _secureAppSettingsService = secureAppSettingsService;
     }
 
@@ -135,11 +138,12 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
         VPNClientStateModel currentStateTemp;
         try
         {
-            var vpnProcesses = _processManager.GetByName(_appSettings.vpnConfig.executableName);
+            var hasVPNProcessActive = _processManager.GetByName(_appSettings.vpnConfig.executableName).Any();
+            var hasVPNNetworkInterfaceActive = _networkManager.GetActiveInterfaces().Any(obj => obj.Name == _appSettings.vpnConfig.networkAdapterPattern);
             currentStateTemp = new VPNClientStateModel(
                 title: "VPN client status",
                 subtitle: _appSettings.vpnConfig.executableName,
-                isActive: vpnProcesses.Any());
+                isActive: hasVPNProcessActive && hasVPNNetworkInterfaceActive);
         }
         catch (Exception ex)
         {

@@ -56,6 +56,7 @@ public partial class Home : BlazorPageComponentBase
         VPNClientStateViewModel = new VPNClientStateViewModel(VPNClientBackgroundAgent.CurrentState);
         VPNClientBackgroundAgent.StateChanged += async (sender, __) =>
         {
+            await IPResolverBackgroundAgent.UpdateCurrentStateAsync();
             VPNClientStateViewModel.Update((VPNClientStateModel)sender);
             await UpdateUIAsync();
         };

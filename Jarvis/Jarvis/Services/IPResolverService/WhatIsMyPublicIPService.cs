@@ -3,13 +3,13 @@ using System.Text.RegularExpressions;
 
 namespace Jarvis;
 
-public class MonIPService : IIPResolverService
+public class WhatIsMyPublicIPService : IIPResolverService
 {
     public async Task<string> GetAsync()
     {
-        var httpService = new HttpService("https://mon-ip.io/");
+        var httpService = new HttpService("https://whatismypublicip.com/");
         var result = await httpService.GetStringAsync(string.Empty);
-        var regex = new Regex("<p id=\"ip\">(.*?)</p>");
+        var regex = new Regex("<div id=\"up_finished\".*?>(.*?)</div>");
         var ipGroup = regex.Match(result).Groups[1];
         var ip = ipGroup.Value.RemoveCarriageReturnAndOtherFuckingCharacters();
         return ip;

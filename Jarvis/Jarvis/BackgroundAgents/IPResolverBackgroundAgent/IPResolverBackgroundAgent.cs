@@ -8,17 +8,20 @@ namespace Jarvis;
 
 public class IPResolverBackgroundAgent : IIPResolverBackgroundAgent
 {
-    private readonly IIPResolverService _ipResolverService;
+    private readonly IEnumerable<IIPResolverService> _ipResolverServices;
     private CancellationTokenSource _cancellationTokenSource;
 
     public string CurrentState { get; set; }
 
     public event EventHandler StateChanged;
 
-    public IPResolverBackgroundAgent(
-        IIPResolverService ipResolverService)
+    public IPResolverBackgroundAgent()
     {
-        _ipResolverService = ipResolverService;
+        _ipResolverServices = new List<IIPResolverService>()
+        {
+            new WhatIsMyPublicIPService(),
+            new MonIPService()
+        };
     }
 
     public void StartBackgroundLoop()
@@ -37,12 +40,23 @@ public class IPResolverBackgroundAgent : IIPResolverBackgroundAgent
 
     public async Task UpdateCurrentStateAsync()
     {
-        var currentStateTemp = await _ipResolverService.GetAsync();
-        if (currentStateTemp != CurrentState)
+        foreach (var ipResolverService in _ipResolverServices)
         {
-            StateChanged?.Invoke(currentStateTemp, EventArgs.Empty);
-        }
+            try
+            {
+                var currentStateTemp = await ipResolverService.GetAsync();
+                if (currentStateTemp != CurrentState)
+                {
+                    StateChanged?.Invoke(currentStateTemp, EventArgs.Empty);
+                }
 
-        CurrentState = currentStateTemp;
+                CurrentState = currentStateTemp;
+                break;
+            }
+            catch (Exception)
+            {
+                // IGNORE
+            }
+        }
     }
 }

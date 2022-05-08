@@ -2,7 +2,7 @@ namespace Jarvis;
 
 public sealed class MediaStorageStateViewModel
 {
-    public IEnumerable<string> DefaultChartColors = new List<string>() { "#E89725", "#CA45FF", "#259DE8", "#DC3545", "#54C6FF", "#28A745", "#4B594E", "#C4DB2E" };
+    public IEnumerable<string> DefaultChartColors = new List<string>() { "#E89725", "#25CFAF", "#DC3545", "#259DE8", "#54C6FF", "#28A745", "#CA45FF", "#4B594E", "#C4DB2E" };
 
     public IEnumerable<(string DisplayName, long Size, string Color)> Folders { get; private set; }
 

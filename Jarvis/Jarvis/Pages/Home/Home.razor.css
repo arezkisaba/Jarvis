@@ -2,10 +2,6 @@
     height: calc(100vh - 3.5rem);
 }
 
-.card {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-}
-
 .card-title {
     text-align: center;
     margin-bottom: 0px;

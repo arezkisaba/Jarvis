@@ -75,7 +75,7 @@ public class Launcher
         ));
 
         services.AddSingleton<ICECService, CECService>();
-        services.AddSingleton<IIPResolverService, MonIPService>();
+        ////services.AddSingleton<IIPResolverService, WhatIsMyPublicIPService>();
         services.AddSingleton<IMediaStorageService, MediaStorageService>();
         services.AddSingleton<IMediaCenterService, MediaCenterService>();
         services.AddSingleton<IMediaService, MediaService>();

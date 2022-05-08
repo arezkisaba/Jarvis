@@ -1,3 +1,4 @@
+using Jarvis.Shared.Components.AlertDialog;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
@@ -8,12 +9,13 @@ public partial class Configuration : BlazorPageComponentBase
     [Inject]
     public ISecureAppSettingsService SecureAppSettingsService { get; set; }
 
-    [Inject]
-    public IVPNClientBackgroundAgent VPNClientBackgroundAgent { get; set; }
-
     public SecureAppSettingsViewModel SecureAppSettingsViewModel { get; set; }
 
     public EditContext EditContext { get; set; }
+
+    public AlertDialog AlertDialogSuccessRef { get; set; }
+
+    public AlertDialog AlertDialogErrorRef { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -30,6 +32,14 @@ public partial class Configuration : BlazorPageComponentBase
 
     public async Task HandleOnValidSubmitAsync()
     {
-        await SecureAppSettingsService.WriteAsync(SecureAppSettingsViewModel.ToDomain());
+        try
+        {
+            await SecureAppSettingsService.WriteAsync(SecureAppSettingsViewModel.ToDomain());
+            AlertDialogSuccessRef.Show();
+        }
+        catch (Exception)
+        {
+            AlertDialogErrorRef.Show();
+        }
     }
 }

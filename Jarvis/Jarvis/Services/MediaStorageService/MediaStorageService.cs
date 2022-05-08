@@ -10,7 +10,13 @@ public class MediaStorageService : IMediaStorageService
         foreach (var folder in folders)
         {
             var folderSize = GetFolderSize(folder);
-            result.Add((new DirectoryInfo(folder).Name, folderSize));
+            var folderName = new DirectoryInfo(folder).Name;
+            if (folderName == "$RECYCLE.BIN" || folderName == "System Volume Information")
+            {
+                continue;
+            }
+
+            result.Add((folderName, folderSize));
         }
 
         return result;
