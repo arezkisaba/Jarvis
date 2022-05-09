@@ -1,5 +1,6 @@
 using Lib.Core;
 using Lib.Win32;
+using Microsoft.Extensions.Localization;
 using SharpDX.XInput;
 using WindowsInput;
 using WindowsInput.Native;

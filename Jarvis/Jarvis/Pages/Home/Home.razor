@@ -1,7 +1,8 @@
 @page "/"
 
-@using Jarvis.Pages.Home.Components
 @inherits Jarvis.BlazorPageComponentBase
+@using Jarvis.Pages.Home.Components
+@inject IStringLocalizer<Home> loc
 
 <PageTitle>@PageTitle</PageTitle>
 
@@ -47,8 +48,6 @@ else
                             <div id="container">
                                 <div id="chart" style="@MediaStorageStateViewModel.PieChartCssStyle" />
                             </div>
-
-                            @*<div id="chart-core" class="align-items-center" />*@
                             <div id="legend">
                                 @foreach (var folder in MediaStorageStateViewModel.Folders)
                                 {
@@ -66,7 +65,7 @@ else
             <div class='col-12 col-lg-6 mb-4'>
                 <div class="card h-100">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">PUBLIC IP ADDRESS</h5>
+                        <h5 class="card-title">@loc["PublicIPAddress.Title"]</h5>
                         <hr />
                         <div class="ipaddress d-flex flex-column flex-grow-1 justify-content-center">
                             @PublicIPAddress
