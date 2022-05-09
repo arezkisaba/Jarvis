@@ -15,6 +15,7 @@ public class Launcher
     {
         services.AddRazorPages();
         services.AddServerSideBlazor();
+        services.AddLocalization();
         services.AddSingleton<WeatherForecastService>();
 
         var appSettings = new AppSettings();

@@ -2,6 +2,7 @@
 @using Jarvis.Shared.Components.AlertDialog
 
 @inherits Jarvis.BlazorPageComponentBase
+@inject IStringLocalizer<Configuration> loc
 
 <PageTitle>@PageTitle</PageTitle>
 
@@ -28,47 +29,47 @@ else
                         <div class="row">
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.OpenVPNUsername)">OpenVPN username</label>
-                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.OpenVPNUsername)" @bind-Value="SecureAppSettingsViewModel.OpenVPNUsername" class="form-control" placeholder="Enter OpenVPN username" />
+                                    <label for="@nameof(SecureAppSettingsViewModel.OpenVPNUsername)">@loc["OpenVPNUsername.Label"]</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.OpenVPNUsername)" @bind-Value="SecureAppSettingsViewModel.OpenVPNUsername" class="form-control" placeholder="@loc["OpenVPNUsername.Placeholder"]" />
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.OpenVPNPassword)">OpenVPN password</label>
-                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.OpenVPNPassword)" @bind-Value="SecureAppSettingsViewModel.OpenVPNPassword" class="form-control" placeholder="Enter OpenVPN password" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-lg-6">
-                                <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.TmdbApiKey)">TMDB api key</label>
-                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.TmdbApiKey)" @bind-Value="SecureAppSettingsViewModel.TmdbApiKey" class="form-control" placeholder="Enter TMDB api key" />
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.TmdbAccessToken)">TMDB access token</label>
-                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.TmdbAccessToken)" @bind-Value="SecureAppSettingsViewModel.TmdbAccessToken" class="form-control" placeholder="Enter TMDB access token" />
+                                    <label for="@nameof(SecureAppSettingsViewModel.OpenVPNPassword)">@loc["OpenVPNPassword.Label"]</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.OpenVPNPassword)" @bind-Value="SecureAppSettingsViewModel.OpenVPNPassword" class="form-control" placeholder="@loc["OpenVPNPassword.Placeholder"]" />
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.PlexUsername)">Plex username</label>
-                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.PlexUsername)" @bind-Value="SecureAppSettingsViewModel.PlexUsername" class="form-control" placeholder="Enter Plex username" />
+                                    <label for="@nameof(SecureAppSettingsViewModel.TmdbApiKey)">@loc["TmdbApiKey.Label"]</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.TmdbApiKey)" @bind-Value="SecureAppSettingsViewModel.TmdbApiKey" class="form-control" placeholder="@loc["TmdbApiKey.Placeholder"]" />
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.PlexPassword)">Plex password</label>
-                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.PlexPassword)" @bind-Value="SecureAppSettingsViewModel.PlexPassword" class="form-control" placeholder="Enter Plex password" />
+                                    <label for="@nameof(SecureAppSettingsViewModel.TmdbAccessToken)">@loc["TmdbAccessToken.Label"]</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.TmdbAccessToken)" @bind-Value="SecureAppSettingsViewModel.TmdbAccessToken" class="form-control" placeholder="@loc["TmdbAccessToken.Placeholder"]" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="@nameof(SecureAppSettingsViewModel.PlexUsername)">@loc["PlexUsername.Label"]</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.PlexUsername)" @bind-Value="SecureAppSettingsViewModel.PlexUsername" class="form-control" placeholder="@loc["PlexUsername.Placeholder"]" />
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="@nameof(SecureAppSettingsViewModel.PlexPassword)">@loc["PlexPassword.Label"]</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.PlexPassword)" @bind-Value="SecureAppSettingsViewModel.PlexPassword" class="form-control" placeholder="@loc["PlexPassword.Placeholder"]" />
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <button type="submit" class="btn btn-primary">Update configuration</button>
+                            <button type="submit" class="btn btn-primary">@loc["UpdateConfiguration"]</button>
                         </div>
                     </EditForm>
                 </div>

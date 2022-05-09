@@ -1,5 +1,8 @@
 ﻿@inherits LayoutComponentBase
 
+@using Microsoft.AspNetCore.WebUtilities;
+@using System.Globalization
+
 <CascadingValue Value="AppName">
     <PageTitle>@AppName.ToUpperInvariant()</PageTitle>
     <div>
@@ -21,6 +24,9 @@
 
 @code {
     [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    [Inject]
     public AppSettings AppSettings { get; set; }
 
     public string AppName { get; set; }
@@ -30,5 +36,22 @@
         base.OnInitialized();
 
         AppName = AppSettings.appName;
+
+        if (QueryHelpers.ParseQuery(new Uri(NavigationManager.Uri).Query).TryGetValue("lang", out var paramLang))
+        {
+            CultureInfo culture;
+
+            try
+            {
+                culture = new CultureInfo(paramLang);
+            }
+            catch
+            {
+                culture = new CultureInfo("en");
+            }
+            
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+        }
     }
 }
