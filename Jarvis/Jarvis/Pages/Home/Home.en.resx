@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="GameControllerClientState.Title" xml:space="preserve">
+    <value>GAME CONTROLLER STATUS</value>
+  </data>
   <data name="PublicIPAddress.Title" xml:space="preserve">
     <value>Public IP Address</value>
+  </data>
+  <data name="TorrentClientState.Title" xml:space="preserve">
+    <value>TORRENT CLIENT STATUS</value>
+  </data>
+  <data name="VPNClientState.Title" xml:space="preserve">
+    <value>VPN CLIENT STATUS</value>
   </data>
 </root>

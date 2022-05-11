@@ -28,14 +28,14 @@ else
             <div class='col-12 col-lg-4 mb-4'>
                 <div class="card h-100">
                     <div class="card-body">
-                        <ServiceStateComponent OnStatusChangeRequestedCallback=@ToggleVPNClientStatusAsync IsActive=@VPNClientStateViewModel.IsActive Title=@VPNClientStateViewModel.Title Subtitle=@VPNClientStateViewModel.Subtitle />
+                        <ServiceStateComponent IsActive=@VPNClientStateViewModel.IsActive Title=@VPNClientStateViewModel.Title Subtitle=@VPNClientStateViewModel.Subtitle OnStatusChangeRequestedCallback=@ToggleVPNClientStatusAsync />
                     </div>
                 </div>
             </div>
             <div class='col-12 col-lg-4 mb-4'>
                 <div class="card h-100">
                     <div class="card-body">
-                        <ServiceStateComponent OnStatusChangeRequestedCallback=@ToggleTorrentClientStatusAsync IsActive=@TorrentClientStateViewModel.IsActive Title=@TorrentClientStateViewModel.Title Subtitle=@TorrentClientStateViewModel.Subtitle />
+                        <ServiceStateComponent IsActive=@TorrentClientStateViewModel.IsActive Title=@TorrentClientStateViewModel.Title Subtitle=@TorrentClientStateViewModel.Subtitle OnStatusChangeRequestedCallback=@ToggleTorrentClientStatusAsync />
                     </div>
                 </div>
             </div>

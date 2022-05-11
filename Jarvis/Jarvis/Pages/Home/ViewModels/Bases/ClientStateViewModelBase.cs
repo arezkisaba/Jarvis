@@ -11,14 +11,14 @@ public abstract class ClientStateViewModelBase
     public ClientStateViewModelBase(
         ClientStateModelBase model)
     {
-        Update(model);
+        UpdateInternalData(model);
     }
 
-    public void Update(
+    public void UpdateInternalData(
         ClientStateModelBase model)
     {
-        Title = model?.Title;
-        Subtitle = model?.Subtitle;
-        IsActive = model?.IsActive ?? false;
+        Title = model.Title;
+        Subtitle = model.Subtitle;
+        IsActive = model.IsActive;
     }
 }

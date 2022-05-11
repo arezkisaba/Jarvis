@@ -50,20 +50,24 @@ public partial class Home : BlazorPageComponentBase
         GameControllerClientStateViewModel = new GameControllerClientStateViewModel(GameControllerClientBackgroundAgent.CurrentState);
         GameControllerClientBackgroundAgent.StateChanged += async (sender, __) =>
         {
-            GameControllerClientStateViewModel.Update((GameControllerClientStateModel)sender);
+            var model = (GameControllerClientStateModel)sender;
+            GameControllerClientStateViewModel.UpdateInternalData(model);
             await UpdateUIAsync();
         };
         VPNClientStateViewModel = new VPNClientStateViewModel(VPNClientBackgroundAgent.CurrentState);
         VPNClientBackgroundAgent.StateChanged += async (sender, __) =>
         {
             await IPResolverBackgroundAgent.UpdateCurrentStateAsync();
-            VPNClientStateViewModel.Update((VPNClientStateModel)sender);
+
+            var model = (VPNClientStateModel)sender;
+            VPNClientStateViewModel.UpdateInternalData((VPNClientStateModel)sender);
             await UpdateUIAsync();
         };
         TorrentClientStateViewModel = new TorrentClientStateViewModel(TorrentClientBackgroundAgent.CurrentState);
         TorrentClientBackgroundAgent.StateChanged += async (sender, __) =>
         {
-            TorrentClientStateViewModel.Update((TorrentClientStateModel)sender);
+            var model = (TorrentClientStateModel)sender;
+            TorrentClientStateViewModel.UpdateInternalData((TorrentClientStateModel)sender);
             await UpdateUIAsync();
         };
     }
