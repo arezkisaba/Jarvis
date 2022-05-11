@@ -15,7 +15,7 @@ public class Launcher
     {
         services.AddRazorPages();
         services.AddServerSideBlazor();
-        services.AddLocalization();
+        services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
         services.AddSingleton<WeatherForecastService>();
 
         var appSettings = new AppSettings();

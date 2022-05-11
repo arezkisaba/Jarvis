@@ -1,4 +1,5 @@
 using Lib.Core;
+using Microsoft.Extensions.Localization;
 using System.Diagnostics;
 
 namespace Jarvis;
@@ -9,6 +10,7 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
 
     private readonly AppSettings _appSettings;
     private readonly ILogger<OpenVPNBackgroundAgent> _logger;
+    private readonly IStringLocalizer _localizer;
     private readonly IProcessManager _processManager;
     private readonly INetworkManager _networkManager;
     private readonly ISecureAppSettingsService _secureAppSettingsService;
