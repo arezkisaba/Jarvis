@@ -11,7 +11,7 @@ public class Torrent9TorrentScrapperServiceIntegrationTest
     public async Task GetAsync_TestCase()
     {
         var torrentScrapperService = new Torrent9TorrentScrapperService("https://www.torrent9.nl");
-        var response = await torrentScrapperService.GetStringAsync("game of thrones saison 8 french");
+        var response = await torrentScrapperService.GetSearchResultsRawHtmlAsync("game of thrones saison 8 french");
         Assert.IsTrue(!string.IsNullOrWhiteSpace(response));
     }
 
@@ -19,7 +19,7 @@ public class Torrent9TorrentScrapperServiceIntegrationTest
     public async Task GetTorrentsFromHtml_TestCase()
     {
         var torrentScrapperService = new Torrent9TorrentScrapperService("https://www.torrent9.nl");
-        var response = await torrentScrapperService.GetStringAsync("game of thrones saison 8 french");
+        var response = await torrentScrapperService.GetSearchResultsRawHtmlAsync("game of thrones saison 8 french");
         var items = torrentScrapperService.GetTorrentsFromHtml(response);
         Assert.IsTrue(items != null && items.Any());
     }

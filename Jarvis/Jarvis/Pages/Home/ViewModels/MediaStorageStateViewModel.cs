@@ -39,7 +39,7 @@ public sealed class MediaStorageStateViewModel
 
     private void ComputeTitle()
     {
-        Title = $"{GetStringWithUnitFromSize(UsedSpace)} / {GetStringWithUnitFromSize(TotalSpace)}";
+        Title = $"{FormatHelper.GetStringWithUnitFromSize(UsedSpace)} / {FormatHelper.GetStringWithUnitFromSize(TotalSpace)}";
     }
 
     private void ComputePieChartCssStyle()
@@ -62,39 +62,5 @@ public sealed class MediaStorageStateViewModel
         }
 
         PieChartCssStyle = $"background: conic-gradient({replaceBy});";
-    }
-
-    private string GetStringWithUnitFromSize(
-        long size)
-    {
-        var unit = "B";
-        var finalSize = Convert.ToDouble(size);
-        var coef = 1024d;
-
-        if (finalSize / coef > 1)
-        {
-            finalSize /= coef;
-            unit = "KB";
-        }
-
-        if (finalSize / coef > 1)
-        {
-            finalSize /= coef;
-            unit = "MB";
-        }
-
-        if (finalSize / coef > 1)
-        {
-            finalSize /= coef;
-            unit = "GB";
-        }
-
-        if (finalSize / coef > 1)
-        {
-            finalSize /= coef;
-            unit = "TB";
-        }
-
-        return $"{finalSize.ToString("0.##")} {unit}";
     }
 }

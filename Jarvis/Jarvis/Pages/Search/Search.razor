@@ -46,13 +46,15 @@ else
                                                 <span class="searchresult-name">@searchResult.Name</span>
                                             </div>
                                             <div>
-                                                <span class="searchresult-seeds">SEEDS : @searchResult.Seeds</span>
+                                                <span class="badge badge-primary">@searchResult.Seeds SEEDS</span>
                                                 <span>|</span>
-                                                <span class="searchresult-seeds">PROVIDER : @searchResult.Provider</span>
+                                                <span class="badge badge-secondary">@searchResult.Size</span>
+                                                <span>|</span>
+                                                <span class="badge badge-info">@searchResult.Provider</span>
                                             </div>
                                         </td>
                                         <td class="searchresult-download">
-                                            <span class="oi oi-cloud-download" />
+                                            <span class="oi oi-cloud-download" @onclick="@(() => SearchViewModel.OnDownloadSearchResultAsync(searchResult))" />
                                         </td>
                                     </tr>
                                 }

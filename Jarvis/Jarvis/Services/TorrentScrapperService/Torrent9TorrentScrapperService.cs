@@ -20,11 +20,18 @@ public class Torrent9TorrentScrapperService : TorrentScrapperServiceBase
         return $"{Url}/recherche/{query}";
     }
 
-    public override Task<string> GetStringAsync(
+    public override Task<string> GetSearchResultsRawHtmlAsync(
         string query)
     {
         var httpService = new HttpService(Url);
         return httpService.GetStringAsync($"recherche/{query}");
+    }
+
+    public Task<string> GetSearchResultDetailsRawHtmlAsync(
+        string query)
+    {
+        var httpService = new HttpService(query);
+        return httpService.GetStringAsync(string.Empty);
     }
 
     public override List<TorrentDto> GetTorrentsFromHtml(

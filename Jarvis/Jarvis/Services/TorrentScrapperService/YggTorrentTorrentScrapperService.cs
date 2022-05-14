@@ -23,7 +23,7 @@ public class YggTorrentTorrentScrapperService : TorrentScrapperServiceBase
         return $"{Url}/engine/search?name={query}&do=search";
     }
 
-    public override Task<string> GetStringAsync(
+    public override Task<string> GetSearchResultsRawHtmlAsync(
         string query)
     {
         throw new NotImplementedException();

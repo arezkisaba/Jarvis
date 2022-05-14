@@ -92,6 +92,38 @@ public class TorrentDownloaderService : ITorrentDownloaderService
     }
 
     public async Task AddDownloadAsync(
+        string torrentUrl,
+        string downloadDirectory)
+    {
+        try
+        {
+            Directory.CreateDirectory(downloadDirectory);
+
+            var torrendAdded = await _transmissionApiService.AddTorrentAsync(torrentUrl, downloadDirectory);
+            if (torrendAdded?.arguments?.torrentadded != null)
+            {
+                var id = torrendAdded.arguments.torrentadded.id;
+                var hashString = torrendAdded.arguments.torrentadded.hashString;
+            }
+            else if (torrendAdded?.arguments?.torrentduplicate != null)
+            {
+                var id = torrendAdded.arguments.torrentduplicate.id;
+                var hashString = torrendAdded.arguments.torrentduplicate.hashString;
+            }
+            else
+            {
+                throw new Exception($"Failed to add torrent.");
+            }
+
+            _logger.LogInformation($"Torrent added to downloads.");
+        }
+        catch (Exception ex)
+        {
+            throw new JarvisException("Failed to add torrent.", ex);
+        }
+    }
+
+    public async Task AddDownloadAsync(
         GetModelResponse.DownloadsSectionItem download)
     {
         try

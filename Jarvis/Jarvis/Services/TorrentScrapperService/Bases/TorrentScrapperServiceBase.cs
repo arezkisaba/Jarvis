@@ -22,7 +22,7 @@ public abstract class TorrentScrapperServiceBase
     public abstract string GetSearchUrl(
         string query);
 
-    public abstract Task<string> GetStringAsync(
+    public abstract Task<string> GetSearchResultsRawHtmlAsync(
         string query);
 
     public abstract List<TorrentDto> GetTorrentsFromHtml(

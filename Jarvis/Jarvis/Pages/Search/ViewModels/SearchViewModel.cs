@@ -6,6 +6,7 @@ public sealed class SearchViewModel
 {
     public Func<bool, Task> IsLoadingChangedActionAsync;
     public Func<string, Task> SearchPatternChangedActionAsync;
+    public Func<SearchResultViewModel, Task> SearchResultClickedActionAsync;
 
     private readonly ActionDebouncer _debouncer;
 
@@ -64,5 +65,13 @@ public sealed class SearchViewModel
     public SearchViewModel()
     {
         _debouncer = new ActionDebouncer(1000);
+    }
+
+    public async Task OnDownloadSearchResultAsync(
+        SearchResultViewModel searchResult)
+    {
+        IsLoading = true;
+        await SearchResultClickedActionAsync(searchResult);
+        IsLoading = false;
     }
 }

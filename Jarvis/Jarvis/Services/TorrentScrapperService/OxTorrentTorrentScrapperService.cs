@@ -20,7 +20,7 @@ public class OxTorrentTorrentScrapperService : TorrentScrapperServiceBase
         return $"{Url}/recherche/{query}";
     }
 
-    public override Task<string> GetStringAsync(
+    public override Task<string> GetSearchResultsRawHtmlAsync(
         string query)
     {
         throw new NotImplementedException();
