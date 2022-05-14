@@ -2,7 +2,7 @@ using Lib.Core;
 
 namespace Jarvis;
 
-public sealed class DownloadsViewModel
+public sealed class SearchViewModel
 {
     public Func<bool, Task> IsLoadingChangedActionAsync;
     public Func<string, Task> SearchPatternChangedActionAsync;
@@ -45,8 +45,24 @@ public sealed class DownloadsViewModel
         }
     }
 
-    public DownloadsViewModel()
+    private List<SearchResultViewModel> _searchResults = new();
+    public List<SearchResultViewModel> SearchResults
     {
-        _debouncer = new ActionDebouncer(2000);
+        get => _searchResults;
+        set
+        {
+            if (value != _searchResults)
+            {
+                _searchResults = value;
+                HasSearchResults = SearchResults.Any();
+            }
+        }
+    }
+
+    public bool HasSearchResults { get; private set; }
+
+    public SearchViewModel()
+    {
+        _debouncer = new ActionDebouncer(1000);
     }
 }

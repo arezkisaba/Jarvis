@@ -1,5 +1,6 @@
 @page "/configuration"
 @using Jarvis.Shared.Components.AlertDialog
+@using Jarvis.Shared.Components.Loader
 
 @inherits Jarvis.BlazorPageComponentBase
 @inject IStringLocalizer<Configuration> loc
@@ -8,18 +9,14 @@
 
 @if (SecureAppSettingsViewModel == null)
 {
-    <div class="loader container d-flex">
-        <div class="align-self-center">
-            <div class="spinner-border" role="status" />
-        </div>
-    </div>
+    <Loader />
 }
 else
 {
     <AlertDialog @ref="AlertDialogSuccessRef" Body="Configuration updated successfully" IsDismissable=true Type=AlertDialogType.Success />
     <AlertDialog @ref="AlertDialogErrorRef" Body="Failed to update configuration" IsDismissable=true Type=AlertDialogType.Error />
-
-    <section class="container d-flex h-100">
+    
+    <div class="h-100 d-flex container">
         <div class="align-self-center">
             <div class="card h-100">
                 <div class="card-body">
@@ -75,5 +72,5 @@ else
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 }

@@ -117,13 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Configuration" xml:space="preserve">
-    <value>Configuration</value>
+  <data name="Subtitle" xml:space="preserve">
+    <value>Manette Xbox</value>
   </data>
-  <data name="Downloads" xml:space="preserve">
-    <value>Téléchargements</value>
-  </data>
-  <data name="Home" xml:space="preserve">
-    <value>Accueil</value>
+  <data name="Title" xml:space="preserve">
+    <value>STATUT MANETTE</value>
   </data>
 </root>

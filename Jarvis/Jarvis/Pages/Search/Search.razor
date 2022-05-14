@@ -1,0 +1,74 @@
+@page "/search"
+@using Jarvis.Shared.Components.Loader
+
+@inherits Jarvis.BlazorPageComponentBase
+@inject IStringLocalizer<Search> loc
+
+<PageTitle>@PageTitle</PageTitle>
+
+@if (SearchViewModel == null)
+{
+    <Loader />
+}
+else
+{
+    <div class="h-100 d-flex container">
+        <div class='row'>
+            <div class="col-12">
+                <input type="search" id="@nameof(SearchViewModel.SearchPattern)" @bind="SearchViewModel.SearchPattern" @bind:event="oninput" class="form-control" placeholder="@loc["SearchPattern.Placeholder"]" />
+            </div>
+        </div>
+        @if (SearchViewModel.IsLoading)
+        {
+            <div class="row d-flex flex-grow-1 flex-center">
+                <div class="spinner-border" role="status" />
+            </div>
+        }
+        else
+        {
+            if (SearchViewModel.HasSearchResults)
+            {
+                <div class="row mt-3">
+                    <div class='col-12'>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var searchResult in SearchViewModel.SearchResults)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <span class="searchresult-name">@searchResult.Name</span>
+                                            </div>
+                                            <div>
+                                                <span class="searchresult-seeds">SEEDS : @searchResult.Seeds</span>
+                                                <span>|</span>
+                                                <span class="searchresult-seeds">PROVIDER : @searchResult.Provider</span>
+                                            </div>
+                                        </td>
+                                        <td class="searchresult-download">
+                                            <span class="oi oi-cloud-download" />
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row d-flex flex-grow-1 flex-center">
+                    Aucun résultat
+                </div>
+            }
+        }
+
+    </div>
+
+}

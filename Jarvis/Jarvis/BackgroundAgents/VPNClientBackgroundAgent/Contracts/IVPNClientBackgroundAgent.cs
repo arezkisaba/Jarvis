@@ -11,4 +11,6 @@ public interface IVPNClientBackgroundAgent
     Task StartClientAsync();
 
     Task StopClientAsync();
+
+    void RefreshIsClientActive();
 }

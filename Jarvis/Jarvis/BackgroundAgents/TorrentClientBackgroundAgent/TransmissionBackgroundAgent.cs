@@ -102,15 +102,19 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
 
     #region Private use
 
-    private void RefreshIsClientActive()
+    public void RefreshIsClientActive()
     {
+        var resourceManager = new System.Resources.ResourceManager(
+            "Jarvis.Resources.BackgroundAgents.TorrentClientBackgroundAgent.TransmissionBackgroundAgent",
+            System.Reflection.Assembly.GetExecutingAssembly());
+
         TorrentClientStateModel currentStateTemp;
         try
         {
             var windowsService = _serviceManager.GetAll().Single(obj => obj.Name == _appSettings.torrentConfig.serviceName);
             currentStateTemp = new TorrentClientStateModel(
-                title: "Torrent client status",
-                subtitle: _appSettings.torrentConfig.serviceName,
+                title: resourceManager.GetString("Title"),
+                subtitle: resourceManager.GetString("Subtitle"),
                 isActive: windowsService.IsStarted);
 
             if (windowsService.IsStartedOnBoot)
@@ -122,8 +126,8 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
         {
             _logger.LogError(ex, "XXXXX");
             currentStateTemp = new TorrentClientStateModel(
-                title: "Torrent client status",
-                subtitle: _appSettings.torrentConfig.serviceName,
+                title: resourceManager.GetString("Title"),
+                subtitle: resourceManager.GetString("Subtitle"),
                 isActive: false);
         }
 

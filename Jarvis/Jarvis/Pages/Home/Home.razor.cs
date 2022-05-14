@@ -55,6 +55,7 @@ public partial class Home : BlazorPageComponentBase
             await UpdateUIAsync();
         };
         VPNClientStateViewModel = new VPNClientStateViewModel(VPNClientBackgroundAgent.CurrentState);
+        VPNClientBackgroundAgent.RefreshIsClientActive();
         VPNClientBackgroundAgent.StateChanged += async (sender, __) =>
         {
             await IPResolverBackgroundAgent.UpdateCurrentStateAsync();
@@ -63,7 +64,9 @@ public partial class Home : BlazorPageComponentBase
             VPNClientStateViewModel.UpdateInternalData((VPNClientStateModel)sender);
             await UpdateUIAsync();
         };
+
         TorrentClientStateViewModel = new TorrentClientStateViewModel(TorrentClientBackgroundAgent.CurrentState);
+        TorrentClientBackgroundAgent.RefreshIsClientActive();
         TorrentClientBackgroundAgent.StateChanged += async (sender, __) =>
         {
             var model = (TorrentClientStateModel)sender;

@@ -52,6 +52,9 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
     {
         return Task.Run(async () =>
         {
+            var vpnProcesses = _processManager.GetByName(_appSettings.vpnConfig.executableName);
+            vpnProcesses.ForEach(obj => _processManager.Kill(obj.Name));
+
             RefreshIsClientActive();
 
             if (CurrentState.IsActive)
@@ -109,13 +112,7 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
             }
 
             var vpnProcesses = _processManager.GetByName(_appSettings.vpnConfig.executableName);
-            if (vpnProcesses.Any())
-            {
-                foreach (var vpnProcess in vpnProcesses)
-                {
-                    _processManager.Kill(vpnProcess.Name);
-                }
-            }
+            vpnProcesses.ForEach(obj => _processManager.Kill(obj.Name));
 
             var counter = 0;
             while (CurrentState.IsActive)
@@ -135,24 +132,28 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
 
     #region Private use
 
-    private void RefreshIsClientActive()
+    public void RefreshIsClientActive()
     {
+        var resourceManager = new System.Resources.ResourceManager(
+            "Jarvis.Resources.BackgroundAgents.VPNClientBackgroundAgent.OpenVPNBackgroundAgent",
+            System.Reflection.Assembly.GetExecutingAssembly());
+
         VPNClientStateModel currentStateTemp;
         try
         {
             var hasVPNProcessActive = _processManager.GetByName(_appSettings.vpnConfig.executableName).Any();
             var hasVPNNetworkInterfaceActive = _networkManager.GetActiveInterfaces().Any(obj => obj.Name == _appSettings.vpnConfig.networkAdapterPattern);
             currentStateTemp = new VPNClientStateModel(
-                title: "VPN client status",
-                subtitle: _appSettings.vpnConfig.executableName,
+                title: resourceManager.GetString("Title"),
+                subtitle: resourceManager.GetString("Subtitle"),
                 isActive: hasVPNProcessActive && hasVPNNetworkInterfaceActive);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "XXXXX");
             currentStateTemp = new VPNClientStateModel(
-                title: "VPN client status",
-                subtitle: _appSettings.vpnConfig.executableName,
+                title: resourceManager.GetString("Title"),
+                subtitle: resourceManager.GetString("Subtitle"),
                 isActive: false);
         }
 

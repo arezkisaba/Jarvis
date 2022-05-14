@@ -11,4 +11,6 @@ public interface ITorrentClientBackgroundAgent
     Task StartClientAsync();
 
     Task StopClientAsync();
+
+    void RefreshIsClientActive();
 }

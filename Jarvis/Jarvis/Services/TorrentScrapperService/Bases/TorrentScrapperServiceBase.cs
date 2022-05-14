@@ -1,4 +1,5 @@
 using Lib.Core;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Jarvis;
@@ -82,7 +83,7 @@ public abstract class TorrentScrapperServiceBase
         sizeString = sizeString.RemoveDoubleSpacesAndTrim();
 
         var parts = sizeString.Split(' ');
-        var number = Convert.ToDouble(parts[0]);
+        var number = Convert.ToDouble(parts[0], CultureInfo.InvariantCulture);
         var unit = parts[1];
         double torrentSize;
 

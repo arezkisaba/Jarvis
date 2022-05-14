@@ -11,6 +11,7 @@ public class XboxControllerBackgroundAgent : IGameControllerClientBackgroundAgen
 {
     private readonly AppSettings _appSettings;
     private readonly ILogger<XboxControllerBackgroundAgent> _logger;
+    private readonly IStringLocalizer _localizer;
     private readonly IDisplayManager _displayManager;
     private readonly IProcessManager _processManager;
     private readonly ISoundManager _soundManager;
@@ -82,9 +83,13 @@ public class XboxControllerBackgroundAgent : IGameControllerClientBackgroundAgen
                         }
                     }
 
+                    var resourceManager = new System.Resources.ResourceManager(
+                        "Jarvis.Resources.BackgroundAgents.GameControllerBackgroundAgent.XboxControllerBackgroundAgent",
+                        System.Reflection.Assembly.GetExecutingAssembly());
+
                     var currentStateTemp = new GameControllerClientStateModel(
-                        title: "Game controller status",
-                        subtitle: "Xbox Controller",
+                        title: resourceManager.GetString("Title"),
+                        subtitle: resourceManager.GetString("Subtitle"),
                         isActive: _selectedGameController != null);
                     if (currentStateTemp.IsActive != CurrentState?.IsActive)
                     {
