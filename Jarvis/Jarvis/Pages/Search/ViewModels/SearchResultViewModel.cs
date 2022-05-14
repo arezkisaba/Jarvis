@@ -22,15 +22,9 @@ public sealed class SearchResultViewModel
         string descriptionUrl)
     {
         Name = name;
-        Size = ConvertSizeToFriendlyDisplay(size);
+        Size = FormatHelper.GetStringWithUnitFromSize(size);
         Seeds = seeds;
         Provider = provider;
         DescriptionUrl = descriptionUrl;
-    }
-
-    private static string ConvertSizeToFriendlyDisplay(
-        double size)
-    {
-        return FormatHelper.GetStringWithUnitFromSize(size);
     }
 }
