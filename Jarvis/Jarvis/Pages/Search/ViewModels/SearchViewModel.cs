@@ -55,7 +55,7 @@ public sealed class SearchViewModel
             if (value != _searchResults)
             {
                 _searchResults = value;
-                HasSearchResults = SearchResults.Any();
+                HasSearchResults = SearchResults != null && SearchResults.Any();
             }
         }
     }

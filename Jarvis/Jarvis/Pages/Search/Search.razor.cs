@@ -34,7 +34,7 @@ public partial class Search : BlazorPageComponentBase
             {
                 if (searchPattern.Length < 3)
                 {
-                    SearchViewModel.SearchResults.Clear();
+                    SearchViewModel.SearchResults = null;
                     return;
                 }
 
