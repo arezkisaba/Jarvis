@@ -80,8 +80,6 @@ public class Launcher
         services.AddSingleton<IMediaStorageService, MediaStorageService>();
         services.AddSingleton<IMediaCenterService, MediaCenterService>();
         services.AddSingleton<IMediaService, MediaService>();
-        services.AddSingleton<ITorrentSearchService, TorrentSearchService>();
-        services.AddSingleton<ITorrentDownloaderService, TorrentDownloaderService>();
         services.AddSingleton<IIPResolverBackgroundAgent, IPResolverBackgroundAgent>();
         services.AddSingleton<IMediaStorageBackgroundAgent, MediaStorageBackgroundAgent>();
         services.AddSingleton<IGameControllerClientBackgroundAgent, XboxControllerBackgroundAgent>();

@@ -14,31 +14,31 @@
 }
 else
 {
-    <div class="h-100 d-flex container">
-        <div class='row'>
-            <div class='col-12 col-lg-4 mb-4'>
-                <div class="card h-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-4 mb-4">
+                <div class="card">
                     <div class="card-body">
                         <ServiceStateComponent IsActive=@GameControllerClientStateViewModel.IsActive Title=@GameControllerClientStateViewModel.Title Subtitle=@GameControllerClientStateViewModel.Subtitle />
                     </div>
                 </div>
             </div>
-            <div class='col-12 col-lg-4 mb-4'>
-                <div class="card h-100">
+            <div class="col-12 col-lg-4 mb-4">
+                <div class="card">
                     <div class="card-body">
                         <ServiceStateComponent IsActive=@VPNClientStateViewModel.IsActive Title=@VPNClientStateViewModel.Title Subtitle=@VPNClientStateViewModel.Subtitle OnStatusChangeRequestedCallback=@ToggleVPNClientStatusAsync />
                     </div>
                 </div>
             </div>
-            <div class='col-12 col-lg-4 mb-4'>
-                <div class="card h-100">
+            <div class="col-12 col-lg-4 mb-4">
+                <div class="card">
                     <div class="card-body">
                         <ServiceStateComponent IsActive=@TorrentClientStateViewModel.IsActive Title=@TorrentClientStateViewModel.Title Subtitle=@TorrentClientStateViewModel.Subtitle OnStatusChangeRequestedCallback=@ToggleTorrentClientStatusAsync />
                     </div>
                 </div>
             </div>
-            <div class='col-12 col-lg-6 mb-4'>
-                <div class="card h-100">
+            <div class="col-12 col-lg-6 mb-4">
+                <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">@MediaStorageStateViewModel.Title</h5>
                         <hr />
@@ -60,8 +60,8 @@ else
                     </div>
                 </div>
             </div>
-            <div class='col-12 col-lg-6 mb-4'>
-                <div class="card h-100">
+            <div class="col-12 col-lg-6 mb-4">
+                <div class="card">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">@loc["PublicIPAddress.Title"]</h5>
                         <hr />

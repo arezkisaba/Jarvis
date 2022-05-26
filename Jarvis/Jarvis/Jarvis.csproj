@@ -10,24 +10,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Remove="C:\Users\sabaa\.nuget\packages\lib.core\1.1.4\contentFiles\any\net6.0\Microsoft.TestPlatform.PlatformAbstractions.dll" />
-	  <Content Remove="C:\Users\sabaa\.nuget\packages\lib.core\1.1.4\contentFiles\any\net6.0\testhost.dll" />
-	  <Content Remove="C:\Users\sabaa\.nuget\packages\lib.core\1.1.4\contentFiles\any\net6.0\testhost.exe" />
-	  <Content Remove="C:\Users\sabaa\.nuget\packages\lib.win32\1.1.4\contentFiles\any\net6.0-windows7.0\Microsoft.TestPlatform.PlatformAbstractions.dll" />
-	  <Content Remove="C:\Users\sabaa\.nuget\packages\lib.win32\1.1.4\contentFiles\any\net6.0-windows7.0\testhost.dll" />
-	  <Content Remove="C:\Users\sabaa\.nuget\packages\lib.win32\1.1.4\contentFiles\any\net6.0-windows7.0\testhost.exe" />
-	  <Content Remove="C:\Users\sabaa\.nuget\packages\microsoft.testplatform.testhost\17.1.0-release-20220113-05\build\netcoreapp2.1\x64\Microsoft.TestPlatform.PlatformAbstractions.dll" />
-	  <Content Remove="C:\Users\sabaa\.nuget\packages\microsoft.testplatform.testhost\17.1.0-release-20220113-05\build\netcoreapp2.1\x64\testhost.dll" />
-	  <Content Remove="C:\Users\sabaa\.nuget\packages\microsoft.testplatform.testhost\17.1.0-release-20220113-05\build\netcoreapp2.1\x64\testhost.exe" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Lib.Core" Version="1.1.7" />
 		<PackageReference Include="Lib.Win32" Version="1.1.4" />
 		<PackageReference Include="Lib.ApiServices.Plex" Version="1.1.0" />
 		<PackageReference Include="Lib.ApiServices.Tmdb" Version="1.1.0" />
-		<PackageReference Include="Lib.ApiServices.Trakt" Version="1.1.1" />
-		<PackageReference Include="Lib.ApiServices.Transmission" Version="1.1.0" />
+		<PackageReference Include="Lib.ApiServices.Transmission" Version="1.1.1" />
 		<PackageReference Include="InputSimulatorCore" Version="1.0.5" />
 		<PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
 		<PackageReference Include="System.ServiceProcess.ServiceController" Version="5.0.0" />

@@ -36,14 +36,9 @@ main .container {
     padding-top: 1.1rem;
 }
 
-.h-100.d-flex {
+.container {
     min-height: calc(100vh - 56px);
     flex-direction: column;
-}
-
-.flex-center {
-    align-items: center;
-    justify-content: center;
 }
 
 #blazor-error-ui {

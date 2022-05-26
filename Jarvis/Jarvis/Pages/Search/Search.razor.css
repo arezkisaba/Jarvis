@@ -3,23 +3,10 @@
 }
 
 .searchresult-name {
-}
-
-    .searchresult-name span {
-/*        display: inline-block;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        -o-text-overflow: ellipsis;
-        max-width: 50%;*/
-    }
-
-.searchresult-seeds {
-    color: gray;
-    font-size: 0.8rem;
-    text-transform: uppercase;
+    word-break: break-all
 }
 
 .searchresult-download {
     vertical-align: middle;
+    cursor: pointer;
 }

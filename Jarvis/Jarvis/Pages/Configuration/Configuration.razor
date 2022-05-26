@@ -1,6 +1,7 @@
 @page "/configuration"
 @using Jarvis.Shared.Components.AlertDialog
 @using Jarvis.Shared.Components.Loader
+@using Jarvis.Shared.Components.StretchContainer
 
 @inherits Jarvis.BlazorPageComponentBase
 @inject IStringLocalizer<Configuration> loc
@@ -13,13 +14,12 @@
 }
 else
 {
-    <AlertDialog @ref="AlertDialogSuccessRef" Body="Configuration updated successfully" IsDismissable=true Type=AlertDialogType.Success />
-    <AlertDialog @ref="AlertDialogErrorRef" Body="Failed to update configuration" IsDismissable=true Type=AlertDialogType.Error />
-    
-    <div class="h-100 d-flex container">
-        <div class="align-self-center">
-            <div class="card h-100">
+    <div class="d-flex container">
+        <StretchContainer>
+            <div class="card">
                 <div class="card-body">
+                    <AlertDialog @ref="AlertDialogSuccessRef" Body="Configuration updated successfully" IsDismissable=true Type=AlertDialogType.Success />
+                    <AlertDialog @ref="AlertDialogErrorRef" Body="Failed to update configuration" IsDismissable=true Type=AlertDialogType.Error />
                     <EditForm EditContext="@EditContext" OnValidSubmit="@HandleOnValidSubmitAsync">
                         <DataAnnotationsValidator />
                         <ValidationSummary />
@@ -71,6 +71,6 @@ else
                     </EditForm>
                 </div>
             </div>
-        </div>
+        </StretchContainer>
     </div>
 }

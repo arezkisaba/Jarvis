@@ -14,29 +14,13 @@ public class JarvisService
 
     public ITorrentClientBackgroundAgent TorrentClientBackgroundAgent { get; }
 
-    public IMediaCenterService MediaCenterService { get; }
-
-    public IMediaService MediaService { get; }
-
-    public ITorrentSearchService TorrentSearchService { get; }
-
-    public ITorrentDownloaderService DownloaderService { get; }
-
-    public MediaStorageStateViewModel StatusViewModel { get; }
-
-    public bool IsSearchingTorrent { get; set; }
-
     public JarvisService(
         ILogger<TransmissionBackgroundAgent> logger,
         IIPResolverBackgroundAgent ipResolverBackgroundAgent,
         IMediaStorageBackgroundAgent mediaStorageBackgroundAgent,
         IGameControllerClientBackgroundAgent gameControllerClientBackgroundAgent,
         IVPNClientBackgroundAgent vpnClientBackgroundAgent,
-        ITorrentClientBackgroundAgent torrentClientBackgroundAgent,
-        IMediaCenterService mediaCenterService,
-        IMediaService mediaService,
-        ITorrentSearchService torrentSearchService,
-        ITorrentDownloaderService downloaderService)
+        ITorrentClientBackgroundAgent torrentClientBackgroundAgent)
     {
         _logger = logger;
         IPResolverBackgroundAgent = ipResolverBackgroundAgent;
@@ -44,10 +28,6 @@ public class JarvisService
         GameControllerClientBackgroundAgent = gameControllerClientBackgroundAgent;
         VPNClientBackgroundAgent = vpnClientBackgroundAgent;
         TorrentClientBackgroundAgent = torrentClientBackgroundAgent;
-        MediaCenterService = mediaCenterService;
-        MediaService = mediaService;
-        TorrentSearchService = torrentSearchService;
-        DownloaderService = downloaderService;
     }
 
     public async Task StartAsync()
@@ -71,32 +51,6 @@ public class JarvisService
         await VPNClientBackgroundAgent.StopClientAsync();
         await TorrentClientBackgroundAgent.StopClientAsync();
     }
-
-    ////public async Task StartSearchAsync()
-    ////{
-    ////    try
-    ////    {
-    ////        IsSearchingTorrent = true;
-
-    ////        await MediaService.CreateDirectoriesIfDoesntExistsAsync();
-    ////        var (movies, tvShows) = await MediaCenterService.FillMediasFromMediaCenterAndMediaDatabaseAsync();
-    ////        await MediaCenterService.SynchronizeWatchStatusBetweenMediaCenterAndMediaDatabaseAsync();
-    ////        await TorrentSearchService.SearchTorrentsAsync(movies, tvShows);
-    ////        await DownloaderService.StartDownloadsAsync();
-    ////    }
-    ////    catch (JarvisException ex)
-    ////    {
-    ////        _logger.LogException(ex);
-    ////    }
-    ////    catch (Exception ex)
-    ////    {
-    ////        _logger.LogException(ex);
-    ////    }
-    ////    finally
-    ////    {
-    ////        IsSearchingTorrent = false;
-    ////    }
-    ////}
 
     #region Private use
 

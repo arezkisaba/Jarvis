@@ -120,6 +120,9 @@
   <data name="Configuration" xml:space="preserve">
     <value>Configuration</value>
   </data>
+  <data name="Downloads" xml:space="preserve">
+    <value>Downloads</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>

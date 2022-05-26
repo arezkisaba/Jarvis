@@ -1,3 +1,4 @@
+using Lib.ApiServices.Transmission;
 using Lib.Core;
 
 namespace Jarvis;
@@ -9,21 +10,28 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
     private readonly AppSettings _appSettings;
     private readonly ILogger<TransmissionBackgroundAgent> _logger;
     private readonly IServiceManager _serviceManager;
+    private readonly ITransmissionApiService _transmissionApiService;
     private readonly string _targetGlobalConfigFilePath;
     private CancellationTokenSource _cancellationTokenSource;
+
+    public List<TorrentDownloadModel> TorrentDownloads { get; set; } = new();
 
     public TorrentClientStateModel CurrentState { get; set; }
 
     public event EventHandler StateChanged;
 
+    public Action DownloadStateChangedAction { get; set; }
+
     public TransmissionBackgroundAgent(
         AppSettings appSettings,
         ILogger<TransmissionBackgroundAgent> logger,
-        IServiceManager serviceManager)
+        IServiceManager serviceManager,
+        ITransmissionApiService transmissionApiService)
     {
         _appSettings = appSettings;
         _logger = logger;
         _serviceManager = serviceManager;
+        _transmissionApiService = transmissionApiService;
         _targetGlobalConfigFilePath = Path.Combine(Environment.GetEnvironmentVariable("LocalAppData"), $"transmission-daemon\\settings.json");
     }
 
@@ -36,6 +44,7 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
 
             do
             {
+                await FillTorrentDownloadsAsync();
                 RefreshIsClientActive();
             } while (await timer.WaitForNextTickAsync(_cancellationTokenSource.Token));
         });
@@ -100,6 +109,67 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
         });
     }
 
+    public async Task AddDownloadAsync(
+        string url,
+        string downloadDirectory,
+        string size,
+        int seeds)
+    {
+        try
+        {
+            Directory.CreateDirectory(downloadDirectory);
+
+            var torrendAdded = await _transmissionApiService.AddTorrentAsync(url, downloadDirectory);
+            if (torrendAdded?.arguments?.torrentadded != null)
+            {
+                var id = torrendAdded.arguments.torrentadded.id;
+                var hashString = torrendAdded.arguments.torrentadded.hashString;
+                TorrentDownloads.Add(new TorrentDownloadModel(
+                    name: torrendAdded.arguments.torrentadded.name,
+                    url: url,
+                    downloadDirectory: downloadDirectory,
+                    percentDone: 0,
+                    size: size,
+                    seeds: seeds,
+                    provider: "Torrent9",
+                    id: id.ToString(),
+                    hashString: hashString)
+                );
+            }
+            else if (torrendAdded?.arguments?.torrentduplicate != null)
+            {
+                ////var id = torrendAdded.arguments.torrentduplicate.id;
+                ////var hashString = torrendAdded.arguments.torrentduplicate.hashString;
+                throw new Exception($"Failed to add torrent.");
+            }
+            else
+            {
+                throw new Exception($"Failed to add torrent.");
+            }
+
+            _logger.LogInformation($"Torrent added to downloads.");
+        }
+        catch (Exception ex)
+        {
+            throw new JarvisException("Failed to add torrent.", ex);
+        }
+    }
+
+    public async Task DeleteDownloadAsync(
+        string hashString)
+    {
+        try
+        {
+            var download = TorrentDownloads.Single(obj => obj.HashString == hashString);
+            await _transmissionApiService.DeleteTorrentAsync(int.Parse(download.Id));
+            TorrentDownloads.RemoveAll(obj => obj.HashString == download.HashString);
+        }
+        catch (Exception ex)
+        {
+            throw new JarvisException("Failed to delete torrent from downloads.", ex);
+        }
+    }
+
     #region Private use
 
     public void RefreshIsClientActive()
@@ -137,6 +207,28 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
         }
 
         CurrentState = currentStateTemp;
+    }
+
+    private async Task FillTorrentDownloadsAsync()
+    {
+        try
+        {
+            var torrentDownloads = await _transmissionApiService.GetTorrentsAsync();
+            TorrentDownloads.ForEach(torrent =>
+            {
+                var match = torrentDownloads.FirstOrDefault(obj => obj.hashString == torrent.HashString);
+                if (match != null)
+                {
+                    torrent.Name = match.name;
+                    torrent.PercentDone = match.percentDone;
+                }
+            });
+
+            DownloadStateChangedAction?.Invoke();
+        }
+        catch (Exception)
+        {
+        }
     }
 
     private async Task EnableConnectionsFromLocalNetworkAsync()

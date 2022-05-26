@@ -8,7 +8,7 @@ public sealed class SearchResultViewModel
 
     public string Size { get; private set; }
 
-    public long Seeds { get; private set; }
+    public int Seeds { get; private set; }
 
     public string Provider { get; private set; }
 
@@ -17,7 +17,7 @@ public sealed class SearchResultViewModel
     public SearchResultViewModel(
         string name,
         double size,
-        long seeds,
+        int seeds,
         string provider,
         string descriptionUrl)
     {

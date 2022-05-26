@@ -7,7 +7,10 @@ public partial class Search : BlazorPageComponentBase
     private readonly Torrent9TorrentScrapperService _torrent9TorrentScrapperService;
 
     [Inject]
-    public ITorrentDownloaderService TorrentDownloaderService { get; set; }
+    private NavigationManager NavManager { get; set; }
+
+    [Inject]
+    private ITorrentClientBackgroundAgent TorrentClientBackgroundAgent { get; set; }
 
     [Inject]
     public AppSettings AppSettings { get; set; }
@@ -59,9 +62,14 @@ public partial class Search : BlazorPageComponentBase
             {
                 var response = await _torrent9TorrentScrapperService.GetSearchResultDetailsRawHtmlAsync(searchResult.DescriptionUrl);
                 var torrentLink = await _torrent9TorrentScrapperService.GetMagnetLinkFromHtmlAsync(response, null, null);
-                var addDownloadTask = TorrentDownloaderService.AddDownloadAsync(torrentLink, AppSettings.computer.downloadsFolder);
-                var waitTask = Task.Delay(500);
-                await Task.WhenAll(addDownloadTask, waitTask);
+                var addDownloadTask = TorrentClientBackgroundAgent.AddDownloadAsync(
+                    torrentLink,
+                    AppSettings.computer.downloadsFolder,
+                    searchResult.Size,
+                    searchResult.Seeds);
+                var delayTask = Task.Delay(500);
+                await Task.WhenAll(addDownloadTask, delayTask);
+                NavManager.NavigateTo("/downloads");
             }
             catch (Exception)
             {
