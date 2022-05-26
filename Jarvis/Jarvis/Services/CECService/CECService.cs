@@ -20,31 +20,24 @@ public class CECService : ICECService
     {
         return Task.Run(async () =>
         {
-            try
-            {
-                var process = new Process();
-                process.StartInfo.FileName = _appSettings.cecConfig.cecClientPath;
-                process.StartInfo.Arguments = "-m";
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardInput = true;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.RedirectStandardError = true;
-                process.EnableRaisingEvents = true;
-                process.OutputDataReceived += OnProcessOutputDataReceived;
-                process.Start();
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
+            var process = new Process();
+            process.StartInfo.FileName = _appSettings.cecConfig.cecClientPath;
+            process.StartInfo.Arguments = "-m";
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.EnableRaisingEvents = true;
+            process.OutputDataReceived += OnProcessOutputDataReceived;
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
 
-                await Task.Delay(2000);
-                process.StandardInput.WriteLine(GetPowerOnCommand());
-                process.StandardInput.WriteLine(GetSwitchHDMISourceCommand(hdmiSource));
-                await Task.Delay(5000);
-                process.Kill();
-            }
-            catch (Exception)
-            {
-                // LOG
-            }
+            await Task.Delay(2000);
+            process.StandardInput.WriteLine(GetPowerOnCommand());
+            process.StandardInput.WriteLine(GetSwitchHDMISourceCommand(hdmiSource));
+            await Task.Delay(5000);
+            process.Kill();
         });
     }
 

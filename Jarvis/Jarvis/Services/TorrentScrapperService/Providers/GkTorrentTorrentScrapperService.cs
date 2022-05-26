@@ -14,21 +14,12 @@ public class GkTorrentTorrentScrapperService : TorrentScrapperServiceBase
     {
     }
 
-    public override string GetSearchUrl(
+    public override async Task<List<TorrentDto>> GetResultsAsync(
         string query)
     {
-        return $"{Url}/recherche/{query}";
-    }
+        var httpService = new HttpService(Url);
+        var content = await httpService.GetStringAsync($"recherche/{query}");
 
-    public override Task<string> GetSearchResultsRawHtmlAsync(
-        string query)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override List<TorrentDto> GetTorrentsFromHtml(
-        string content)
-    {
         content = content.RemoveCarriageReturnAndOtherFuckingCharacters();
 
         var torrents = new List<TorrentDto>();
@@ -60,5 +51,15 @@ public class GkTorrentTorrentScrapperService : TorrentScrapperServiceBase
         }
 
         return torrents;
+    }
+
+    public override async Task<string> GetDownloadLinkAsync(
+        string descriptionUrl,
+        string cookies,
+        string userAgent)
+    {
+        var httpService = new HttpService(descriptionUrl);
+        var content = await httpService.GetStringAsync(string.Empty);
+        return await GetMagnetLinkFromHtmlAsync(content, cookies, userAgent);
     }
 }

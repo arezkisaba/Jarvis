@@ -16,7 +16,6 @@ public class Launcher
         services.AddRazorPages();
         services.AddServerSideBlazor();
         services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
-        services.AddSingleton<WeatherForecastService>();
 
         var appSettings = new AppSettings();
         configurationManager.Bind(appSettings);
@@ -75,8 +74,17 @@ public class Launcher
             tokens.TmdbSessionId
         ));
 
+        services.AddSingleton<ITorrentScrapperService>(new TorrentScrapperService(
+            new List<TorrentScrapperServiceBase>
+            {
+                new GkTorrentTorrentScrapperService("https://www.gktorrents.org"),
+                new OxTorrentTorrentScrapperService("https://www.oxtorrent.si"),
+                new Torrent9TorrentScrapperService("https://www.torrent9.nl"),
+                new ZeTorrentsTorrentScrapperService("https://www.zetorrents.nl"),
+            }
+        ));
+
         services.AddSingleton<ICECService, CECService>();
-        ////services.AddSingleton<IIPResolverService, WhatIsMyPublicIPService>();
         services.AddSingleton<IMediaStorageService, MediaStorageService>();
         services.AddSingleton<IMediaCenterService, MediaCenterService>();
         services.AddSingleton<IMediaService, MediaService>();

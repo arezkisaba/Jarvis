@@ -12,35 +12,24 @@ public abstract class TorrentScrapperServiceBase
     public virtual bool CanUseMagnetLinks => true;
 
     public string Url { get; set; }
-
+    
     public TorrentScrapperServiceBase(
         string url)
     {
         Url = url;
     }
 
-    public abstract string GetSearchUrl(
+    public abstract Task<List<TorrentDto>> GetResultsAsync(
         string query);
 
-    public abstract Task<string> GetSearchResultsRawHtmlAsync(
-        string query);
+    public abstract Task<string> GetDownloadLinkAsync(
+        string descriptionUrl,
+        string cookies,
+        string userAgent);
 
-    public abstract List<TorrentDto> GetTorrentsFromHtml(
-        string content);
+    #region Private use
 
-    public virtual List<string> GetLoginCommands(
-        string username,
-        string password)
-    {
-        return new List<string>();
-    }
-
-    public virtual string GetLoggedPattern()
-    {
-        return string.Empty;
-    }
-
-    public virtual Task<string> GetMagnetLinkFromHtmlAsync(
+    protected virtual Task<string> GetMagnetLinkFromHtmlAsync(
         string text,
         string cookies,
         string userAgent)
@@ -55,7 +44,7 @@ public abstract class TorrentScrapperServiceBase
         return Task.FromResult($"magnet:{matches[0].Groups[1].Value}");
     }
 
-    public virtual Task<string> GetTorrentLinkFromHtmlAsync(
+    protected virtual Task<string> GetTorrentLinkFromHtmlAsync(
         string text,
         string cookies,
         string userAgent)
@@ -68,6 +57,18 @@ public abstract class TorrentScrapperServiceBase
         }
 
         return Task.FromResult($"{matches[0].Groups[1].Value}.torrent");
+    }
+
+    protected virtual List<string> GetLoginCommands(
+        string username,
+        string password)
+    {
+        return new List<string>();
+    }
+
+    protected virtual string GetLoggedPattern()
+    {
+        return string.Empty;
     }
 
     protected double ConvertSizeStringToNumber(
@@ -130,4 +131,6 @@ public abstract class TorrentScrapperServiceBase
 
         return Tuple.Create(name, link);
     }
+
+    #endregion
 }

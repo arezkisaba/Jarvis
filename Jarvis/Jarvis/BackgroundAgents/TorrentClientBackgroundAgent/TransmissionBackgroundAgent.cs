@@ -140,7 +140,6 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
             {
                 ////var id = torrendAdded.arguments.torrentduplicate.id;
                 ////var hashString = torrendAdded.arguments.torrentduplicate.hashString;
-                throw new Exception($"Failed to add torrent.");
             }
             else
             {

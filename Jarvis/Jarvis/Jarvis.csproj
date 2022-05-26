@@ -10,6 +10,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Services\TorrentScrapperService\Providers\YggTorrentTorrentScrapperService.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Lib.Core" Version="1.1.7" />
 		<PackageReference Include="Lib.Win32" Version="1.1.4" />
 		<PackageReference Include="Lib.ApiServices.Plex" Version="1.1.0" />

@@ -3,37 +3,28 @@ using System.Text.RegularExpressions;
 
 namespace Jarvis;
 
-public class ZeTorrentsTorrentScrapperService : TorrentScrapperServiceBase
+public class Torrent9TorrentScrapperService : TorrentScrapperServiceBase
 {
     public override bool IsActive => true;
-    public override string Name => "ZeTorrents";
+    public override string Name => "Torrent9";
 
-    public ZeTorrentsTorrentScrapperService(
+    public Torrent9TorrentScrapperService(
         string url)
         : base(url)
     {
     }
 
-    public override string GetSearchUrl(
+    public override async Task<List<TorrentDto>> GetResultsAsync(
         string query)
     {
-        return $"{Url}/recherche/{query}";
-    }
+        var httpService = new HttpService(Url);
+        var content = await httpService.GetStringAsync($"recherche/{query}");
 
-    public override Task<string> GetSearchResultsRawHtmlAsync(
-        string query)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override List<TorrentDto> GetTorrentsFromHtml(
-        string content)
-    {
         content = content.RemoveCarriageReturnAndOtherFuckingCharacters();
 
         var torrents = new List<TorrentDto>();
         var rows = new Regex("<tr.*?>(.*?)</tr>").Matches(content)
-            .Select(obj => obj.Groups[0].Value).Where(obj => !obj.Contains("<th") && !obj.Contains("Pas de torrents"))
+            .Select(obj => obj.Groups[0].Value.Replace("<span style=\"color:#337ab7\">", "").Replace("</span>", "")).Where(obj => !obj.Contains("<th") && !obj.Contains("Pas de torrents"))
             .ToList();
 
         foreach (var row in rows)
@@ -60,5 +51,15 @@ public class ZeTorrentsTorrentScrapperService : TorrentScrapperServiceBase
         }
 
         return torrents;
+    }
+
+    public override async Task<string> GetDownloadLinkAsync(
+        string descriptionUrl,
+        string cookies,
+        string userAgent)
+    {
+        var httpService = new HttpService(descriptionUrl);
+        var content = await httpService.GetStringAsync(string.Empty);
+        return await GetMagnetLinkFromHtmlAsync(content, cookies, userAgent);
     }
 }
