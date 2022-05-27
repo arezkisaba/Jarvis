@@ -39,14 +39,13 @@ public class ZeTorrentsTorrentScrapperService : TorrentScrapperServiceBase
 
             if (!string.IsNullOrWhiteSpace(nameAndLink.Item2))
             {
-                torrents.Add(new TorrentDto
-                {
-                    DescriptionUrl = $"{Url}{nameAndLink.Item2}",
-                    Name = nameAndLink.Item1,
-                    Provider = Name,
-                    Seeds = Convert.ToInt32(valueSeeds),
-                    Size = ConvertSizeStringToNumber(valueSize)
-                });
+                torrents.Add(new TorrentDto(
+                    DescriptionUrl: $"{Url}{nameAndLink.Item2}",
+                    Name: nameAndLink.Item1,
+                    Provider: Name,
+                    Seeds: Convert.ToInt32(valueSeeds),
+                    Size: ConvertSizeStringToNumber(valueSize))
+                );
             }
         }
 

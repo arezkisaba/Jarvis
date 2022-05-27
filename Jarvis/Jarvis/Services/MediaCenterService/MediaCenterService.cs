@@ -245,7 +245,7 @@ public class MediaCenterService : IMediaCenterService
             _mediaDatabaseService.AuthenticationSuccessfull += async (sender, e) =>
             {
                 _tokens.TmdbSessionId = e.SessionId;
-                await FileWrapper.WriteObjectAsync(StorageHelper.GetTokensFile(_appSettings.appdataDirectory), _tokens, ExchangeFormat.Json);
+                ////await FileWrapper.WriteObjectAsync(StorageHelper.GetTokensFile(_appSettings.appdataDirectory), _tokens, ExchangeFormat.Json);
             };
 
             _initializationDone = true;
