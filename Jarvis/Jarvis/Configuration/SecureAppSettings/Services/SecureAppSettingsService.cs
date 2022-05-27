@@ -32,6 +32,7 @@ public class SecureAppSettingsService : ISecureAppSettingsService
             Unprotect(encryptedSecrets.OpenVPNPassword),
             Unprotect(encryptedSecrets.TmdbApiKey),
             Unprotect(encryptedSecrets.TmdbAccessToken),
+            Unprotect(encryptedSecrets.TmdbSessionId),
             Unprotect(encryptedSecrets.PlexUsername),
             Unprotect(encryptedSecrets.PlexPassword));
     }
@@ -44,6 +45,7 @@ public class SecureAppSettingsService : ISecureAppSettingsService
             Protect(decryptedSecrets.OpenVPNPassword),
             Protect(decryptedSecrets.TmdbApiKey),
             Protect(decryptedSecrets.TmdbAccessToken),
+            Protect(decryptedSecrets.TmdbSessionId),
             Protect(decryptedSecrets.PlexUsername),
             Protect(decryptedSecrets.PlexPassword));
         var content = await Serializer.JsonSerializeAsync(encryptedSecrets);

@@ -64,7 +64,8 @@ public class Launcher
             return new TmdbApiService(
                 secureAppSettings.Value.TmdbApiKey,
                 secureAppSettings.Value.TmdbAccessToken,
-                "tokens.TmdbSessionId");
+                secureAppSettings.Value.TmdbSessionId
+            );
         });
 
         services.AddSingleton<ITorrentScrapperService>(new TorrentScrapperService(

@@ -9,3 +9,5 @@
 - TorrentDownloads Provider
 - IOptions
 - UnitTest > UnitTests
+- Records
+- Namespaces

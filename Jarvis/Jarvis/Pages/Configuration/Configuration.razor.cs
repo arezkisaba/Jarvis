@@ -1,11 +1,15 @@
 using Jarvis.Shared.Components.AlertDialog;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Options;
 
 namespace Jarvis.Pages.Configuration;
 
 public partial class Configuration : BlazorPageComponentBase
 {
+    [Inject]
+    public IOptions<SecureAppSettings> SecureAppSettings { get; set; }
+
     [Inject]
     public ISecureAppSettingsService SecureAppSettingsService { get; set; }
 
@@ -34,7 +38,9 @@ public partial class Configuration : BlazorPageComponentBase
     {
         try
         {
-            await SecureAppSettingsService.WriteAsync(SecureAppSettingsViewModel.ToDomain());
+            var domain = SecureAppSettingsViewModel.ToDomain();
+            domain.TmdbSessionId = SecureAppSettings.Value.TmdbSessionId;
+            await SecureAppSettingsService.WriteAsync(domain);
             AlertDialogSuccessRef.Show();
         }
         catch (Exception)

@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
+@using Lib.ApiServices.Tmdb
 @using Microsoft.AspNetCore.WebUtilities;
 @using System.Globalization
 @using Microsoft.Extensions.Options
@@ -22,37 +23,3 @@
         </div>
     </div>
 </CascadingValue>
-
-@code {
-    [Inject]
-    public NavigationManager NavigationManager { get; set; }
-
-    [Inject]
-    public IOptions<AppSettings> AppSettings { get; set; }
-
-    public string AppName { get; set; }
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        AppName = AppSettings.Value.appName;
-
-        if (QueryHelpers.ParseQuery(new Uri(NavigationManager.Uri).Query).TryGetValue("lang", out var paramLang))
-        {
-            CultureInfo culture;
-
-            try
-            {
-                culture = new CultureInfo(paramLang);
-            }
-            catch
-            {
-                culture = new CultureInfo("en");
-            }
-            
-            CultureInfo.DefaultThreadCurrentCulture = culture;
-            CultureInfo.DefaultThreadCurrentUICulture = culture;
-        }
-    }
-}
