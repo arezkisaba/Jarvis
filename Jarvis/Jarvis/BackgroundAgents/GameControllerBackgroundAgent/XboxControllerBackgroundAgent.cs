@@ -1,6 +1,7 @@
 using Lib.Core;
 using Lib.Win32;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 using SharpDX.XInput;
 using WindowsInput;
 using WindowsInput.Native;
@@ -35,7 +36,7 @@ public class XboxControllerBackgroundAgent : IGameControllerClientBackgroundAgen
     public event EventHandler StateChanged;
 
     public XboxControllerBackgroundAgent(
-        AppSettings appSettings,
+        IOptions<AppSettings> appSettings,
         ILogger<XboxControllerBackgroundAgent> logger,
         IDisplayManager displayManager,
         IProcessManager processManager,
@@ -44,7 +45,7 @@ public class XboxControllerBackgroundAgent : IGameControllerClientBackgroundAgen
         IInputSimulator inputSimulator,
         ICECService cecService)
     {
-        _appSettings = appSettings;
+        _appSettings = appSettings.Value;
         _logger = logger;
         _displayManager = displayManager;
         _processManager = processManager;

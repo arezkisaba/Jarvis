@@ -1,6 +1,7 @@
 using Lib.ApiServices.Plex;
 using Lib.ApiServices.Tmdb;
 using Lib.Core;
+using Microsoft.Extensions.Options;
 using System.Reflection;
 
 namespace Jarvis;
@@ -19,7 +20,7 @@ public class MediaCenterService : IMediaCenterService
     private IList<TvShow> _tvShows;
 
     public MediaCenterService(
-        AppSettings appSettings,
+        IOptions<AppSettings> appSettings,
         Tokens tokens,
         ILogger<MediaCenterService> logger,
         IProcessManager processManager,
@@ -27,7 +28,7 @@ public class MediaCenterService : IMediaCenterService
         ITmdbApiService mediaDatabaseService,
         IMediaService mediaService)
     {
-        _appSettings = appSettings;
+        _appSettings = appSettings.Value;
         _tokens = tokens;
         _logger = logger;
         _processManager = processManager;

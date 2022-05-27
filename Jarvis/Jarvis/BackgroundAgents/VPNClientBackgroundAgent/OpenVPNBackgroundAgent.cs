@@ -1,5 +1,5 @@
 using Lib.Core;
-using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
 namespace Jarvis;
@@ -9,11 +9,10 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
     private const int timeoutDelay = 30;
 
     private readonly AppSettings _appSettings;
+    private readonly SecureAppSettings _secureAppSettings;
     private readonly ILogger<OpenVPNBackgroundAgent> _logger;
-    private readonly IStringLocalizer _localizer;
     private readonly IProcessManager _processManager;
     private readonly INetworkManager _networkManager;
-    private readonly ISecureAppSettingsService _secureAppSettingsService;
     private CancellationTokenSource _cancellationTokenSource;
 
     public VPNClientStateModel CurrentState { get; set; }
@@ -21,17 +20,17 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
     public event EventHandler StateChanged;
 
     public OpenVPNBackgroundAgent(
-        AppSettings appSettings,
+        IOptions<AppSettings> appSettings,
+        IOptions<SecureAppSettings> secureAppSettings,
         ILogger<OpenVPNBackgroundAgent> logger,
         IProcessManager processManager,
-        INetworkManager networkManager,
-        ISecureAppSettingsService secureAppSettingsService)
+        INetworkManager networkManager)
     {
-        _appSettings = appSettings;
+        _appSettings = appSettings.Value;
+        _secureAppSettings = secureAppSettings.Value;
         _logger = logger;
         _processManager = processManager;
         _networkManager = networkManager;
-        _secureAppSettingsService = secureAppSettingsService;
     }
 
     public void StartBackgroundLoop()
@@ -79,10 +78,9 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
             process.BeginErrorReadLine();
 
             await Task.Delay(1000);
-            var secureAppSettings = await _secureAppSettingsService.ReadAsync();
-            process.StandardInput.WriteLine(secureAppSettings.OpenVPNUsername);
+            process.StandardInput.WriteLine(_secureAppSettings.OpenVPNUsername);
             await Task.Delay(1000);
-            process.StandardInput.WriteLine(secureAppSettings.OpenVPNPassword);
+            process.StandardInput.WriteLine(_secureAppSettings.OpenVPNPassword);
 
             var counter = 0;
             while (!CurrentState.IsActive)

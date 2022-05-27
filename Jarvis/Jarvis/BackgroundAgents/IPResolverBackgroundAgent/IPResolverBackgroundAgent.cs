@@ -1,9 +1,3 @@
-using Lib.Core;
-using Lib.Win32;
-using SharpDX.XInput;
-using WindowsInput;
-using WindowsInput.Native;
-
 namespace Jarvis;
 
 public class IPResolverBackgroundAgent : IIPResolverBackgroundAgent

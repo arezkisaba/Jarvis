@@ -1,11 +1,14 @@
 using Lib.Core;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Extensions.Options;
 using System.Reflection;
 
 namespace Jarvis;
 
 public class SecureAppSettingsService : ISecureAppSettingsService
 {
+    private const string fileName = $"{nameof(SecureAppSettings)}.json";
+
     private readonly IDataProtector _dataProtector;
     private readonly string _filePath;
 
@@ -16,8 +19,7 @@ public class SecureAppSettingsService : ISecureAppSettingsService
         serviceCollection.AddDataProtection();
         var services = serviceCollection.BuildServiceProvider();
         var dataProtectionProvider = services.GetService<IDataProtectionProvider>();
-        _dataProtector = dataProtectionProvider.CreateProtector(
-            $"{Assembly.GetEntryAssembly().GetName().Name}");
+        _dataProtector = dataProtectionProvider.CreateProtector($"{Assembly.GetEntryAssembly().GetName().Name}");
         _filePath = filePath;
     }
 
@@ -35,15 +37,15 @@ public class SecureAppSettingsService : ISecureAppSettingsService
     }
 
     public async Task WriteAsync(
-        SecureAppSettings secureAppsettingsModel)
+        SecureAppSettings decryptedSecrets)
     {
         var encryptedSecrets = new SecureAppSettings(
-            Protect(secureAppsettingsModel.OpenVPNUsername),
-            Protect(secureAppsettingsModel.OpenVPNPassword),
-            Protect(secureAppsettingsModel.TmdbApiKey),
-            Protect(secureAppsettingsModel.TmdbAccessToken),
-            Protect(secureAppsettingsModel.PlexUsername),
-            Protect(secureAppsettingsModel.PlexPassword));
+            Protect(decryptedSecrets.OpenVPNUsername),
+            Protect(decryptedSecrets.OpenVPNPassword),
+            Protect(decryptedSecrets.TmdbApiKey),
+            Protect(decryptedSecrets.TmdbAccessToken),
+            Protect(decryptedSecrets.PlexUsername),
+            Protect(decryptedSecrets.PlexPassword));
         var content = await Serializer.JsonSerializeAsync(encryptedSecrets);
         File.WriteAllText(_filePath, content);
     }

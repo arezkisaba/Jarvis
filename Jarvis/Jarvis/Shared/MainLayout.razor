@@ -2,6 +2,7 @@
 
 @using Microsoft.AspNetCore.WebUtilities;
 @using System.Globalization
+@using Microsoft.Extensions.Options
 
 <CascadingValue Value="AppName">
     <PageTitle>@AppName.ToUpperInvariant()</PageTitle>
@@ -27,7 +28,7 @@
     public NavigationManager NavigationManager { get; set; }
 
     [Inject]
-    public AppSettings AppSettings { get; set; }
+    public IOptions<AppSettings> AppSettings { get; set; }
 
     public string AppName { get; set; }
 
@@ -35,7 +36,7 @@
     {
         base.OnInitialized();
 
-        AppName = AppSettings.appName;
+        AppName = AppSettings.Value.appName;
 
         if (QueryHelpers.ParseQuery(new Uri(NavigationManager.Uri).Query).TryGetValue("lang", out var paramLang))
         {

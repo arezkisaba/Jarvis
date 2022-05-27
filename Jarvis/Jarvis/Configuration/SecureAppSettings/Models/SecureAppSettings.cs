@@ -10,11 +10,15 @@ public class SecureAppSettings
 
     public string TmdbAccessToken { get; set; }
 
-    public string TmdbSessionId { get; set; }
+    ////public string TmdbSessionId { get; set; }
 
     public string PlexUsername { get; set; }
 
     public string PlexPassword { get; set; }
+
+    public SecureAppSettings()
+    {
+    }
 
     public SecureAppSettings(
         string openVPNUsername,

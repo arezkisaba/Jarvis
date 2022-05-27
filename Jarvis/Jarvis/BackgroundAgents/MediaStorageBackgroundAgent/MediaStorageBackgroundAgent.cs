@@ -1,9 +1,11 @@
+using Microsoft.Extensions.Options;
+
 namespace Jarvis;
 
 public class MediaStorageBackgroundAgent : IMediaStorageBackgroundAgent
 {
-    private readonly IMediaStorageService _mediaStorageService;
     private readonly AppSettings _appSettings;
+    private readonly IMediaStorageService _mediaStorageService;
     private CancellationTokenSource _cancellationTokenSource;
 
     public MediaStorageStateModel CurrentState { get; set; }
@@ -11,11 +13,11 @@ public class MediaStorageBackgroundAgent : IMediaStorageBackgroundAgent
     public event EventHandler StateChanged;
 
     public MediaStorageBackgroundAgent(
-        IMediaStorageService mediaStorageService,
-        AppSettings appSettings)
+        IOptions<AppSettings> appSettings,
+        IMediaStorageService mediaStorageService)
     {
+        _appSettings = appSettings.Value;
         _mediaStorageService = mediaStorageService;
-        _appSettings = appSettings;
     }
 
     public void StartBackgroundLoop()

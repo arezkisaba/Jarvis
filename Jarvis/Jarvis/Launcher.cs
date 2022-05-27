@@ -3,6 +3,7 @@ using Lib.ApiServices.Tmdb;
 using Lib.ApiServices.Transmission;
 using Lib.Core;
 using Lib.Win32;
+using Microsoft.Extensions.Options;
 using WindowsInput;
 
 namespace Jarvis;
@@ -10,44 +11,21 @@ namespace Jarvis;
 public class Launcher
 {
     public async Task InitAsync(
-        IServiceCollection services,
-        ConfigurationManager configurationManager)
+        ConfigurationManager configuration,
+        IServiceCollection services)
     {
         services.AddRazorPages();
         services.AddServerSideBlazor();
         services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
 
-        var appSettings = new AppSettings();
-        configurationManager.Bind(appSettings);
+        services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
 
-        AppSettingsHelper.FillAppSettings(appSettings);
-
-        if (!Directory.Exists(appSettings.appdataDirectory))
-        {
-            Directory.CreateDirectory(appSettings.appdataDirectory);
-        }
-
-        var tokensFile = StorageHelper.GetTokensFile(appSettings.appdataDirectory);
-        if (!File.Exists(tokensFile))
-        {
-            File.Create(tokensFile).Close();
-        }
-
-        var secureAppSettingsFile = StorageHelper.GetSecureAppSettingsFile(appSettings.appdataDirectory);
-        if (!File.Exists(secureAppSettingsFile))
-        {
-            File.Create(secureAppSettingsFile).Close();
-        }
-
-        var tokens = Serializer.JsonDeserialize<Tokens>(File.ReadAllText(tokensFile));
-
-        var secureAppSettingsService = new SecureAppSettingsService(secureAppSettingsFile);
-        var secureAppSettings = await secureAppSettingsService.ReadAsync();
-
-        services.AddSingleton(appSettings);
-        services.AddSingleton(secureAppSettings);
-        services.AddSingleton(tokens);
+        var file = $"{Path.Combine(configuration.GetValue<string>("AppSettings:appdataDirectory"), $"{nameof(SecureAppSettings)}.json")}";
+        var secureAppSettingsService = new SecureAppSettingsService(file);
         services.AddSingleton<ISecureAppSettingsService>(secureAppSettingsService);
+        configuration.AddSecureAppSettingsConfiguration(secureAppSettingsService);
+        services.Configure<SecureAppSettings>(configuration.GetSection("SecureAppSettings"));
+
         services.AddSingleton<IInputSimulator, InputSimulator>();
         services.AddSingleton<IDisplayManager, DisplayManager>();
         services.AddSingleton<IMailManager, MailManager>();
@@ -58,21 +36,32 @@ public class Launcher
         services.AddSingleton<ISoundManager, SoundManager>();
         services.AddSingleton<IWindowManager, WindowManager>();
 
-        services.AddSingleton<ITransmissionApiService>(new TransmissionApiService(
-            appSettings.serviceConfig.transmissionConfig.url
-        ));
+        services.AddSingleton<ITransmissionApiService>(serviceProvider =>
+        {
+            var appSettings = serviceProvider.GetService<IOptions<AppSettings>>();
+            return new TransmissionApiService(
+                appSettings.Value.serviceConfig.transmissionConfig.url);
+        });
 
-        services.AddSingleton<IPlexApiService>(new PlexApiService(
-            appSettings.serviceConfig.plexConfig.url,
-            secureAppSettings.PlexUsername,
-            secureAppSettings.PlexPassword
-        ));
+        services.AddSingleton<IPlexApiService>(serviceProvider =>
+        {
+            var appSettings = serviceProvider.GetService<IOptions<AppSettings>>();
+            var secureAppSettings = serviceProvider.GetService<IOptions<SecureAppSettings>>();
+            return new PlexApiService(
+                appSettings.Value.serviceConfig.plexConfig.url,
+                secureAppSettings.Value.PlexUsername,
+                secureAppSettings.Value.PlexPassword);
+        });
 
-        services.AddSingleton<ITmdbApiService>(new TmdbApiService(
-            secureAppSettings.TmdbApiKey,
-            secureAppSettings.TmdbAccessToken,
-            tokens.TmdbSessionId
-        ));
+        services.AddSingleton<ITmdbApiService>(serviceProvider =>
+        {
+            var appSettings = serviceProvider.GetService<IOptions<AppSettings>>();
+            var secureAppSettings = serviceProvider.GetService<IOptions<SecureAppSettings>>();
+            return new TmdbApiService(
+                secureAppSettings.Value.TmdbApiKey,
+                secureAppSettings.Value.TmdbAccessToken,
+                "tokens.TmdbSessionId");
+        });
 
         services.AddSingleton<ITorrentScrapperService>(new TorrentScrapperService(
             new List<TorrentScrapperServiceBase>
@@ -85,9 +74,10 @@ public class Launcher
         ));
 
         services.AddSingleton<ICECService, CECService>();
+        services.AddSingleton<IMediaMatchingService, MediaMatchingService>();
         services.AddSingleton<IMediaStorageService, MediaStorageService>();
-        services.AddSingleton<IMediaCenterService, MediaCenterService>();
-        services.AddSingleton<IMediaService, MediaService>();
+        ////services.AddSingleton<IMediaCenterService, MediaCenterService>();
+        ////services.AddSingleton<IMediaService, MediaService>();
         services.AddSingleton<IIPResolverBackgroundAgent, IPResolverBackgroundAgent>();
         services.AddSingleton<IMediaStorageBackgroundAgent, MediaStorageBackgroundAgent>();
         services.AddSingleton<IGameControllerClientBackgroundAgent, XboxControllerBackgroundAgent>();

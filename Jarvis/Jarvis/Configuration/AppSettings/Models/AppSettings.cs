@@ -36,12 +36,6 @@ public class AppSettings
 
     public string playstation2EmulatorExecutableArguments { get; set; }
 
-    public string playstationPortableRomsDirectory { get; set; }
-
-    public string playstationPortableEmulatorExecutable { get; set; }
-
-    public string playstationPortableEmulatorExecutableArguments { get; set; }
-
     public ComputerSection computer { get; set; }
 
     public CECConfigSection cecConfig { get; set; }

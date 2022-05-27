@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
 namespace Jarvis;
@@ -8,10 +9,10 @@ public class CECService : ICECService
     private readonly ILogger<CECService> _logger;
 
     public CECService(
-        AppSettings appSettings,
+        IOptions<AppSettings> appSettings,
         ILogger<CECService> logger)
     {
-        _appSettings = appSettings;
+        _appSettings = appSettings.Value;
         _logger = logger;
     }
 

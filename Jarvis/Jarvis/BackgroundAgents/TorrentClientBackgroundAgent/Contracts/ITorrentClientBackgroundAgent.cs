@@ -10,6 +10,8 @@ public interface ITorrentClientBackgroundAgent
 
     Action DownloadStateChangedAction { get; set; }
 
+    Action<TorrentDownloadModel> DownloadFinishedAction { get; set; }
+
     void StartBackgroundLoop();
 
     Task StartClientAsync();
@@ -17,6 +19,7 @@ public interface ITorrentClientBackgroundAgent
     Task StopClientAsync();
 
     Task AddDownloadAsync(
+        string name,
         string torrentUrl,
         string downloadDirectory,
         string size,

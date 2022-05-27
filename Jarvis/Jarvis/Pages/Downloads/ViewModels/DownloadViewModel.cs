@@ -1,6 +1,6 @@
 namespace Jarvis;
 
-public sealed class DownloadItemViewModel
+public sealed class DownloadViewModel
 {
     public string Name { get; set; }
 
@@ -20,7 +20,7 @@ public sealed class DownloadItemViewModel
 
     public string HashString { get; set; }
 
-    public DownloadItemViewModel(
+    public DownloadViewModel(
         string name,
         string url,
         string downloadDirectory,

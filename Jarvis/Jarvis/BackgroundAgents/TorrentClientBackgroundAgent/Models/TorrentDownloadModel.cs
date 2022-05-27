@@ -2,23 +2,23 @@ namespace Jarvis;
 
 public class TorrentDownloadModel
 {
-    public string Name { get; set; }
+    public string Name { get; private set; }
 
-    public string Url { get; set; }
+    public string Url { get; private set; }
 
-    public string DownloadDirectory { get; set; }
+    public string DownloadDirectory { get; private set; }
 
-    public double PercentDone { get; set; }
+    public double PercentDone { get; internal set; }
 
-    public string Size { get; set; }
+    public string Size { get; private set; }
 
-    public int Seeds { get; set; }
+    public int Seeds { get; private set; }
 
-    public string Provider { get; set; }
+    public string Provider { get; private set; }
 
-    public string Id { get; set; }
+    public string Id { get; private set; }
 
-    public string HashString { get; set; }
+    public string HashString { get; private set; }
 
     public TorrentDownloadModel(
         string name,

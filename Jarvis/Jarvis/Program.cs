@@ -3,7 +3,7 @@ using Jarvis;
 var builder = WebApplication.CreateBuilder(args);
 
 var launcher = new Launcher();
-await launcher.InitAsync(builder.Services, builder.Configuration);
+await launcher.InitAsync(builder.Configuration, builder.Services);
 
 var app = builder.Build();
 

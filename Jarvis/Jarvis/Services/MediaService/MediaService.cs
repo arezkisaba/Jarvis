@@ -1,4 +1,5 @@
 using Lib.Core;
+using Microsoft.Extensions.Options;
 using System.Text.RegularExpressions;
 
 namespace Jarvis;
@@ -13,9 +14,9 @@ public class MediaService : IMediaService
     private readonly string _tvShowsFolder;
 
     public MediaService(
-        AppSettings appSettings)
+        IOptions<AppSettings> appSettings)
     {
-        _appSettings = appSettings;
+        _appSettings = appSettings.Value;
         _downloadsFolder = _appSettings.computer.downloadsFolder;
         _moviesFolder = _appSettings.computer.moviesFolder;
         _tvShowsFolder = _appSettings.computer.tvShowsFolder;

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Options;
 
 namespace Jarvis.Pages.Search;
 
@@ -16,7 +17,7 @@ public partial class Search : BlazorPageComponentBase
     private ITorrentScrapperService TorrentScrapperService { get; set; }
 
     [Inject]
-    public AppSettings AppSettings { get; set; }
+    public IOptions<AppSettings> AppSettings { get; set; }
 
     public SearchViewModel SearchViewModel { get; set; }
 
@@ -64,13 +65,13 @@ public partial class Search : BlazorPageComponentBase
             {
                 var torrentLink = await TorrentScrapperService.GetDownloadLinkAsync(searchResult.Provider, searchResult.DescriptionUrl, null, null);
                 var addDownloadTask = TorrentClientBackgroundAgent.AddDownloadAsync(
+                    searchResult.Name,
                     torrentLink,
-                    AppSettings.computer.downloadsFolder,
+                    AppSettings.Value.computer.downloadsFolder,
                     searchResult.Size,
                     searchResult.Seeds);
                 var delayTask = Task.Delay(500);
                 await Task.WhenAll(addDownloadTask, delayTask);
-                NavManager.NavigateTo("/downloads");
             }
             catch (Exception)
             {

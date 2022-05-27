@@ -1,5 +1,3 @@
-using Lib.Core;
-
 namespace Jarvis;
 
 public sealed class SearchResultViewModel

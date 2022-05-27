@@ -1,5 +1,6 @@
 using Lib.ApiServices.Transmission;
 using Lib.Core;
+using Microsoft.Extensions.Options;
 
 namespace Jarvis;
 
@@ -22,13 +23,15 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
 
     public Action DownloadStateChangedAction { get; set; }
 
+    public Action<TorrentDownloadModel> DownloadFinishedAction { get; set; }
+
     public TransmissionBackgroundAgent(
-        AppSettings appSettings,
+        IOptions<AppSettings> appSettings,
         ILogger<TransmissionBackgroundAgent> logger,
         IServiceManager serviceManager,
         ITransmissionApiService transmissionApiService)
     {
-        _appSettings = appSettings;
+        _appSettings = appSettings.Value;
         _logger = logger;
         _serviceManager = serviceManager;
         _transmissionApiService = transmissionApiService;
@@ -110,6 +113,7 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
     }
 
     public async Task AddDownloadAsync(
+        string name,
         string url,
         string downloadDirectory,
         string size,
@@ -125,7 +129,7 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
                 var id = torrendAdded.arguments.torrentadded.id;
                 var hashString = torrendAdded.arguments.torrentadded.hashString;
                 TorrentDownloads.Add(new TorrentDownloadModel(
-                    name: torrendAdded.arguments.torrentadded.name,
+                    name: name,
                     url: url,
                     downloadDirectory: downloadDirectory,
                     percentDone: 0,
@@ -218,8 +222,14 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
                 var match = torrentDownloads.FirstOrDefault(obj => obj.hashString == torrent.HashString);
                 if (match != null)
                 {
-                    torrent.Name = match.name;
-                    torrent.PercentDone = match.percentDone;
+                    if (torrent.PercentDone != match.percentDone)
+                    {
+                        torrent.PercentDone = match.percentDone;
+                        if (torrent.PercentDone == 1)
+                        {
+                            DownloadFinishedAction?.Invoke(torrent);
+                        }
+                    }
                 }
             });
 

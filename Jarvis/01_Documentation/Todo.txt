@@ -5,3 +5,7 @@
 - Vérifier les niveaux de logs
 - Sherlock
 - Gestionnaire de taches
+
+- TorrentDownloads Provider
+- IOptions
+- UnitTest > UnitTests
