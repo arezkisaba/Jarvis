@@ -15,25 +15,17 @@ public class SecureAppSettingsConfigurationProvider : ConfigurationProvider
 
     public override void Load()
     {
-        InitAsync().Wait();
+        var encryptedSecrets = CreateSecureAppSettingsIfDoesntExistsAsync().GetAwaiter().GetResult();
+        Data = encryptedSecrets.GetType()
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            .ToDictionary(prop => $"{nameof(SecureAppSettings)}:{prop.Name}", prop => (string)prop.GetValue(encryptedSecrets, null));
     }
 
-    private async Task InitAsync()
+    #region Private use
+
+    private async Task<SecureAppSettings> CreateSecureAppSettingsIfDoesntExistsAsync()
     {
         SecureAppSettings encryptedSecrets;
-
-        ////var tempConfig = builder.Build();
-        ////var folderPath = tempConfig.GetValue<string>($"AppSettings:{nameof(AppSettings.appdataDirectory)}");
-        ////if (!Directory.Exists(folderPath))
-        ////{
-        ////    Directory.CreateDirectory(folderPath);
-        ////}
-
-        ////var filePath = $"{Path.Combine(folderPath, "Secrets.json")}";
-        ////if (!File.Exists(filePath))
-        ////{
-        ////    File.Create(filePath);
-        ////}
 
         try
         {
@@ -45,8 +37,8 @@ public class SecureAppSettingsConfigurationProvider : ConfigurationProvider
             await _secureAppSettingsService.WriteAsync(encryptedSecrets);
         }
 
-        Data = encryptedSecrets.GetType()
-            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-            .ToDictionary(prop => $"{nameof(SecureAppSettings)}:{prop.Name}", prop => (string)prop.GetValue(encryptedSecrets, null));
+        return encryptedSecrets;
     }
+
+    #endregion
 }

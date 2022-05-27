@@ -14,17 +14,21 @@ public class Launcher
         ConfigurationManager configuration,
         IServiceCollection services)
     {
+        var appdataDirectory = configuration.GetValue<string>($"{nameof(AppSettings)}:{nameof(AppSettings.appdataDirectory)}");
+        if (!Directory.Exists(appdataDirectory))
+        {
+            Directory.CreateDirectory(appdataDirectory);
+        }
+
         services.AddRazorPages();
         services.AddServerSideBlazor();
         services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
-
         services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
+        services.Configure<SecureAppSettings>(configuration.GetSection("SecureAppSettings"));
 
-        var file = $"{Path.Combine(configuration.GetValue<string>("AppSettings:appdataDirectory"), $"{nameof(SecureAppSettings)}.json")}";
-        var secureAppSettingsService = new SecureAppSettingsService(file);
+        var secureAppSettingsService = new SecureAppSettingsService(appdataDirectory);
         services.AddSingleton<ISecureAppSettingsService>(secureAppSettingsService);
         configuration.AddSecureAppSettingsConfiguration(secureAppSettingsService);
-        services.Configure<SecureAppSettings>(configuration.GetSection("SecureAppSettings"));
 
         services.AddSingleton<IInputSimulator, InputSimulator>();
         services.AddSingleton<IDisplayManager, DisplayManager>();

@@ -13,14 +13,14 @@ public class SecureAppSettingsService : ISecureAppSettingsService
     private readonly string _filePath;
 
     public SecureAppSettingsService(
-        string filePath)
+        string folderPath)
     {
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddDataProtection();
         var services = serviceCollection.BuildServiceProvider();
         var dataProtectionProvider = services.GetService<IDataProtectionProvider>();
         _dataProtector = dataProtectionProvider.CreateProtector($"{Assembly.GetEntryAssembly().GetName().Name}");
-        _filePath = filePath;
+        _filePath = $"{Path.Combine(folderPath, fileName)}";
     }
 
     public async Task<SecureAppSettings> ReadAsync()
