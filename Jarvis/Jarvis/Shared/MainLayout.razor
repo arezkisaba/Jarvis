@@ -1,13 +1,14 @@
-﻿@inherits LayoutComponentBase
-
-@using Lib.ApiServices.Tmdb
+﻿@using Lib.ApiServices.Tmdb
 @using Microsoft.AspNetCore.WebUtilities;
 @using System.Globalization
 @using Microsoft.Extensions.Options
 
+@inherits BlazorLayoutComponentBase
+@inject IStringLocalizer<MainLayout> loc
+
 <CascadingValue Value="AppName">
     <PageTitle>@AppName.ToUpperInvariant()</PageTitle>
-    <div>
+    <div id="view">
         <div class="top-row">
             <a href="#">@AppName.ToUpperInvariant()</a>
         </div>
@@ -22,4 +23,20 @@
             </main>
         </div>
     </div>
+
+    @if (ShowTmdbModal)
+    {
+        <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Confirmation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <a href="@TmdbAuthenticationUrl" target="_blank">@loc["ConfirmTmdbAuthenticationUrl"]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </CascadingValue>

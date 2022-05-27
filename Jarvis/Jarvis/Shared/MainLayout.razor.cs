@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace Jarvis.Shared;
 
-public partial class MainLayout : LayoutComponentBase
+public partial class MainLayout : BlazorLayoutComponentBase
 {
     [Inject]
     public NavigationManager NavigationManager { get; set; }
@@ -20,6 +20,10 @@ public partial class MainLayout : LayoutComponentBase
     [Inject]
     public ITmdbApiService TmdbApiService { get; set; }
 
+    public bool ShowTmdbModal { get; set; }
+
+    public string TmdbAuthenticationUrl { get; set; }
+
     public string AppName { get; set; }
 
     protected override void OnInitialized()
@@ -30,16 +34,31 @@ public partial class MainLayout : LayoutComponentBase
 
         SetCultureInfo();
 
-        TmdbApiService.AuthenticationInformationsAvailable += (sender, e) =>
+        TmdbApiService.AuthenticationInformationsAvailable += async (sender, e) =>
         {
-            // Popup
+            TmdbAuthenticationUrl = e.AuthenticationUrl;
+            ShowTmdbModal = true;
+            await UpdateUIAsync();
         };
 
         TmdbApiService.AuthenticationSuccessfull += async (sender, e) =>
         {
-            var secureAppSettings = await SecureAppSettingsService.ReadAsync();
-            secureAppSettings.TmdbSessionId = e.SessionId;
-            await SecureAppSettingsService.WriteAsync(secureAppSettings);
+            try
+            {
+                var secureAppSettings = await SecureAppSettingsService.ReadAsync();
+                secureAppSettings.TmdbSessionId = e.SessionId;
+                await SecureAppSettingsService.WriteAsync(secureAppSettings);
+            }
+            catch (Exception)
+            {
+                // IGNORE
+            }
+            finally
+            {
+                TmdbAuthenticationUrl = null;
+                ShowTmdbModal = false;
+                await UpdateUIAsync();
+            }
         };
     }
 
