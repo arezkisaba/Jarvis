@@ -8,15 +8,15 @@ public class MediaMatchingService : IMediaMatchingService
 {
     public readonly IList<string> EpisodeExpressions = new List<string>
     {
-        @"^(.*?)[ \.]?S[ ]?([0-9]{2,})[ ]?E[ ]?([0-9]{2,})(.*?)$", // Visitors S01E07
+        @"^(.*?)[ \.]?S[ ]?([0-9]{1,})[ ]?E[ ]?([0-9]{1,})(.*?)$", // Visitors S01E07
         @"^(.*?)[ \.]?Saison[ ]?([0-9]{1,})[ ]?Episode[ ]?([0-9]{1,})(.*?)$", // Visitors Saison 01 Episode 07
 
     }.AsReadOnly();
 
     public readonly IList<string> SeasonExpressions = new List<string>
     {
-        @"^(.*?)[ ]?S[ ]?([0-9]{2,})(.*?)$", // Visitors S01
-        @"^(.*?)[ ]?Saison[ ]?([0-9]{2,})(.*?)$", // Visitors Saison 01
+        @"^(.*?)[ ]?S[ ]?([0-9]{1,})(.*?)$", // Visitors S01
+        @"^(.*?)[ ]?Saison[ ]?([0-9]{1,})(.*?)$", // Visitors Saison 01
 
     }.AsReadOnly();
 
@@ -39,6 +39,15 @@ public class MediaMatchingService : IMediaMatchingService
             if (match.Success)
             {
                 return (MediaTypeModel.Episode, match);
+            }
+        }
+
+        foreach (var expression in SeasonExpressions)
+        {
+            var match = new Regex(expression).Match(content);
+            if (match.Success)
+            {
+                return (MediaTypeModel.Season, match);
             }
         }
 

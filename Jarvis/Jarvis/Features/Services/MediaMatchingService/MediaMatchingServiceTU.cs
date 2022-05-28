@@ -41,15 +41,34 @@ public class MediaMatchingServiceTU
         Assert.AreEqual(7, int.Parse(match.Groups[3].Value));
     }
 
-    [TestCase(TestName = "GetMediaTypeAndInformations déduit l'épisode : Cas 4")]
-    public void GetMediaTypeAndInformations_Episode_TestCase_4()
+    [TestCase(TestName = "GetMediaTypeAndInformations déduit la saison : Cas 1")]
+    public void GetMediaTypeAndInformations_Saison_TestCase_1()
     {
         var mediaMatchingService = new MediaMatchingService();
-        var (mediaType, match) = mediaMatchingService.GetMediaTypeAndInformations("[ Torrent911.net ] Visitors.S01E07.FRENCH.WEB.XviD-EXTREME.avi");
-        Assert.AreEqual(MediaTypeModel.Episode, mediaType);
+        var (mediaType, match) = mediaMatchingService.GetMediaTypeAndInformations("Visitors S01");
+        Assert.AreEqual(MediaTypeModel.Season, mediaType);
         Assert.AreEqual("Visitors", match.Groups[1].Value);
         Assert.AreEqual(1, int.Parse(match.Groups[2].Value));
-        Assert.AreEqual(7, int.Parse(match.Groups[3].Value));
+    }
+
+    [TestCase(TestName = "GetMediaTypeAndInformations déduit la saison : Cas 2")]
+    public void GetMediaTypeAndInformations_Saison_TestCase_2()
+    {
+        var mediaMatchingService = new MediaMatchingService();
+        var (mediaType, match) = mediaMatchingService.GetMediaTypeAndInformations("Visitors Saison 01");
+        Assert.AreEqual(MediaTypeModel.Season, mediaType);
+        Assert.AreEqual("Visitors", match.Groups[1].Value);
+        Assert.AreEqual(1, int.Parse(match.Groups[2].Value));
+    }
+
+    [TestCase(TestName = "GetMediaTypeAndInformations déduit la saison : Cas 3")]
+    public void GetMediaTypeAndInformations_Saison_TestCase_3()
+    {
+        var mediaMatchingService = new MediaMatchingService();
+        var (mediaType, match) = mediaMatchingService.GetMediaTypeAndInformations("Visitors Saison 1");
+        Assert.AreEqual(MediaTypeModel.Season, mediaType);
+        Assert.AreEqual("Visitors", match.Groups[1].Value);
+        Assert.AreEqual(1, int.Parse(match.Groups[2].Value));
     }
 }
 // [ Torrent911.net ] Visitors.S01E02.FRENCH.WEB.XviD-EXTREME.avi
