@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Jarvis.Shared.Components.Toaster;
 
-public partial class Toaster : ComponentBase, IDisposable
+public partial class ToasterComponent : ComponentBase, IDisposable
 {
     [Inject]
     private ToasterService _toasterService { get; set; }

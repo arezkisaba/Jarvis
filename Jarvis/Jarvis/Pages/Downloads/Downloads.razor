@@ -1,7 +1,6 @@
 @page "/downloads"
 
 @using Jarvis.Shared.Components.Loader
-@using Jarvis.Shared.Components.StretchContainer
 @using Jarvis.Technical
 
 @inherits BlazorPageComponentBase
@@ -11,7 +10,7 @@
 
 @if (DownloadsViewModel == null)
 {
-    <Loader />
+    <LoaderComponent />
 }
 else
 {
@@ -55,9 +54,9 @@ else
         }
         else
         {
-            <StretchContainer>
+            <div class="d-flex flex-grow-1 flex-center">
                 @loc["NoResults"]
-            </StretchContainer>
+            </div>
         }
     </div>
 }

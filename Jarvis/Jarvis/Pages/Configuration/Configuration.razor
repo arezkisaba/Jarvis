@@ -1,7 +1,6 @@
 @page "/configuration"
 
 @using Jarvis.Shared.Components.Loader
-@using Jarvis.Shared.Components.StretchContainer
 @using Jarvis.Technical
 
 @inherits BlazorPageComponentBase
@@ -11,12 +10,12 @@
 
 @if (SecureAppSettingsViewModel == null)
 {
-    <Loader />
+    <LoaderComponent />
 }
 else
 {
     <div class="d-flex container mb-4">
-        <StretchContainer>
+        <div class="d-flex flex-grow-1 flex-center">
             <div class="card">
                 <div class="card-body">
                     <EditForm EditContext="@EditContext" OnValidSubmit="@HandleOnValidSubmitAsync">
@@ -70,6 +69,6 @@ else
                     </EditForm>
                 </div>
             </div>
-        </StretchContainer>
+        </div>
     </div>
 }

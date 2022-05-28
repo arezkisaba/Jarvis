@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Jarvis.Shared.Components.Modaler;
 
-public partial class Modaler : ComponentBase, IDisposable
+public partial class ModalerComponent : ComponentBase, IDisposable
 {
     [Inject]
     private ModalerService _modalerService { get; set; }

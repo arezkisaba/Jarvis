@@ -91,7 +91,7 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
             {
                 if (counter >= timeoutDelay)
                 {
-                    throw new DemarrageServiceVPNException("Unable to start VPN client", new TimeoutException("VPN client still inactive"));
+                    throw new DemarrageServiceVPNException("Unable to start VPN client", null);
                 }
 
                 await Task.Delay(500);
@@ -121,7 +121,7 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
             {
                 if (counter >= timeoutDelay)
                 {
-                    throw new ArretServiceVPNException("Unable to stop VPN client", new TimeoutException("VPN client still active"));
+                    throw new ArretServiceVPNException("Unable to stop VPN client", null);
                 }
 
                 await Task.Delay(500);

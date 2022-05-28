@@ -1,7 +1,6 @@
-﻿using Jarvis.Technical.Configuration.SecureAppSettings;
-using Jarvis.Technical.Configuration.SecureAppSettings.Services.Contracts;
+﻿using Jarvis.Technical.Configuration.SecureAppSettings.Services.Contracts;
 
-namespace Jarvis.Technical.Configuration;
+namespace Jarvis.Technical.Configuration.SecureAppSettings;
 
 public static class ConfigurationBuilderExtensions
 {

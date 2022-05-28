@@ -1,7 +1,6 @@
 @page "/search"
 
 @using Jarvis.Shared.Components.Loader
-@using Jarvis.Shared.Components.StretchContainer
 @using Jarvis.Technical
 
 @inherits BlazorPageComponentBase
@@ -11,7 +10,7 @@
 
 @if (SearchViewModel == null)
 {
-    <Loader />
+    <LoaderComponent />
 }
 else
 {
@@ -23,9 +22,9 @@ else
         </div>
         @if (SearchViewModel.IsLoading)
         {
-            <StretchContainer>
+            <div class="d-flex flex-grow-1 flex-center">
                 <div class="spinner-border" role="status" />
-            </StretchContainer>
+            </div>
         }
         else
         {
@@ -66,9 +65,9 @@ else
             }
             else
             {
-                <StretchContainer>
+                <div class="d-flex flex-grow-1 flex-center">
                     @loc["NoResults"]
-                </StretchContainer>
+                </div>
             }
         }
     </div>

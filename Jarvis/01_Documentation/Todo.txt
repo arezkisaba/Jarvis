@@ -16,4 +16,6 @@ Navigateur :
 - WASM
 - WebSocket
 
+UnitTests => TU
+IntegrationTests => TI
 analyse dépendances
