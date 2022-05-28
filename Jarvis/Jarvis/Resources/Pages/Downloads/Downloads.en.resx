@@ -123,4 +123,7 @@
   <data name="Seeds" xml:space="preserve">
     <value>Seeds</value>
   </data>
+  <data name="Toaster.DownloadEnded" xml:space="preserve">
+    <value>Download finished</value>
+  </data>
 </root>

@@ -1,3 +1,4 @@
+using Jarvis.Shared.Components.Modaler;
 using Jarvis.Shared.Components.Toaster;
 using Lib.ApiServices.Tmdb;
 using Microsoft.AspNetCore.Components;
@@ -14,6 +15,9 @@ public partial class MainLayout : BlazorLayoutComponentBase
     public NavigationManager NavigationManager { get; set; }
 
     [Inject]
+    public ModalerService ModalerService { get; set; }
+
+    [Inject]
     public ToasterService ToasterService { get; set; }
 
     [Inject]
@@ -24,8 +28,6 @@ public partial class MainLayout : BlazorLayoutComponentBase
 
     [Inject]
     public ITmdbApiService TmdbApiService { get; set; }
-
-    public bool ShowTmdbModal { get; set; }
 
     public bool ShowAlert { get; set; }
 
@@ -44,8 +46,7 @@ public partial class MainLayout : BlazorLayoutComponentBase
         TmdbApiService.AuthenticationInformationsAvailable += async (sender, e) =>
         {
             TmdbAuthenticationUrl = e.AuthenticationUrl;
-            ShowTmdbModal = true;
-            await UpdateUIAsync();
+            ////await UpdateUIAsync();
         };
 
         TmdbApiService.AuthenticationSuccessfull += async (sender, e) =>
@@ -68,11 +69,11 @@ public partial class MainLayout : BlazorLayoutComponentBase
         Task.Run(async () =>
         {
             ////await Task.Delay(2000);
-            ////ToasterService.AddToast(Toast.CreateToast("Hello World 1", "Hello from Blazor", ToastType.Primary, 5));
+            ////ToasterService.AddToast(Toast.CreateToast("Hello World 1", "Hello from Blazor", ToastType.Success, 5));
             ////await Task.Delay(2000);
-            ////ToasterService.AddToast(Toast.CreateToast("Hello World 2", "Hello from Blazor", ToastType.Secondary, 5));
-            ////ShowAlert = true;
-            ////await UpdateUIAsync();
+            ////ToasterService.AddToast(Toast.CreateToast("Hello World 2", "Hello from Blazor", ToastType.Danger, 5));
+            ////await Task.Delay(2000);
+            ////ModalerService.AddModal(Modal.CreateModal("Hello World 1", "Hello from Blazor", ModalType.Warning));
         });
     }
 

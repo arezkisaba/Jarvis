@@ -11,23 +11,26 @@ public partial class Toaster : ComponentBase, IDisposable
 
     protected override void OnInitialized()
     {
-        toasterService.ToasterChanged += ToastChanged;
-        toasterService.ToasterTimerElapsed += ToastChanged;
+        toasterService.ToasterChanged += OnToastChanged;
+        toasterService.ToasterTimerElapsed += OnToastChanged;
     }
 
-    private void ClearToast(Toast toast)
+    private void ClearToast(
+        Toast toast)
     {
         toasterService.ClearToast(toast);
     }
 
-    private void ToastChanged(object? sender, EventArgs e)
+    private void OnToastChanged(
+        object sender,
+        EventArgs e)
     {
         InvokeAsync(StateHasChanged);
     }
 
     public void Dispose()
     {
-        toasterService.ToasterChanged -= ToastChanged;
-        toasterService.ToasterTimerElapsed -= ToastChanged;
+        toasterService.ToasterChanged -= OnToastChanged;
+        toasterService.ToasterTimerElapsed -= OnToastChanged;
     }
 }

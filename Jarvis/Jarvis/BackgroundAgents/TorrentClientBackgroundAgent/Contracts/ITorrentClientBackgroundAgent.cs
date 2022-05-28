@@ -25,5 +25,8 @@ public interface ITorrentClientBackgroundAgent
         string size,
         int seeds);
 
+    Task DeleteDownloadAsync(
+        string hashString);
+
     void RefreshIsClientActive();
 }

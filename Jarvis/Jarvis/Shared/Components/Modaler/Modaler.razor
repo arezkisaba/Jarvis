@@ -1,0 +1,22 @@
+@implements IDisposable
+
+@if (modalerService.HasModal)
+{
+    <div class="modal-layout">
+        <div class="modal-container">
+            <div class="modal fade show" role="dialog" aria-modal="true" style="display:block">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header @modalerService.GetModal().HeaderCssClass">
+                            <strong class="me-auto text-white">@modalerService.GetModal().Title</strong>
+                            <button type="button" class="btn-close btn-close-white" aria-label="Close" @onclick="() => modalerService.ClearModal()"></button>
+                        </div>
+                        <div class="modal-body bg-white">
+                            @modalerService.GetModal().Message
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

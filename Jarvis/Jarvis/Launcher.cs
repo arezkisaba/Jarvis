@@ -1,3 +1,4 @@
+using Jarvis.Shared.Components.Modaler;
 using Jarvis.Shared.Components.Toaster;
 using Lib.ApiServices.Plex;
 using Lib.ApiServices.Tmdb;
@@ -90,6 +91,7 @@ public class Launcher
         services.AddSingleton<IVPNClientBackgroundAgent, OpenVPNBackgroundAgent>();
         services.AddSingleton<ITorrentClientBackgroundAgent, TransmissionBackgroundAgent>();
 
+        services.AddScoped<ModalerService>();
         services.AddScoped<ToasterService>();
 
         services.AddSingleton<JarvisService>();
