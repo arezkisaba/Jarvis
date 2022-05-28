@@ -5,7 +5,7 @@ namespace Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.IPResolverS
 
 [TestFixture]
 [ExcludeFromCodeCoverage]
-public class WhatIsMyPublicIPServiceIntegrationTest
+public class WhatIsMyPublicIPServiceTI
 {
     [TestCase(TestName = "GetAsync renvois une adresse ip")]
     public async Task GetAsync_TestCase()

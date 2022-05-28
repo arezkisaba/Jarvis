@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Models;
 
 [TestFixture]
-public class MediaStorageStateModelUnitTests
+public class MediaStorageStateModelTU
 {
     [TestCase(TestName = "MediaStorageStateModel s'initialise correctement")]
     public void MediaStorageStateModel_Construct1_TestCase()

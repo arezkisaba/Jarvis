@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace Jarvis.Features.Services.TorrentScrapperService.Models;
 
 [TestFixture]
-public class TorrentDtoUnitTests
+public class TorrentDtoTU
 {
     [TestCase(TestName = "TorrentDto s'initialise correctement")]
     public void TorrentDto_Construct1_TestCase()

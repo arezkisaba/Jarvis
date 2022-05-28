@@ -6,7 +6,7 @@ namespace Jarvis.Features.Services.MediaMatchingService;
 
 [TestFixture]
 [ExcludeFromCodeCoverage]
-public class MediaMatchingServiceUnitTests
+public class MediaMatchingServiceTU
 {
     [TestCase(TestName = "GetMediaTypeAndInformations déduit l'épisode : Cas 1")]
     public void GetMediaTypeAndInformations_Episode_TestCase_1()

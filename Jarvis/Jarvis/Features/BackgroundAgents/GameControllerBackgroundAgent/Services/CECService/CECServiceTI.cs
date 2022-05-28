@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService;
 
 [TestFixture]
-public class CECServiceIntegrationTest
+public class CECServiceTI
 {
     ////[TestCase(TestName = "SwitchSourceAsync ne plante pas")]
     ////public async Task SwitchSourceAsync_TestCase()

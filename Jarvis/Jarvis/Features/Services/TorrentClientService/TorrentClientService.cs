@@ -46,7 +46,6 @@ public class TorrentClientService : ITorrentClientService
                     name: name,
                     url: url,
                     downloadDirectory: downloadDirectory,
-                    percentDone: 0,
                     size: size,
                     seeds: seeds,
                     provider: "Torrent9",

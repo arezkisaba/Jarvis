@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent.Models;
 
 [TestFixture]
-public class GameControllerClientStateModelUnitTests
+public class GameControllerClientStateModelTU
 {
     [TestCase(TestName = "GameControllerClientStateModel s'initialise correctement")]
     public void GameControllerClientStateModel_Construct1_TestCase()

@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Models;
 
 [TestFixture]
-public class VPNClientStateModelUnitTests
+public class VPNClientStateModelTU
 {
     [TestCase(TestName = "VPNClientStateModel s'initialise correctement")]
     public void VPNClientStateModel_Construct1_TestCase()

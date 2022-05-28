@@ -1,21 +1,20 @@
-using Jarvis.Technical.Configuration.SecureAppSettings.Models;
 using NUnit.Framework;
 
-namespace Jarvis.Pages.Configuration.ViewModels;
+namespace Jarvis.Technical.Configuration.SecureAppSettings.Models;
 
 [TestFixture]
-public class SecureAppSettingsViewModelUnitTests
+public class SecureAppSettingsModelTU
 {
-    [TestCase(TestName = "SecureAppSettingsViewModel s'initialise correctement")]
-    public void SecureAppSettingsViewModel_Construct1_TestCase()
+    [TestCase(TestName = "SecureAppSettingsModel s'initialise correctement")]
+    public void SecureAppSettings_Construct1_TestCase()
     {
-        var obj = new SecureAppSettingsViewModel(new SecureAppSettingsModel(
+        var obj = new SecureAppSettingsModel(
             openVPNUsername: "openVPNUsername",
             openVPNPassword: "openVPNPassword",
             tmdbApiKey: "tmdbApiKey",
             tmdbAccessToken: "tmdbAccessToken",
             plexUsername: "plexUsername",
-            plexPassword: "plexPassword"));
+            plexPassword: "plexPassword");
         Assert.AreEqual("openVPNUsername", obj.OpenVPNUsername);
         Assert.AreEqual("openVPNPassword", obj.OpenVPNPassword);
         Assert.AreEqual("tmdbApiKey", obj.TmdbApiKey);

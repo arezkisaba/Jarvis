@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService;
 
 [TestFixture]
-public class MediaStorageServiceUnitTest
+public class MediaStorageServiceTU
 {
     [TestCase(TestName = "GetFolderContentAndSize retourne une liste de dossier")]
     public void GetFolderContentAndSize_NotEmpty_TestCase()

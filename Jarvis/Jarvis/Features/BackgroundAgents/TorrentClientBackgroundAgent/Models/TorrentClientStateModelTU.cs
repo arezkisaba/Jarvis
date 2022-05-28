@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Models;
 
 [TestFixture]
-public class TorrentClientStateModelUnitTests
+public class TorrentClientStateModelTU
 {
     [TestCase(TestName = "TorrentClientStateModel s'initialise correctement")]
     public void TorrentClientStateModel_Construct1_TestCase()
