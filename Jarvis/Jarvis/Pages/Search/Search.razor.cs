@@ -1,4 +1,5 @@
 using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
+using Jarvis.Features.Services.TorrentClientService.Contracts;
 using Jarvis.Features.Services.TorrentScrapperService.Contracts;
 using Jarvis.Pages.Search.ViewModels;
 using Jarvis.Shared.Components.Toaster.Models;
@@ -23,6 +24,9 @@ public partial class Search : BlazorPageComponentBase
 
     [Inject]
     private ITorrentClientBackgroundAgent TorrentClientBackgroundAgent { get; set; }
+
+    [Inject]
+    private ITorrentClientService TorrentClientService { get; set; }
 
     [Inject]
     private ITorrentScrapperService TorrentScrapperService { get; set; }
@@ -71,7 +75,7 @@ public partial class Search : BlazorPageComponentBase
             try
             {
                 var torrentLink = await TorrentScrapperService.GetDownloadLinkAsync(searchResult.Provider, searchResult.DescriptionUrl, null, null);
-                var addDownloadTask = TorrentClientBackgroundAgent.AddDownloadAsync(
+                var addDownloadTask = TorrentClientService.AddDownloadAsync(
                     searchResult.Name,
                     torrentLink,
                     AppSettings.Value.computer.downloadsFolder,

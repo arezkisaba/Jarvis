@@ -39,11 +39,6 @@ public partial class Configuration : BlazorPageComponentBase
         EditContext = new(SecureAppSettingsViewModel);
     }
 
-    public void Dispose()
-    {
-        // Unsuscribe
-    }
-
     public async Task HandleOnValidSubmitAsync()
     {
         try

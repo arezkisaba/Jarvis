@@ -1,11 +1,12 @@
 using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Contracts;
+using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Exceptions;
 using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Models;
 using Jarvis.Technical.Configuration.AppSettings.Models;
 using Jarvis.Technical.Configuration.SecureAppSettings.Models;
 using Lib.Core;
 using System.Diagnostics;
 
-namespace Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Exceptions;
+namespace Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent;
 
 public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
 {

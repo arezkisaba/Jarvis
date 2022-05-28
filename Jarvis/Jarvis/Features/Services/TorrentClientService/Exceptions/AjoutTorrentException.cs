@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Exceptions;
+namespace Jarvis.Features.Services.TorrentClientService.Exceptions;
 
 [Serializable]
 internal class AjoutTorrentException : Exception

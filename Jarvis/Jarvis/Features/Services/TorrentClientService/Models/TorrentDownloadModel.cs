@@ -1,4 +1,4 @@
-namespace Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Models;
+namespace Jarvis.Features.Services.TorrentClientService.Models;
 
 public class TorrentDownloadModel
 {

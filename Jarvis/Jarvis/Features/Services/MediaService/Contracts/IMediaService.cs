@@ -1,4 +1,4 @@
-using Jarvis.Technical.Models.Domain;
+using Jarvis.Technical.Models;
 
 namespace Jarvis.Features.Services.MediaService.Contracts;
 

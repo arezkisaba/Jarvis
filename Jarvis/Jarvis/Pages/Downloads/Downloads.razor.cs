@@ -1,7 +1,8 @@
 using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Models;
 using Jarvis.Features.Services.MediaMatchingService.Contracts;
 using Jarvis.Features.Services.MediaMatchingService.Models;
+using Jarvis.Features.Services.TorrentClientService.Contracts;
+using Jarvis.Features.Services.TorrentClientService.Models;
 using Jarvis.Pages.Downloads.ViewModels;
 using Jarvis.Shared.Components.Toaster.Models;
 using Jarvis.Shared.Components.Toaster.Services;
@@ -28,6 +29,9 @@ public partial class Downloads : BlazorPageComponentBase
 
     [Inject]
     private ITorrentClientBackgroundAgent TorrentClientBackgroundAgent { get; set; }
+
+    [Inject]
+    private ITorrentClientService TorrentClientService { get; set; }
 
     [Inject]
     private ITmdbApiService MediaDatabaseService { get; set; }
@@ -61,7 +65,7 @@ public partial class Downloads : BlazorPageComponentBase
     private void UpdateDownloads()
     {
         DownloadsViewModel = new DownloadsViewModel(
-            TorrentClientBackgroundAgent.TorrentDownloads.Select(obj => new DownloadViewModel(
+            TorrentClientService.TorrentDownloads.Select(obj => new DownloadViewModel(
                 name: obj.Name,
                 url: obj.Url,
                 downloadDirectory: obj.DownloadDirectory,
@@ -102,7 +106,7 @@ public partial class Downloads : BlazorPageComponentBase
                 }
             }
 
-            await TorrentClientBackgroundAgent.DeleteDownloadAsync(download.HashString);
+            await TorrentClientService.DeleteDownloadAsync(download.HashString);
 
             ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], Loc["Toaster.DownloadEnded"], ToastType.Success, 2));
         }

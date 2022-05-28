@@ -1,7 +1,7 @@
 using Jarvis.Features.Services.MediaService.Contracts;
 using Jarvis.Technical.Configuration.AppSettings.Models;
 using Jarvis.Technical.Helpers;
-using Jarvis.Technical.Models.Domain;
+using Jarvis.Technical.Models;
 using Lib.Core;
 using System.Text.RegularExpressions;
 

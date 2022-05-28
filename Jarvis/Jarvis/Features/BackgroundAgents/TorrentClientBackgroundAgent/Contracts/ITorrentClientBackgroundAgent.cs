@@ -1,11 +1,10 @@
 using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Models;
+using Jarvis.Features.Services.TorrentClientService.Models;
 
 namespace Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
 
 public interface ITorrentClientBackgroundAgent
 {
-    List<TorrentDownloadModel> TorrentDownloads { get; set; }
-
     TorrentClientStateModel CurrentState { get; set; }
 
     event EventHandler StateChanged;
@@ -19,16 +18,6 @@ public interface ITorrentClientBackgroundAgent
     Task StartClientAsync();
 
     Task StopClientAsync();
-
-    Task AddDownloadAsync(
-        string name,
-        string torrentUrl,
-        string downloadDirectory,
-        string size,
-        int seeds);
-
-    Task DeleteDownloadAsync(
-        string hashString);
 
     void RefreshIsClientActive();
 }

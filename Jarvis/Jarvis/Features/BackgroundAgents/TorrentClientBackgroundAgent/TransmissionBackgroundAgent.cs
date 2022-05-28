@@ -1,6 +1,8 @@
 using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
 using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Exceptions;
 using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Models;
+using Jarvis.Features.Services.TorrentClientService.Contracts;
+using Jarvis.Features.Services.TorrentClientService.Models;
 using Jarvis.Technical.Configuration.AppSettings.Models;
 using Lib.ApiServices.Transmission;
 using Lib.Core;
@@ -14,11 +16,9 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
     private readonly AppSettingsModel _appSettings;
     private readonly ILogger<TransmissionBackgroundAgent> _logger;
     private readonly IServiceManager _serviceManager;
-    private readonly ITransmissionApiService _transmissionApiService;
+    private readonly ITorrentClientService _torrentClientService;
     private readonly string _targetGlobalConfigFilePath;
     private CancellationTokenSource _cancellationTokenSource;
-
-    public List<TorrentDownloadModel> TorrentDownloads { get; set; } = new();
 
     public TorrentClientStateModel CurrentState { get; set; }
 
@@ -32,12 +32,12 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
         IOptions<AppSettingsModel> appSettings,
         ILogger<TransmissionBackgroundAgent> logger,
         IServiceManager serviceManager,
-        ITransmissionApiService transmissionApiService)
+        ITorrentClientService torrentClientService)
     {
         _appSettings = appSettings.Value;
         _logger = logger;
         _serviceManager = serviceManager;
-        _transmissionApiService = transmissionApiService;
+        _torrentClientService = torrentClientService;
         _targetGlobalConfigFilePath = Path.Combine(Environment.GetEnvironmentVariable("LocalAppData"), $"transmission-daemon\\settings.json");
     }
 
@@ -115,67 +115,6 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
         });
     }
 
-    public async Task AddDownloadAsync(
-        string name,
-        string url,
-        string downloadDirectory,
-        string size,
-        int seeds)
-    {
-        try
-        {
-            Directory.CreateDirectory(downloadDirectory);
-
-            var torrendAdded = await _transmissionApiService.AddTorrentAsync(url, downloadDirectory);
-            if (torrendAdded?.arguments?.torrentadded != null)
-            {
-                var id = torrendAdded.arguments.torrentadded.id;
-                var hashString = torrendAdded.arguments.torrentadded.hashString;
-                TorrentDownloads.Add(new TorrentDownloadModel(
-                    name: name,
-                    url: url,
-                    downloadDirectory: downloadDirectory,
-                    percentDone: 0,
-                    size: size,
-                    seeds: seeds,
-                    provider: "Torrent9",
-                    id: id.ToString(),
-                    hashString: hashString)
-                );
-            }
-            else if (torrendAdded?.arguments?.torrentduplicate != null)
-            {
-                ////var id = torrendAdded.arguments.torrentduplicate.id;
-                ////var hashString = torrendAdded.arguments.torrentduplicate.hashString;
-            }
-            else
-            {
-                throw new Exception($"Failed to add torrent.");
-            }
-
-            _logger.LogInformation($"Torrent added to downloads.");
-        }
-        catch (Exception ex)
-        {
-            throw new AjoutTorrentException("Failed to add torrent.", ex);
-        }
-    }
-
-    public async Task DeleteDownloadAsync(
-        string hashString)
-    {
-        try
-        {
-            var download = TorrentDownloads.Single(obj => obj.HashString == hashString);
-            await _transmissionApiService.DeleteTorrentAsync(int.Parse(download.Id));
-            TorrentDownloads.RemoveAll(obj => obj.HashString == download.HashString);
-        }
-        catch (Exception ex)
-        {
-            throw new SuppressionTorrentException("Failed to delete torrent from downloads.", ex);
-        }
-    }
-
     #region Private use
 
     public void RefreshIsClientActive()
@@ -219,15 +158,15 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
     {
         try
         {
-            var torrentDownloads = await _transmissionApiService.GetTorrentsAsync();
-            TorrentDownloads.ForEach(torrent =>
+            var torrentDownloads = await _torrentClientService.GetDownloadsAsync();
+            _torrentClientService.TorrentDownloads.ForEach(torrent =>
             {
-                var match = torrentDownloads.FirstOrDefault(obj => obj.hashString == torrent.HashString);
-                if (match != null)
+                var (hashString, percentDone) = torrentDownloads.FirstOrDefault(obj => obj.hashString == torrent.HashString);
+                if (hashString != null)
                 {
-                    if (torrent.PercentDone != match.percentDone)
+                    if (torrent.PercentDone != percentDone)
                     {
-                        torrent.PercentDone = match.percentDone;
+                        torrent.PercentDone = percentDone;
                         if (torrent.PercentDone == 1)
                         {
                             DownloadFinishedAction?.Invoke(torrent);
