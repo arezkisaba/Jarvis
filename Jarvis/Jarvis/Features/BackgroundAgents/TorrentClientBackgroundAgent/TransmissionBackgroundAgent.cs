@@ -4,7 +4,6 @@ using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Models;
 using Jarvis.Features.Services.TorrentClientService.Contracts;
 using Jarvis.Features.Services.TorrentClientService.Models;
 using Jarvis.Technical.Configuration.AppSettings.Models;
-using Lib.ApiServices.Transmission;
 using Lib.Core;
 
 namespace Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent;
@@ -75,7 +74,7 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
             {
                 if (counter >= timeoutDelay)
                 {
-                    throw new DemarrageServiceTorrentException("Unable to start torrent client", new TimeoutException("Torrent client still inactive"));
+                    throw new DemarrageServiceTorrentException("Unable to start torrent client", null);
                 }
 
                 await Task.Delay(500);
@@ -104,7 +103,7 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
             {
                 if (counter >= timeoutDelay)
                 {
-                    throw new ArretServiceTorrentException("Unable to stop torrent client", new TimeoutException("Torrent client still active"));
+                    throw new ArretServiceTorrentException("Unable to stop torrent client", null);
                 }
 
                 await Task.Delay(500);
