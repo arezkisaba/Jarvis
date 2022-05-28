@@ -1,6 +1,6 @@
-using System.Timers;
+using Jarvis.Shared.Components.Modaler.Models;
 
-namespace Jarvis.Shared.Components.Modaler;
+namespace Jarvis.Shared.Components.Modaler.Services;
 
 public class ModalerService : IDisposable
 {

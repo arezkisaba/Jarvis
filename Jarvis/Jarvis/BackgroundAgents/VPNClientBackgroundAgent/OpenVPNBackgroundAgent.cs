@@ -1,15 +1,20 @@
+using Jarvis.BackgroundAgents.VPNClientBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.VPNClientBackgroundAgent.Models;
+using Jarvis.Configuration.AppSettings.Models;
+using Jarvis.Configuration.SecureAppSettings.Models;
+using Jarvis.Models.Exceptions;
 using Lib.Core;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
-namespace Jarvis;
+namespace Jarvis.BackgroundAgents.VPNClientBackgroundAgent;
 
 public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
 {
     private const int timeoutDelay = 30;
 
-    private readonly AppSettings _appSettings;
-    private readonly SecureAppSettings _secureAppSettings;
+    private readonly AppSettingsModel _appSettings;
+    private readonly SecureAppSettingsModel _secureAppSettings;
     private readonly ILogger<OpenVPNBackgroundAgent> _logger;
     private readonly IProcessManager _processManager;
     private readonly INetworkManager _networkManager;
@@ -20,8 +25,8 @@ public class OpenVPNBackgroundAgent : IVPNClientBackgroundAgent
     public event EventHandler StateChanged;
 
     public OpenVPNBackgroundAgent(
-        IOptions<AppSettings> appSettings,
-        IOptions<SecureAppSettings> secureAppSettings,
+        IOptions<AppSettingsModel> appSettings,
+        IOptions<SecureAppSettingsModel> secureAppSettings,
         ILogger<OpenVPNBackgroundAgent> logger,
         IProcessManager processManager,
         INetworkManager networkManager)

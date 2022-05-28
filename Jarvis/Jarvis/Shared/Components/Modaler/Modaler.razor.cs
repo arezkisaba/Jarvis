@@ -1,3 +1,4 @@
+using Jarvis.Shared.Components.Modaler.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace Jarvis.Shared.Components.Modaler;

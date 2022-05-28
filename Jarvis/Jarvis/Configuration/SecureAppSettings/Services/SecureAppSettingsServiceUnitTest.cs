@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Jarvis.UnitTests;
+namespace Jarvis.Configuration.SecureAppSettings.Services;
 
 [TestFixture]
 public class SecureAppSettingsServiceUnitTest

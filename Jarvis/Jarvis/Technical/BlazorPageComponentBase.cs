@@ -1,4 +1,4 @@
-namespace Jarvis;
+namespace Jarvis.Technical;
 
 public abstract class BlazorPageComponentBase : BlazorComponentBase
 {

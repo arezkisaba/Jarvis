@@ -1,16 +1,16 @@
 using NUnit.Framework;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Jarvis.IntegrationTests;
+namespace Jarvis.BackgroundAgents.IPResolverBackgroundAgent.IPResolverService;
 
 [TestFixture]
 [ExcludeFromCodeCoverage]
-public class WhatIsMyPublicIPServiceIntegrationTest
+public class MonIPServiceIntegrationTest
 {
     [TestCase(TestName = "GetAsync renvois une adresse ip")]
     public async Task GetAsync_TestCase()
     {
-        var ipResolverService = new WhatIsMyPublicIPService();
+        var ipResolverService = new MonIPService();
         var ip = await ipResolverService.GetAsync();
         Assert.IsTrue(!string.IsNullOrWhiteSpace(ip));
     }

@@ -1,4 +1,6 @@
-namespace Jarvis;
+using Jarvis.BackgroundAgents.VPNClientBackgroundAgent.Models;
+
+namespace Jarvis.BackgroundAgents.VPNClientBackgroundAgent.Contracts;
 
 public interface IVPNClientBackgroundAgent
 {

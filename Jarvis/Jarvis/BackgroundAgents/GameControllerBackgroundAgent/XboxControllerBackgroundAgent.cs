@@ -1,18 +1,20 @@
+using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Models;
+using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService.Contracts;
+using Jarvis.Configuration.AppSettings.Models;
 using Lib.Core;
 using Lib.Win32;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using SharpDX.XInput;
 using WindowsInput;
 using WindowsInput.Native;
 
-namespace Jarvis;
+namespace Jarvis.BackgroundAgents.GameControllerBackgroundAgent;
 
 public class XboxControllerBackgroundAgent : IGameControllerClientBackgroundAgent
 {
-    private readonly AppSettings _appSettings;
+    private readonly AppSettingsModel _appSettings;
     private readonly ILogger<XboxControllerBackgroundAgent> _logger;
-    private readonly IStringLocalizer _localizer;
     private readonly IDisplayManager _displayManager;
     private readonly IProcessManager _processManager;
     private readonly ISoundManager _soundManager;
@@ -36,7 +38,7 @@ public class XboxControllerBackgroundAgent : IGameControllerClientBackgroundAgen
     public event EventHandler StateChanged;
 
     public XboxControllerBackgroundAgent(
-        IOptions<AppSettings> appSettings,
+        IOptions<AppSettingsModel> appSettings,
         ILogger<XboxControllerBackgroundAgent> logger,
         IDisplayManager displayManager,
         IProcessManager processManager,

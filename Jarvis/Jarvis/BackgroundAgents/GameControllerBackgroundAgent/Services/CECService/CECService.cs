@@ -1,15 +1,17 @@
+using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService.Contracts;
+using Jarvis.Configuration.AppSettings.Models;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
-namespace Jarvis;
+namespace Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService;
 
 public class CECService : ICECService
 {
-    private readonly AppSettings _appSettings;
+    private readonly AppSettingsModel _appSettings;
     private readonly ILogger<CECService> _logger;
 
     public CECService(
-        IOptions<AppSettings> appSettings,
+        IOptions<AppSettingsModel> appSettings,
         ILogger<CECService> logger)
     {
         _appSettings = appSettings.Value;

@@ -1,4 +1,10 @@
-using Jarvis.Shared.Components.Toaster;
+using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
+using Jarvis.Configuration.AppSettings.Models;
+using Jarvis.Pages.Search.ViewModels;
+using Jarvis.Services.TorrentScrapperService.Contracts;
+using Jarvis.Shared.Components.Toaster.Models;
+using Jarvis.Shared.Components.Toaster.Services;
+using Jarvis.Technical;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
@@ -8,7 +14,7 @@ namespace Jarvis.Pages.Search;
 public partial class Search : BlazorPageComponentBase
 {
     [Inject]
-    public IOptions<AppSettings> AppSettings { get; set; }
+    public IOptions<AppSettingsModel> AppSettings { get; set; }
 
     [Inject]
     public IStringLocalizer<App> AppLoc { get; set; }

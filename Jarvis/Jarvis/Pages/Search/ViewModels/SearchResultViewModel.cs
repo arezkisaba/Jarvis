@@ -1,4 +1,6 @@
-namespace Jarvis;
+using Jarvis.Helpers;
+
+namespace Jarvis.Pages.Search.ViewModels;
 
 public sealed class SearchResultViewModel
 {

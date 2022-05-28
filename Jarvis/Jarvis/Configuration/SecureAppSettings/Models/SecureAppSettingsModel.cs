@@ -1,6 +1,6 @@
-namespace Jarvis;
+namespace Jarvis.Configuration.SecureAppSettings.Models;
 
-public class SecureAppSettings
+public class SecureAppSettingsModel
 {
     public string OpenVPNUsername { get; set; }
 
@@ -16,11 +16,11 @@ public class SecureAppSettings
 
     public string PlexPassword { get; set; }
 
-    public SecureAppSettings()
+    public SecureAppSettingsModel()
     {
     }
 
-    public SecureAppSettings(
+    public SecureAppSettingsModel(
         string openVPNUsername,
         string openVPNPassword,
         string tmdbApiKey,
@@ -36,7 +36,7 @@ public class SecureAppSettings
         PlexPassword = plexPassword;
     }
 
-    public SecureAppSettings(
+    public SecureAppSettingsModel(
         string openVPNUsername,
         string openVPNPassword,
         string tmdbApiKey,

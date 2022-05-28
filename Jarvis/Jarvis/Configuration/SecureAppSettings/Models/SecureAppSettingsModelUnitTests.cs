@@ -1,14 +1,14 @@
 using NUnit.Framework;
 
-namespace Jarvis.UnitTests;
+namespace Jarvis.Configuration.SecureAppSettings.Models;
 
 [TestFixture]
-public class SecureAppSettingsUnitTests
+public class SecureAppSettingsModelUnitTests
 {
-    [TestCase(TestName = "SecureAppSettings s'initialise correctement")]
+    [TestCase(TestName = "SecureAppSettingsModel s'initialise correctement")]
     public void SecureAppSettings_Construct1_TestCase()
     {
-        var obj = new SecureAppSettings(
+        var obj = new SecureAppSettingsModel(
             openVPNUsername: "openVPNUsername",
             openVPNPassword: "openVPNPassword",
             tmdbApiKey: "tmdbApiKey",

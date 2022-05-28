@@ -1,13 +1,13 @@
-namespace Jarvis.Shared.Components.Modaler;
+namespace Jarvis.Shared.Components.Modaler.Models;
 
 public record Modal
 {
     public Guid Id = Guid.NewGuid();
-    
+
     public string Title { get; init; } = string.Empty;
-    
+
     public string Message { get; init; } = string.Empty;
-    
+
     public string HeaderCssClass { get; init; } = string.Empty;
 
     public static Modal CreateModal(

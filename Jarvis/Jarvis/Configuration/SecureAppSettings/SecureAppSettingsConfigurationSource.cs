@@ -1,4 +1,6 @@
-﻿namespace Jarvis;
+﻿using Jarvis.Configuration.SecureAppSettings.Services.Contracts;
+
+namespace Jarvis.Configuration.SecureAppSettings;
 
 public class SecureAppSettingsConfigurationSource : IConfigurationSource
 {

@@ -1,4 +1,4 @@
-namespace Jarvis;
+namespace Jarvis.Helpers;
 
 public static class FormatHelper
 {

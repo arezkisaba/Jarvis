@@ -1,4 +1,4 @@
-namespace Jarvis;
+namespace Jarvis.BackgroundAgents.IPResolverBackgroundAgent.Contracts;
 
 public interface IIPResolverBackgroundAgent
 {

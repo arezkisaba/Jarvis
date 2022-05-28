@@ -1,6 +1,7 @@
-﻿using System.Reflection;
+﻿using Jarvis.Configuration.SecureAppSettings.Models;
+using Jarvis.Configuration.SecureAppSettings.Services.Contracts;
 
-namespace Jarvis;
+namespace Jarvis.Configuration.SecureAppSettings;
 
 public class SecureAppSettingsConfigurationProvider : ConfigurationProvider
 {
@@ -17,14 +18,14 @@ public class SecureAppSettingsConfigurationProvider : ConfigurationProvider
         var encryptedSecrets = CreateSecureAppSettingsIfDoesntExistsAsync().GetAwaiter().GetResult();
         Data = encryptedSecrets.GetType()
             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-            .ToDictionary(prop => $"{nameof(SecureAppSettings)}:{prop.Name}", prop => (string)prop.GetValue(encryptedSecrets, null));
+            .ToDictionary(prop => $"{nameof(SecureAppSettingsModel)}:{prop.Name}", prop => (string)prop.GetValue(encryptedSecrets, null));
     }
 
     #region Private use
 
-    private async Task<SecureAppSettings> CreateSecureAppSettingsIfDoesntExistsAsync()
+    private async Task<SecureAppSettingsModel> CreateSecureAppSettingsIfDoesntExistsAsync()
     {
-        SecureAppSettings encryptedSecrets;
+        SecureAppSettingsModel encryptedSecrets;
 
         try
         {
@@ -32,7 +33,7 @@ public class SecureAppSettingsConfigurationProvider : ConfigurationProvider
         }
         catch (Exception)
         {
-            encryptedSecrets = new SecureAppSettings();
+            encryptedSecrets = new SecureAppSettingsModel();
             await _secureAppSettingsService.WriteAsync(encryptedSecrets);
         }
 

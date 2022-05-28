@@ -1,4 +1,4 @@
-namespace Jarvis;
+namespace Jarvis.Models.Exceptions;
 
 public class JarvisException : Exception
 {

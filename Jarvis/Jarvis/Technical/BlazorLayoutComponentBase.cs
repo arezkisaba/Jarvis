@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace Jarvis;
+namespace Jarvis.Technical;
 
 public abstract class BlazorLayoutComponentBase : LayoutComponentBase
 {

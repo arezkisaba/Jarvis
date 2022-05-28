@@ -1,6 +1,6 @@
 using Lib.Core;
 
-namespace Jarvis;
+namespace Jarvis.Models.Domain;
 
 public class Movie
 {

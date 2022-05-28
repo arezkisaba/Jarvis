@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Jarvis.UnitTests;
+namespace Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.Models;
 
 [TestFixture]
 public class MediaStorageStateModelUnitTests

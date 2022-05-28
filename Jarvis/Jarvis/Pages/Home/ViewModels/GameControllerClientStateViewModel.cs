@@ -1,17 +1,26 @@
-using Jarvis.Pages.Home;
-using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Localization;
+using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Models;
 
-namespace Jarvis;
+namespace Jarvis.Pages.Home.ViewModels;
 
-public sealed class GameControllerClientStateViewModel : ClientStateViewModelBase
+public sealed class GameControllerClientStateViewModel
 {
-    [Inject]
-    public IStringLocalizer<Home> Localizer { get; set; }
+    public string Title { get; private set; }
+
+    public string Subtitle { get; private set; }
+
+    public bool IsActive { get; private set; }
 
     public GameControllerClientStateViewModel(
         GameControllerClientStateModel model)
-        : base(model)
     {
+        UpdateInternalData(model);
+    }
+
+    public void UpdateInternalData(
+        GameControllerClientStateModel model)
+    {
+        Title = model.Title;
+        Subtitle = model.Subtitle;
+        IsActive = model.IsActive;
     }
 }

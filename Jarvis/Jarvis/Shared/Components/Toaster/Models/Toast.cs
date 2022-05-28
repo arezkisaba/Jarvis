@@ -1,19 +1,19 @@
-namespace Jarvis.Shared.Components.Toaster;
+namespace Jarvis.Shared.Components.Toaster.Models;
 
 public record Toast
 {
     public Guid Id = Guid.NewGuid();
-    
+
     public string Title { get; init; } = string.Empty;
-    
+
     public string Message { get; init; } = string.Empty;
-    
+
     public string HeaderCssClass { get; init; } = string.Empty;
 
     public DateTimeOffset TimeToBurn { get; init; } = DateTimeOffset.Now.AddSeconds(5);
-    
+
     public bool IsBurnt => TimeToBurn < DateTimeOffset.Now;
-    
+
     private TimeSpan elapsedTime => Posted - DateTimeOffset.Now;
 
     public readonly DateTimeOffset Posted = DateTimeOffset.Now;

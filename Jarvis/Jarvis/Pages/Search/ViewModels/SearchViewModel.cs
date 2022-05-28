@@ -1,6 +1,6 @@
 using Lib.Core;
 
-namespace Jarvis;
+namespace Jarvis.Pages.Search.ViewModels;
 
 public sealed class SearchViewModel
 {

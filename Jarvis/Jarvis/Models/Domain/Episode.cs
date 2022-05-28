@@ -1,4 +1,4 @@
-namespace Jarvis;
+namespace Jarvis.Models.Domain;
 
 public class Episode
 {

@@ -1,20 +1,24 @@
+using Jarvis.Configuration.AppSettings.Models;
+using Jarvis.Helpers;
+using Jarvis.Models.Domain;
+using Jarvis.Services.MediaService.Contracts;
 using Lib.Core;
 using Microsoft.Extensions.Options;
 using System.Text.RegularExpressions;
 
-namespace Jarvis;
+namespace Jarvis.Services.MediaService;
 
 public class MediaService : IMediaService
 {
     private const string EpisodeExpression = @"^(.*?) - S([0-9]{2,})E([0-9]{2,}) - (.*?)\.(.*?)$";
 
-    private readonly AppSettings _appSettings;
+    private readonly AppSettingsModel _appSettings;
     private readonly string _downloadsFolder;
     private readonly string _moviesFolder;
     private readonly string _tvShowsFolder;
 
     public MediaService(
-        IOptions<AppSettings> appSettings)
+        IOptions<AppSettingsModel> appSettings)
     {
         _appSettings = appSettings.Value;
         _downloadsFolder = _appSettings.computer.downloadsFolder;

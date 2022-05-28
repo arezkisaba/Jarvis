@@ -1,9 +1,11 @@
-namespace Jarvis;
+using Jarvis.Configuration.SecureAppSettings.Models;
+
+namespace Jarvis.Configuration.SecureAppSettings.Services.Contracts;
 
 public interface ISecureAppSettingsService
 {
-    Task<SecureAppSettings> ReadAsync();
+    Task<SecureAppSettingsModel> ReadAsync();
 
     Task WriteAsync(
-        SecureAppSettings secureAppSettings);
+        SecureAppSettingsModel secureAppSettings);
 }

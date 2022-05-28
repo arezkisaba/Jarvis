@@ -1,4 +1,11 @@
-namespace Jarvis;
+using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.IPResolverBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent;
+using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.VPNClientBackgroundAgent.Contracts;
+
+namespace Jarvis.Services;
 
 public class JarvisService
 {

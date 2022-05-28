@@ -1,4 +1,13 @@
-using Jarvis.Shared.Components.Toaster;
+using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Models;
+using Jarvis.Configuration.AppSettings.Models;
+using Jarvis.Helpers;
+using Jarvis.Pages.Downloads.ViewModels;
+using Jarvis.Services.MediaMatchingService.Contracts;
+using Jarvis.Services.MediaMatchingService.Models;
+using Jarvis.Shared.Components.Toaster.Models;
+using Jarvis.Shared.Components.Toaster.Services;
+using Jarvis.Technical;
 using Lib.ApiServices.Tmdb;
 using Lib.Core;
 using Microsoft.AspNetCore.Components;
@@ -10,7 +19,7 @@ namespace Jarvis.Pages.Downloads;
 public partial class Downloads : BlazorPageComponentBase
 {
     [Inject]
-    private IOptions<AppSettings> AppSettings { get; set; }
+    private IOptions<AppSettingsModel> AppSettings { get; set; }
 
     [Inject]
     public IStringLocalizer<App> AppLoc { get; set; }

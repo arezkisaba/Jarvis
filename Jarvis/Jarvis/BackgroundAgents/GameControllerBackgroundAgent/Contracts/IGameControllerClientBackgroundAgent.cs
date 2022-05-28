@@ -1,4 +1,6 @@
-namespace Jarvis;
+using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Models;
+
+namespace Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Contracts;
 
 public interface IGameControllerClientBackgroundAgent
 {

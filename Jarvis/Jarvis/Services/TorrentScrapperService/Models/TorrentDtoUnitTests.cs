@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Jarvis.UnitTests;
+namespace Jarvis.Services.TorrentScrapperService.Models;
 
 [TestFixture]
 public class TorrentDtoUnitTests

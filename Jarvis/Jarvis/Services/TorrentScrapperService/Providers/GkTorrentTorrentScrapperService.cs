@@ -1,7 +1,9 @@
+using Jarvis.Services.TorrentScrapperService.Models;
+using Jarvis.Services.TorrentScrapperService.Providers.Bases;
 using Lib.Core;
 using System.Text.RegularExpressions;
 
-namespace Jarvis;
+namespace Jarvis.Services.TorrentScrapperService.Providers;
 
 public class GkTorrentTorrentScrapperService : TorrentScrapperServiceBase
 {

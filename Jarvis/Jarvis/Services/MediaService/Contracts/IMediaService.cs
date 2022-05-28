@@ -1,4 +1,6 @@
-namespace Jarvis;
+using Jarvis.Models.Domain;
+
+namespace Jarvis.Services.MediaService.Contracts;
 
 public interface IMediaService
 {

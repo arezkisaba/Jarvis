@@ -1,6 +1,6 @@
-namespace Jarvis;
+namespace Jarvis.Configuration.AppSettings.Models;
 
-public class AppSettings
+public class AppSettingsModel
 {
     public string appName { get; set; }
 

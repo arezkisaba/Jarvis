@@ -1,4 +1,7 @@
-namespace Jarvis;
+using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.Models;
+using Jarvis.Helpers;
+
+namespace Jarvis.Pages.Home.ViewModels;
 
 public sealed class MediaStorageStateViewModel
 {

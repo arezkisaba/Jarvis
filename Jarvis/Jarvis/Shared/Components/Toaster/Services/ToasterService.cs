@@ -1,6 +1,7 @@
+using Jarvis.Shared.Components.Toaster.Models;
 using System.Timers;
 
-namespace Jarvis.Shared.Components.Toaster;
+namespace Jarvis.Shared.Components.Toaster.Services;
 
 public class ToasterService : IDisposable
 {

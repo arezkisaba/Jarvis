@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Jarvis.IntegrationTests;
+namespace Jarvis.Services.TorrentScrapperService.Providers;
 
 [TestFixture]
 [ExcludeFromCodeCoverage]

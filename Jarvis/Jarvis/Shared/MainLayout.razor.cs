@@ -1,9 +1,11 @@
-using Jarvis.Shared.Components.Modaler;
-using Jarvis.Shared.Components.Toaster;
+using Jarvis.Configuration.AppSettings.Models;
+using Jarvis.Configuration.SecureAppSettings.Services.Contracts;
+using Jarvis.Shared.Components.Modaler.Services;
+using Jarvis.Shared.Components.Toaster.Services;
+using Jarvis.Technical;
 using Lib.ApiServices.Tmdb;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using System.Globalization;
 
@@ -21,7 +23,7 @@ public partial class MainLayout : BlazorLayoutComponentBase
     public ToasterService ToasterService { get; set; }
 
     [Inject]
-    public IOptions<AppSettings> AppSettings { get; set; }
+    public IOptions<AppSettingsModel> AppSettings { get; set; }
 
     [Inject]
     public ISecureAppSettingsService SecureAppSettingsService { get; set; }

@@ -1,4 +1,4 @@
-namespace Jarvis;
+namespace Jarvis.Services.MediaMatchingService.Models;
 
 public enum MediaTypeModel
 {

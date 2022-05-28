@@ -1,6 +1,7 @@
+using Jarvis.Configuration.SecureAppSettings.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace Jarvis;
+namespace Jarvis.Pages.Configuration.ViewModels;
 
 public sealed class SecureAppSettingsViewModel
 {
@@ -27,7 +28,7 @@ public sealed class SecureAppSettingsViewModel
     }
 
     public SecureAppSettingsViewModel(
-        SecureAppSettings model)
+        SecureAppSettingsModel model)
     {
         OpenVPNUsername = model.OpenVPNUsername;
         OpenVPNPassword = model.OpenVPNPassword;
@@ -37,9 +38,9 @@ public sealed class SecureAppSettingsViewModel
         PlexPassword = model.PlexPassword;
     }
 
-    public SecureAppSettings ToDomain()
+    public SecureAppSettingsModel ToDomain()
     {
-        return new SecureAppSettings(
+        return new SecureAppSettingsModel(
             OpenVPNUsername,
             OpenVPNPassword,
             TmdbApiKey,

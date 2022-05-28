@@ -1,7 +1,8 @@
+using Jarvis.Services.MediaMatchingService.Models;
 using NUnit.Framework;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Jarvis.UnitTests;
+namespace Jarvis.Services.MediaMatchingService;
 
 [TestFixture]
 [ExcludeFromCodeCoverage]

@@ -1,4 +1,6 @@
-namespace Jarvis;
+using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.Models;
+
+namespace Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.Contracts;
 
 public interface IMediaStorageBackgroundAgent
 {

@@ -1,4 +1,8 @@
-namespace Jarvis;
+using Jarvis.Services.TorrentScrapperService.Contracts;
+using Jarvis.Services.TorrentScrapperService.Models;
+using Jarvis.Services.TorrentScrapperService.Providers.Bases;
+
+namespace Jarvis.Services.TorrentScrapperService;
 
 public class TorrentScrapperService : ITorrentScrapperService
 {

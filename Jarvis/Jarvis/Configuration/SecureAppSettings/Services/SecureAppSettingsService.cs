@@ -1,8 +1,10 @@
+using Jarvis.Configuration.SecureAppSettings.Models;
+using Jarvis.Configuration.SecureAppSettings.Services.Contracts;
 using Lib.Core;
 using Microsoft.AspNetCore.DataProtection;
 using System.Reflection;
 
-namespace Jarvis;
+namespace Jarvis.Configuration.SecureAppSettings.Services;
 
 public class SecureAppSettingsService : ISecureAppSettingsService
 {
@@ -22,11 +24,11 @@ public class SecureAppSettingsService : ISecureAppSettingsService
         _filePath = $"{Path.Combine(folderPath, fileName)}";
     }
 
-    public async Task<SecureAppSettings> ReadAsync()
+    public async Task<SecureAppSettingsModel> ReadAsync()
     {
         var content = File.ReadAllText(_filePath);
-        var encryptedSecrets = await Serializer.JsonDeserializeAsync<SecureAppSettings>(content);
-        return new SecureAppSettings(
+        var encryptedSecrets = await Serializer.JsonDeserializeAsync<SecureAppSettingsModel>(content);
+        return new SecureAppSettingsModel(
             Unprotect(encryptedSecrets.OpenVPNUsername),
             Unprotect(encryptedSecrets.OpenVPNPassword),
             Unprotect(encryptedSecrets.TmdbApiKey),
@@ -37,9 +39,9 @@ public class SecureAppSettingsService : ISecureAppSettingsService
     }
 
     public async Task WriteAsync(
-        SecureAppSettings decryptedSecrets)
+        SecureAppSettingsModel decryptedSecrets)
     {
-        var encryptedSecrets = new SecureAppSettings(
+        var encryptedSecrets = new SecureAppSettingsModel(
             Protect(decryptedSecrets.OpenVPNUsername),
             Protect(decryptedSecrets.OpenVPNPassword),
             Protect(decryptedSecrets.TmdbApiKey),

@@ -1,4 +1,4 @@
-namespace Jarvis;
+namespace Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService.Contracts;
 
 public interface ICECService
 {

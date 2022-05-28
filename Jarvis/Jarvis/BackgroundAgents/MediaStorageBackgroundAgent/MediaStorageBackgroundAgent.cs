@@ -1,10 +1,14 @@
+using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService.Contracts;
+using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.Models;
+using Jarvis.Configuration.AppSettings.Models;
 using Microsoft.Extensions.Options;
 
-namespace Jarvis;
+namespace Jarvis.BackgroundAgents.MediaStorageBackgroundAgent;
 
 public class MediaStorageBackgroundAgent : IMediaStorageBackgroundAgent
 {
-    private readonly AppSettings _appSettings;
+    private readonly AppSettingsModel _appSettings;
     private readonly IMediaStorageService _mediaStorageService;
     private CancellationTokenSource _cancellationTokenSource;
 
@@ -13,7 +17,7 @@ public class MediaStorageBackgroundAgent : IMediaStorageBackgroundAgent
     public event EventHandler StateChanged;
 
     public MediaStorageBackgroundAgent(
-        IOptions<AppSettings> appSettings,
+        IOptions<AppSettingsModel> appSettings,
         IMediaStorageService mediaStorageService)
     {
         _appSettings = appSettings.Value;

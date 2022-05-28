@@ -41,4 +41,9 @@
 	  </Content>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="BackgroundAgents\TorrentClientBackgroundAgent\Exceptions\" />
+	  <Folder Include="BackgroundAgents\VPNClientBackgroundAgent\Exceptions\" />
+	</ItemGroup>
+
 </Project>

@@ -1,6 +1,8 @@
+using Jarvis.Services.MediaMatchingService.Contracts;
+using Jarvis.Services.MediaMatchingService.Models;
 using System.Text.RegularExpressions;
 
-namespace Jarvis;
+namespace Jarvis.Services.MediaMatchingService;
 
 public class MediaMatchingService : IMediaMatchingService
 {

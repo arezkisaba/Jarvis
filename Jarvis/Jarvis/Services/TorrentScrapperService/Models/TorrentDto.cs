@@ -1,4 +1,4 @@
-namespace Jarvis;
+namespace Jarvis.Services.TorrentScrapperService.Models;
 
 public readonly record struct TorrentDto(
     string DescriptionUrl,

@@ -1,5 +1,31 @@
-using Jarvis.Shared.Components.Modaler;
-using Jarvis.Shared.Components.Toaster;
+using Jarvis.BackgroundAgents.GameControllerBackgroundAgent;
+using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService;
+using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService.Contracts;
+using Jarvis.BackgroundAgents.IPResolverBackgroundAgent;
+using Jarvis.BackgroundAgents.IPResolverBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent;
+using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService;
+using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService.Contracts;
+using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent;
+using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.VPNClientBackgroundAgent;
+using Jarvis.BackgroundAgents.VPNClientBackgroundAgent.Contracts;
+using Jarvis.Configuration;
+using Jarvis.Configuration.AppSettings.Models;
+using Jarvis.Configuration.SecureAppSettings.Models;
+using Jarvis.Configuration.SecureAppSettings.Services;
+using Jarvis.Configuration.SecureAppSettings.Services.Contracts;
+using Jarvis.Services;
+using Jarvis.Services.MediaMatchingService;
+using Jarvis.Services.MediaMatchingService.Contracts;
+using Jarvis.Services.TorrentScrapperService;
+using Jarvis.Services.TorrentScrapperService.Contracts;
+using Jarvis.Services.TorrentScrapperService.Providers;
+using Jarvis.Services.TorrentScrapperService.Providers.Bases;
+using Jarvis.Shared.Components.Modaler.Services;
+using Jarvis.Shared.Components.Toaster.Services;
 using Lib.ApiServices.Plex;
 using Lib.ApiServices.Tmdb;
 using Lib.ApiServices.Transmission;
@@ -16,7 +42,7 @@ public class Launcher
         ConfigurationManager configuration,
         IServiceCollection services)
     {
-        var appdataDirectory = configuration.GetValue<string>($"{nameof(AppSettings)}:{nameof(AppSettings.appdataDirectory)}");
+        var appdataDirectory = configuration.GetValue<string>($"{nameof(AppSettingsModel)}:{nameof(AppSettingsModel.appdataDirectory)}");
         if (!Directory.Exists(appdataDirectory))
         {
             Directory.CreateDirectory(appdataDirectory);
@@ -25,8 +51,8 @@ public class Launcher
         services.AddRazorPages();
         services.AddServerSideBlazor();
         services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
-        services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
-        services.Configure<SecureAppSettings>(configuration.GetSection("SecureAppSettings"));
+        services.Configure<AppSettingsModel>(configuration.GetSection("AppSettings"));
+        services.Configure<SecureAppSettingsModel>(configuration.GetSection("SecureAppSettings"));
 
         var secureAppSettingsService = new SecureAppSettingsService(appdataDirectory);
         services.AddSingleton<ISecureAppSettingsService>(secureAppSettingsService);
@@ -44,15 +70,15 @@ public class Launcher
 
         services.AddSingleton<ITransmissionApiService>(serviceProvider =>
         {
-            var appSettings = serviceProvider.GetService<IOptions<AppSettings>>();
+            var appSettings = serviceProvider.GetService<IOptions<AppSettingsModel>>();
             return new TransmissionApiService(
                 appSettings.Value.serviceConfig.transmissionConfig.url);
         });
 
         services.AddSingleton<IPlexApiService>(serviceProvider =>
         {
-            var appSettings = serviceProvider.GetService<IOptions<AppSettings>>();
-            var secureAppSettings = serviceProvider.GetService<IOptions<SecureAppSettings>>();
+            var appSettings = serviceProvider.GetService<IOptions<AppSettingsModel>>();
+            var secureAppSettings = serviceProvider.GetService<IOptions<SecureAppSettingsModel>>();
             return new PlexApiService(
                 appSettings.Value.serviceConfig.plexConfig.url,
                 secureAppSettings.Value.PlexUsername,
@@ -61,8 +87,8 @@ public class Launcher
 
         services.AddSingleton<ITmdbApiService>(serviceProvider =>
         {
-            var appSettings = serviceProvider.GetService<IOptions<AppSettings>>();
-            var secureAppSettings = serviceProvider.GetService<IOptions<SecureAppSettings>>();
+            var appSettings = serviceProvider.GetService<IOptions<AppSettingsModel>>();
+            var secureAppSettings = serviceProvider.GetService<IOptions<SecureAppSettingsModel>>();
             return new TmdbApiService(
                 secureAppSettings.Value.TmdbApiKey,
                 secureAppSettings.Value.TmdbAccessToken,

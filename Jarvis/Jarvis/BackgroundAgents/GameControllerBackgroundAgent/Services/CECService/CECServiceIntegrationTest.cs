@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Jarvis.IntegrationTests;
+namespace Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService;
 
 [TestFixture]
 public class CECServiceIntegrationTest

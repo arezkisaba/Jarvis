@@ -15,3 +15,5 @@
 Navigateur :
 - WASM
 - WebSocket
+
+analyse dépendances

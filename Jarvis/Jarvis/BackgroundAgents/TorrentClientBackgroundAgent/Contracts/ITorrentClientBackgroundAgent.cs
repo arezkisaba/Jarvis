@@ -1,4 +1,6 @@
-namespace Jarvis;
+using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Models;
+
+namespace Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
 
 public interface ITorrentClientBackgroundAgent
 {

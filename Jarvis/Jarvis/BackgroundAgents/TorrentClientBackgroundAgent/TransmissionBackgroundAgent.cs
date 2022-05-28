@@ -1,14 +1,18 @@
+using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
+using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Models;
+using Jarvis.Configuration.AppSettings.Models;
+using Jarvis.Models.Exceptions;
 using Lib.ApiServices.Transmission;
 using Lib.Core;
 using Microsoft.Extensions.Options;
 
-namespace Jarvis;
+namespace Jarvis.BackgroundAgents.TorrentClientBackgroundAgent;
 
 public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
 {
     private const int timeoutDelay = 30;
 
-    private readonly AppSettings _appSettings;
+    private readonly AppSettingsModel _appSettings;
     private readonly ILogger<TransmissionBackgroundAgent> _logger;
     private readonly IServiceManager _serviceManager;
     private readonly ITransmissionApiService _transmissionApiService;
@@ -26,7 +30,7 @@ public class TransmissionBackgroundAgent : ITorrentClientBackgroundAgent
     public Action<TorrentDownloadModel> DownloadFinishedAction { get; set; }
 
     public TransmissionBackgroundAgent(
-        IOptions<AppSettings> appSettings,
+        IOptions<AppSettingsModel> appSettings,
         ILogger<TransmissionBackgroundAgent> logger,
         IServiceManager serviceManager,
         ITransmissionApiService transmissionApiService)

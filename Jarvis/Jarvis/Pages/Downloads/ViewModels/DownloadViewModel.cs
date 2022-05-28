@@ -1,4 +1,4 @@
-namespace Jarvis;
+namespace Jarvis.Pages.Downloads.ViewModels;
 
 public sealed class DownloadViewModel
 {
