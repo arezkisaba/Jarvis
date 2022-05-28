@@ -117,16 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NoResults" xml:space="preserve">
-    <value>Aucun résultat de recherche</value>
+  <data name="Toaster.ErrorMessage" xml:space="preserve">
+    <value>An error occured</value>
   </data>
-  <data name="SearchPattern.Placeholder" xml:space="preserve">
-    <value>Recherche</value>
+  <data name="Toaster.ErrorTitle" xml:space="preserve">
+    <value>Information</value>
   </data>
-  <data name="Seeds" xml:space="preserve">
-    <value>Seeds</value>
-  </data>
-  <data name="Toaster.DownloadAdded" xml:space="preserve">
-    <value>Le téléchargement a été ajouté</value>
+  <data name="Toaster.InformationTitle" xml:space="preserve">
+    <value>Information</value>
   </data>
 </root>

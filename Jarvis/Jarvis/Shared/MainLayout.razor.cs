@@ -2,6 +2,7 @@ using Jarvis.Shared.Components.Toaster;
 using Lib.ApiServices.Tmdb;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using System.Globalization;
 
@@ -61,17 +62,15 @@ public partial class MainLayout : BlazorLayoutComponentBase
             }
             finally
             {
-                TmdbAuthenticationUrl = null;
-                ShowTmdbModal = false;
-                await UpdateUIAsync();
             }
         };
-
-        ToasterService.AddToast(Toast.CreateToast("Hello World", "Hello from Blazor", ToastType.Info, 600));
 
         Task.Run(async () =>
         {
             ////await Task.Delay(2000);
+            ////ToasterService.AddToast(Toast.CreateToast("Hello World 1", "Hello from Blazor", ToastType.Primary, 5));
+            ////await Task.Delay(2000);
+            ////ToasterService.AddToast(Toast.CreateToast("Hello World 2", "Hello from Blazor", ToastType.Secondary, 5));
             ////ShowAlert = true;
             ////await UpdateUIAsync();
         });

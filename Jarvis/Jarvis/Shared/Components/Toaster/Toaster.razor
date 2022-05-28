@@ -2,18 +2,20 @@
 
 @if (toasterService.HasToasts)
 {
-    <div class="toast-container">
-        @foreach (var toast in toasterService.GetToasts())
-        {
-            <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <strong class="me-auto">@toast.Title</strong>
-                    <button type="button" class="btn-close btn-close-white" aria-label="Close" @onclick="() => ClearToast(toast)"></button>
+    <div class="toast-layout">
+        <div class="toast-container">
+            @foreach (var toast in toasterService.GetToasts())
+            {
+                <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header @toast.HeaderCssClass">
+                        <strong class="me-auto text-white">@toast.Title</strong>
+                        <button type="button" class="btn-close btn-close-white" aria-label="Close" @onclick="() => ClearToast(toast)"></button>
+                    </div>
+                    <div class="toast-body bg-white">
+                        @toast.Message
+                    </div>
                 </div>
-                <div class="toast-body">
-                    @toast.Message
-                </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 }

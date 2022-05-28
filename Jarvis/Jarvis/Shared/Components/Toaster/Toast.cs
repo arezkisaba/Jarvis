@@ -8,7 +8,7 @@ public record Toast
     
     public string Message { get; init; } = string.Empty;
     
-    public ToastType MessageColour { get; init; } = ToastType.Primary;
+    public string HeaderCssClass { get; init; } = string.Empty;
 
     public DateTimeOffset TimeToBurn { get; init; } = DateTimeOffset.Now.AddSeconds(5);
     
@@ -28,7 +28,7 @@ public record Toast
         {
             Title = title,
             Message = message,
-            MessageColour = toastType,
+            HeaderCssClass = $"bg-{toastType.ToString().ToLowerInvariant()}",
             TimeToBurn = DateTimeOffset.Now.AddSeconds(delayBeforeDismiss)
         };
     }

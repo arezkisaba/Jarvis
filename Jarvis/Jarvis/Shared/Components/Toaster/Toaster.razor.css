@@ -1,4 +1,4 @@
-﻿.toast-container {
+﻿.toast-layout {
     position: fixed !important;
     top: 0 !important;
     bottom: 0 !important;
@@ -11,14 +11,14 @@
     pointer-events: none !important;
 }
 
-.toast {
+.toast-container {
     position: fixed !important;
     user-select: all !important;
     pointer-events: all !important;
 }
 
 @media (min-width: 641px) {
-    .toast {
+    .toast-container {
         position: fixed;
         top: 10px !important;
         right: 10px !important;
@@ -26,10 +26,15 @@
 }
 
 @media (max-width: 640.98px) {
-    .toast {
+    .toast-container {
         position: fixed;
-        top: 10px !important;
+        bottom: 10px !important;
         left: 10px !important;
+        width: calc(100%) !important;
+        max-width: calc(100%) !important;
+    }
+
+    .toast {
         width: calc(100% - 20px) !important;
         max-width: calc(100% - 20px) !important;
     }
