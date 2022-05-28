@@ -1,0 +1,36 @@
+﻿.toast-container {
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    /*height: 100vh !important;*/
+    z-index: 999 !important;
+    user-select: none !important;
+    pointer-events: none !important;
+}
+
+.toast {
+    position: fixed !important;
+    user-select: all !important;
+    pointer-events: all !important;
+}
+
+@media (min-width: 641px) {
+    .toast {
+        position: fixed;
+        top: 10px !important;
+        right: 10px !important;
+    }
+}
+
+@media (max-width: 640.98px) {
+    .toast {
+        position: fixed;
+        top: 10px !important;
+        left: 10px !important;
+        width: calc(100% - 20px) !important;
+        max-width: calc(100% - 20px) !important;
+    }
+}

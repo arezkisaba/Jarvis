@@ -12,7 +12,7 @@ public abstract class TorrentScrapperServiceBase
     public virtual bool CanUseMagnetLinks => true;
 
     public string Url { get; set; }
-    
+
     public TorrentScrapperServiceBase(
         string url)
     {

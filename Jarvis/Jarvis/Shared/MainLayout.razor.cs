@@ -1,3 +1,4 @@
+using Jarvis.Shared.Components.Toaster;
 using Lib.ApiServices.Tmdb;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.WebUtilities;
@@ -12,6 +13,9 @@ public partial class MainLayout : BlazorLayoutComponentBase
     public NavigationManager NavigationManager { get; set; }
 
     [Inject]
+    public ToasterService ToasterService { get; set; }
+
+    [Inject]
     public IOptions<AppSettings> AppSettings { get; set; }
 
     [Inject]
@@ -21,6 +25,8 @@ public partial class MainLayout : BlazorLayoutComponentBase
     public ITmdbApiService TmdbApiService { get; set; }
 
     public bool ShowTmdbModal { get; set; }
+
+    public bool ShowAlert { get; set; }
 
     public string TmdbAuthenticationUrl { get; set; }
 
@@ -60,6 +66,15 @@ public partial class MainLayout : BlazorLayoutComponentBase
                 await UpdateUIAsync();
             }
         };
+
+        ToasterService.AddToast(Toast.CreateToast("Hello World", "Hello from Blazor", ToastType.Info, 600));
+
+        Task.Run(async () =>
+        {
+            ////await Task.Delay(2000);
+            ////ShowAlert = true;
+            ////await UpdateUIAsync();
+        });
     }
 
     #region Private use

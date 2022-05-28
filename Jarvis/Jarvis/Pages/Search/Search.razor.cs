@@ -21,12 +21,14 @@ public partial class Search : BlazorPageComponentBase
 
     public SearchViewModel SearchViewModel { get; set; }
 
+    public bool ShowAlert { get; set; }
+
     public Search()
     {
         _torrent9TorrentScrapperService = new Torrent9TorrentScrapperService("https://www.torrent9.nl");
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         PageTitle = "Search";
 
@@ -35,6 +37,7 @@ public partial class Search : BlazorPageComponentBase
         {
             await UpdateUIAsync();
         };
+
         SearchViewModel.SearchPatternChangedActionAsync = async (searchPattern) =>
         {
             try
@@ -72,6 +75,7 @@ public partial class Search : BlazorPageComponentBase
                     searchResult.Seeds);
                 var delayTask = Task.Delay(500);
                 await Task.WhenAll(addDownloadTask, delayTask);
+                ShowAlert = true;
             }
             catch (Exception)
             {

@@ -1,4 +1,3 @@
-using Jarvis.Shared.Components.AlertDialog;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Options;
@@ -16,10 +15,6 @@ public partial class Configuration : BlazorPageComponentBase
     public SecureAppSettingsViewModel SecureAppSettingsViewModel { get; set; }
 
     public EditContext EditContext { get; set; }
-
-    public AlertDialog AlertDialogSuccessRef { get; set; }
-
-    public AlertDialog AlertDialogErrorRef { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -41,11 +36,11 @@ public partial class Configuration : BlazorPageComponentBase
             var domain = SecureAppSettingsViewModel.ToDomain();
             domain.TmdbSessionId = SecureAppSettings.Value.TmdbSessionId;
             await SecureAppSettingsService.WriteAsync(domain);
-            AlertDialogSuccessRef.Show();
+            ////AlertDialogSuccessRef.Show();
         }
         catch (Exception)
         {
-            AlertDialogErrorRef.Show();
+            ////AlertDialogErrorRef.Show();
         }
     }
 }

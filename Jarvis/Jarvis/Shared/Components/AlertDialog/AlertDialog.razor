@@ -1,8 +1,0 @@
-@inherits BlazorComponentBase
-
-<div class="alert @TypeCssClass @(IsDismissable ? "alert-dismissible" : string.Empty) fade @VisibilityCssClass" role="alert">
-    @Body
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>

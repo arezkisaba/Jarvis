@@ -1,6 +1,5 @@
 using Lib.Core;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Extensions.Options;
 using System.Reflection;
 
 namespace Jarvis;

@@ -29,7 +29,7 @@ public partial class Home : BlazorPageComponentBase
     private VPNClientStateViewModel VPNClientStateViewModel { get; set; }
 
     private TorrentClientStateViewModel TorrentClientStateViewModel { get; set; }
-                                      
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();

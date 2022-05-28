@@ -1,6 +1,5 @@
 @page "/configuration"
 
-@using Jarvis.Shared.Components.AlertDialog
 @using Jarvis.Shared.Components.Loader
 @using Jarvis.Shared.Components.StretchContainer
 
@@ -15,12 +14,10 @@
 }
 else
 {
-    <div class="d-flex container">
+    <div class="d-flex container mb-4">
         <StretchContainer>
             <div class="card">
                 <div class="card-body">
-                    <AlertDialog @ref="AlertDialogSuccessRef" Body="Configuration updated successfully" IsDismissable=true Type=AlertDialogType.Success />
-                    <AlertDialog @ref="AlertDialogErrorRef" Body="Failed to update configuration" IsDismissable=true Type=AlertDialogType.Error />
                     <EditForm EditContext="@EditContext" OnValidSubmit="@HandleOnValidSubmitAsync">
                         <DataAnnotationsValidator />
                         <ValidationSummary />

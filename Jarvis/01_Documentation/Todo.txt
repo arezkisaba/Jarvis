@@ -11,3 +11,7 @@
 - UnitTest > UnitTests
 - Records
 - Namespaces
+
+Navigateur :
+- WASM
+- WebSocket

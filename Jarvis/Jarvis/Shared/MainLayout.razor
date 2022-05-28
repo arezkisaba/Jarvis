@@ -1,4 +1,6 @@
-﻿@using Lib.ApiServices.Tmdb
+﻿@using Jarvis.Shared.Components.Modal
+@using Jarvis.Shared.Components.Toaster
+@using Lib.ApiServices.Tmdb
 @using Microsoft.AspNetCore.WebUtilities;
 @using System.Globalization
 @using Microsoft.Extensions.Options
@@ -8,11 +10,10 @@
 
 <CascadingValue Value="AppName">
     <PageTitle>@AppName.ToUpperInvariant()</PageTitle>
-    <div id="view">
+    <div>
         <div class="top-row">
             <a href="#">@AppName.ToUpperInvariant()</a>
         </div>
-
         <div class="page">
             <div class="sidebar">
                 <NavMenu />
@@ -24,19 +25,11 @@
         </div>
     </div>
 
-    @if (ShowTmdbModal)
-    {
-        <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Confirmation</h4>
-                    </div>
-                    <div class="modal-body">
-                        <a href="@TmdbAuthenticationUrl" target="_blank">@loc["ConfirmTmdbAuthenticationUrl"]</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
+@*    <Modal Show=@ShowTmdbModal>
+        <Body>
+            <a href="@TmdbAuthenticationUrl" target="_blank">@loc["ConfirmTmdbAuthenticationUrl"]</a>
+        </Body>
+    </Modal>*@
+    
+    <Toaster />
 </CascadingValue>

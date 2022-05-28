@@ -6,7 +6,7 @@ public class VPNClientStateModel : ClientStateModelBase
         string title,
         string subtitle,
         bool isActive)
-        : base (title, subtitle, isActive)
+        : base(title, subtitle, isActive)
     {
     }
 }

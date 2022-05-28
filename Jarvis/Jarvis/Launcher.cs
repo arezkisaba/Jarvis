@@ -1,3 +1,4 @@
+using Jarvis.Shared.Components.Toaster;
 using Lib.ApiServices.Plex;
 using Lib.ApiServices.Tmdb;
 using Lib.ApiServices.Transmission;
@@ -88,6 +89,9 @@ public class Launcher
         services.AddSingleton<IGameControllerClientBackgroundAgent, XboxControllerBackgroundAgent>();
         services.AddSingleton<IVPNClientBackgroundAgent, OpenVPNBackgroundAgent>();
         services.AddSingleton<ITorrentClientBackgroundAgent, TransmissionBackgroundAgent>();
+
+        services.AddScoped<ToasterService>();
+
         services.AddSingleton<JarvisService>();
     }
 
