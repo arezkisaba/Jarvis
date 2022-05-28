@@ -153,6 +153,9 @@
   <data name="TmdbApiKey.Placeholder" xml:space="preserve">
     <value>Enter your TMDB API Key</value>
   </data>
+  <data name="Toaster.ConfigurationUpdated" xml:space="preserve">
+    <value>Configuration updated succesfully</value>
+  </data>
   <data name="UpdateConfiguration" xml:space="preserve">
     <value>Update configuration</value>
   </data>

@@ -1,5 +1,7 @@
+using Jarvis.Shared.Components.Toaster;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
 namespace Jarvis.Pages.Configuration;
@@ -10,9 +12,18 @@ public partial class Configuration : BlazorPageComponentBase
     public IOptions<SecureAppSettings> SecureAppSettings { get; set; }
 
     [Inject]
+    public IStringLocalizer<App> AppLoc { get; set; }
+
+    [Inject]
+    public IStringLocalizer<Configuration> Loc { get; set; }
+
+    [Inject]
     public ISecureAppSettingsService SecureAppSettingsService { get; set; }
 
     public SecureAppSettingsViewModel SecureAppSettingsViewModel { get; set; }
+
+    [Inject]
+    public ToasterService ToasterService { get; set; }
 
     public EditContext EditContext { get; set; }
 
@@ -36,11 +47,12 @@ public partial class Configuration : BlazorPageComponentBase
             var domain = SecureAppSettingsViewModel.ToDomain();
             domain.TmdbSessionId = SecureAppSettings.Value.TmdbSessionId;
             await SecureAppSettingsService.WriteAsync(domain);
-            ////AlertDialogSuccessRef.Show();
+
+            ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], Loc["Toaster.ConfigurationUpdated"], ToastType.Success, 2));
         }
         catch (Exception)
         {
-            ////AlertDialogErrorRef.Show();
+            ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.ErrorTitle"], AppLoc["Toaster.ErrorMessage"], ToastType.Danger, 2));
         }
     }
 }
