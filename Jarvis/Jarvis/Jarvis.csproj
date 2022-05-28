@@ -10,7 +10,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Services\TorrentScrapperService\Providers\YggTorrentTorrentScrapperService.cs" />
+	  <Compile Remove="Features\Services\TorrentScrapperService\Providers\YggTorrentTorrentScrapperService.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -39,11 +39,6 @@
 	  <Content Include="Resources\logo.ico">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="BackgroundAgents\TorrentClientBackgroundAgent\Exceptions\" />
-	  <Folder Include="BackgroundAgents\VPNClientBackgroundAgent\Exceptions\" />
 	</ItemGroup>
 
 </Project>

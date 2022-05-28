@@ -1,12 +1,11 @@
-using Jarvis.Configuration.AppSettings.Models;
-using Jarvis.Configuration.SecureAppSettings.Services.Contracts;
 using Jarvis.Shared.Components.Modaler.Services;
 using Jarvis.Shared.Components.Toaster.Services;
 using Jarvis.Technical;
+using Jarvis.Technical.Configuration.AppSettings.Models;
+using Jarvis.Technical.Configuration.SecureAppSettings.Services.Contracts;
 using Lib.ApiServices.Tmdb;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Options;
 using System.Globalization;
 
 namespace Jarvis.Shared;

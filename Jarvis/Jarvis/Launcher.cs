@@ -1,37 +1,36 @@
-using Jarvis.BackgroundAgents.GameControllerBackgroundAgent;
-using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Contracts;
-using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService;
-using Jarvis.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService.Contracts;
-using Jarvis.BackgroundAgents.IPResolverBackgroundAgent;
-using Jarvis.BackgroundAgents.IPResolverBackgroundAgent.Contracts;
-using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent;
-using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.Contracts;
-using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService;
-using Jarvis.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService.Contracts;
-using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent;
-using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
-using Jarvis.BackgroundAgents.VPNClientBackgroundAgent;
-using Jarvis.BackgroundAgents.VPNClientBackgroundAgent.Contracts;
-using Jarvis.Configuration;
-using Jarvis.Configuration.AppSettings.Models;
-using Jarvis.Configuration.SecureAppSettings.Models;
-using Jarvis.Configuration.SecureAppSettings.Services;
-using Jarvis.Configuration.SecureAppSettings.Services.Contracts;
-using Jarvis.Services;
-using Jarvis.Services.MediaMatchingService;
-using Jarvis.Services.MediaMatchingService.Contracts;
-using Jarvis.Services.TorrentScrapperService;
-using Jarvis.Services.TorrentScrapperService.Contracts;
-using Jarvis.Services.TorrentScrapperService.Providers;
-using Jarvis.Services.TorrentScrapperService.Providers.Bases;
+using Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent;
+using Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent.Contracts;
+using Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService;
+using Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService.Contracts;
+using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent;
+using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.Contracts;
+using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent;
+using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Contracts;
+using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService;
+using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService.Contracts;
+using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent;
+using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
+using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Contracts;
+using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Exceptions;
+using Jarvis.Features.Services;
+using Jarvis.Features.Services.MediaMatchingService;
+using Jarvis.Features.Services.MediaMatchingService.Contracts;
+using Jarvis.Features.Services.TorrentScrapperService;
+using Jarvis.Features.Services.TorrentScrapperService.Contracts;
+using Jarvis.Features.Services.TorrentScrapperService.Providers;
+using Jarvis.Features.Services.TorrentScrapperService.Providers.Bases;
 using Jarvis.Shared.Components.Modaler.Services;
 using Jarvis.Shared.Components.Toaster.Services;
+using Jarvis.Technical.Configuration;
+using Jarvis.Technical.Configuration.AppSettings.Models;
+using Jarvis.Technical.Configuration.SecureAppSettings.Models;
+using Jarvis.Technical.Configuration.SecureAppSettings.Services;
+using Jarvis.Technical.Configuration.SecureAppSettings.Services.Contracts;
 using Lib.ApiServices.Plex;
 using Lib.ApiServices.Tmdb;
 using Lib.ApiServices.Transmission;
 using Lib.Core;
 using Lib.Win32;
-using Microsoft.Extensions.Options;
 using WindowsInput;
 
 namespace Jarvis;
@@ -42,7 +41,7 @@ public class Launcher
         ConfigurationManager configuration,
         IServiceCollection services)
     {
-        var appdataDirectory = configuration.GetValue<string>($"{nameof(AppSettingsModel)}:{nameof(AppSettingsModel.appdataDirectory)}");
+        var appdataDirectory = configuration.GetValue<string>($"AppSettings:{nameof(AppSettingsModel.appdataDirectory)}");
         if (!Directory.Exists(appdataDirectory))
         {
             Directory.CreateDirectory(appdataDirectory);

@@ -1,13 +1,12 @@
-using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
-using Jarvis.Configuration.AppSettings.Models;
+using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
+using Jarvis.Features.Services.TorrentScrapperService.Contracts;
 using Jarvis.Pages.Search.ViewModels;
-using Jarvis.Services.TorrentScrapperService.Contracts;
 using Jarvis.Shared.Components.Toaster.Models;
 using Jarvis.Shared.Components.Toaster.Services;
 using Jarvis.Technical;
+using Jarvis.Technical.Configuration.AppSettings.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Options;
 
 namespace Jarvis.Pages.Search;
 

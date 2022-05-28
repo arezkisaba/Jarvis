@@ -1,18 +1,17 @@
-using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
-using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Models;
-using Jarvis.Configuration.AppSettings.Models;
-using Jarvis.Helpers;
+using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
+using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Models;
+using Jarvis.Features.Services.MediaMatchingService.Contracts;
+using Jarvis.Features.Services.MediaMatchingService.Models;
 using Jarvis.Pages.Downloads.ViewModels;
-using Jarvis.Services.MediaMatchingService.Contracts;
-using Jarvis.Services.MediaMatchingService.Models;
 using Jarvis.Shared.Components.Toaster.Models;
 using Jarvis.Shared.Components.Toaster.Services;
 using Jarvis.Technical;
+using Jarvis.Technical.Configuration.AppSettings.Models;
+using Jarvis.Technical.Helpers;
 using Lib.ApiServices.Tmdb;
 using Lib.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Options;
 
 namespace Jarvis.Pages.Downloads;
 

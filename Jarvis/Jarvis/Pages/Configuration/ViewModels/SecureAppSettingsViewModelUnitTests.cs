@@ -1,4 +1,4 @@
-using Jarvis.Configuration.SecureAppSettings.Models;
+using Jarvis.Technical.Configuration.SecureAppSettings.Models;
 using NUnit.Framework;
 
 namespace Jarvis.Pages.Configuration.ViewModels;

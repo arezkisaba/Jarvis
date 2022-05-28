@@ -1,4 +1,4 @@
-using Jarvis.BackgroundAgents.VPNClientBackgroundAgent.Models;
+using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Models;
 
 namespace Jarvis.Pages.Home.ViewModels;
 

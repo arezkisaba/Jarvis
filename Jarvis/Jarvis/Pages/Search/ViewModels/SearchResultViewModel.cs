@@ -1,4 +1,4 @@
-using Jarvis.Helpers;
+using Jarvis.Technical.Helpers;
 
 namespace Jarvis.Pages.Search.ViewModels;
 

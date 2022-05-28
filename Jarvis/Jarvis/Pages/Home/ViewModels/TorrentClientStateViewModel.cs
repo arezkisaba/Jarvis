@@ -1,4 +1,4 @@
-using Jarvis.BackgroundAgents.TorrentClientBackgroundAgent.Models;
+using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Models;
 
 namespace Jarvis.Pages.Home.ViewModels;
 

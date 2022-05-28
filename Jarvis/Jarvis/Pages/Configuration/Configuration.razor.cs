@@ -1,13 +1,12 @@
-using Jarvis.Configuration.SecureAppSettings.Models;
-using Jarvis.Configuration.SecureAppSettings.Services.Contracts;
 using Jarvis.Pages.Configuration.ViewModels;
 using Jarvis.Shared.Components.Toaster.Models;
 using Jarvis.Shared.Components.Toaster.Services;
 using Jarvis.Technical;
+using Jarvis.Technical.Configuration.SecureAppSettings.Models;
+using Jarvis.Technical.Configuration.SecureAppSettings.Services.Contracts;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Options;
 
 namespace Jarvis.Pages.Configuration;
 
