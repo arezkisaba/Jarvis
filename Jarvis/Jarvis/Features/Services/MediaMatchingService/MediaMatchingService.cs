@@ -26,16 +26,14 @@ public class MediaMatchingService : IMediaMatchingService
 
     }.AsReadOnly();
 
-    public MediaMatchingService()
-    {
-    }
-
     public (MediaTypeModel? mediaType, Match match) GetMediaTypeAndInformations(
         string content)
     {
+        var contentTransformed = content;
+
         foreach (var expression in EpisodeExpressions)
         {
-            var match = new Regex(expression).Match(content);
+            var match = new Regex(expression).Match(contentTransformed);
             if (match.Success)
             {
                 return (MediaTypeModel.Episode, match);
@@ -44,17 +42,47 @@ public class MediaMatchingService : IMediaMatchingService
 
         foreach (var expression in SeasonExpressions)
         {
-            var match = new Regex(expression).Match(content);
+            var match = new Regex(expression).Match(contentTransformed);
             if (match.Success)
             {
                 return (MediaTypeModel.Season, match);
             }
         }
 
+        foreach (var expression in MovieExpressions)
+        {
+            var match = new Regex(expression).Match(contentTransformed);
+            if (match.Success)
+            {
+                return (MediaTypeModel.Movie, match);
+            }
+        }
+
         return (null, null);
     }
 
-    #region Private use
+    public string[] GetPossibleMovieTitles(
+        string torrentTitle)
+    {
+        var indexes = new List<int>();
+        var titles = new List<string>()
+        {
+            torrentTitle
+        };
+        
+        for (var i = torrentTitle.Length - 1; i >= 0; i--)
+        {
+            if (torrentTitle[i] == ' ' || torrentTitle[i] == '.')
+            {
+                indexes.Add(i);
+            }
+        }
 
-    #endregion
+        foreach (var index in indexes)
+        {
+            titles.Add(torrentTitle[..index]);
+        }
+
+        return titles.ToArray();
+    }
 }

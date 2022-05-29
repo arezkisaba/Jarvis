@@ -124,6 +124,6 @@
     <value>Seeds</value>
   </data>
   <data name="Toaster.DownloadEnded" xml:space="preserve">
-    <value>Le téléchargement est terminé</value>
+    <value>{0} ajouté à la bibilothèque</value>
   </data>
 </root>

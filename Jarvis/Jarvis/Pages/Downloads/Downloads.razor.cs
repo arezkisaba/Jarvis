@@ -87,28 +87,45 @@ public partial class Downloads : BlazorPageComponentBase
             var (mediaType, match) = MediaMatchingService.GetMediaTypeAndInformations(download.Name);
             if (mediaType == MediaTypeModel.Episode)
             {
-                var tvShowTitle = match.Groups[1].Value;
-                var seasonNumber = int.Parse(match.Groups[2].Value);
-                var episodeNumber = int.Parse(match.Groups[3].Value);
-                var tvShows = await MediaDatabaseService.SearchTvShowAsync(tvShowTitle);
-                if (tvShows.Any())
+                var torrentTitles = MediaMatchingService.GetPossibleMovieTitles(match.Groups[1].Value);
+                foreach (var torrentTitle in torrentTitles)
                 {
-                    var tvShow = tvShows.ElementAt(0);
-                    var seasons = await MediaDatabaseService.GetSeasonsAsync(tvShow.Id);
-                    var season = seasons.SingleOrDefault(obj => obj.Number == seasonNumber);
-                    if (season != null)
+                    var seasonNumber = int.Parse(match.Groups[2].Value);
+                    var episodeNumber = int.Parse(match.Groups[3].Value);
+                    var tvShows = await MediaDatabaseService.SearchTvShowAsync(torrentTitle);
+                    if (tvShows.Any())
                     {
-                        var episodes = await MediaDatabaseService.GetEpisodesAsync(tvShow.Id, season.Number);
-                        var episode = episodes.SingleOrDefault(obj => obj.Number == episodeNumber);
-
-                        await RenameEpisodeOnDiskAsync(download.DownloadDirectory, tvShow.Title, seasonNumber, episodeNumber, "FRENCH");
+                        var tvShow = tvShows.ElementAt(0);
+                        var seasons = await MediaDatabaseService.GetSeasonsAsync(tvShow.Id);
+                        var season = seasons.SingleOrDefault(obj => obj.Number == seasonNumber);
+                        if (season != null)
+                        {
+                            await RenameEpisodeOnDiskAsync(download.DownloadDirectory, tvShow.Title, seasonNumber, episodeNumber, "FRENCH");
+                            var message = string.Format(Loc["Toaster.DownloadEnded"], $"{GetDisplayNameForEpisode(tvShow.Title, seasonNumber, episodeNumber)}");
+                            ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], message, ToastType.Success, 2));
+                            break;
+                        }
+                    }
+                }
+            }
+            else if (mediaType == MediaTypeModel.Movie)
+            {
+                var torrentTitles = MediaMatchingService.GetPossibleMovieTitles(match.Groups[1].Value);
+                foreach (var torrentTitle in torrentTitles)
+                {
+                    var movies = await MediaDatabaseService.SearchMovieAsync(torrentTitle);
+                    if (movies.Any())
+                    {
+                        var movie = movies.ElementAt(0);
+                        await RenameMovieOnDiskAsync(download.DownloadDirectory, torrentTitle, movie.Year);
+                        var message = string.Format(Loc["Toaster.DownloadEnded"], $"{GetDisplayNameForMovie(movie.Title)}");
+                        ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], message, ToastType.Success, 2));
+                        break;
                     }
                 }
             }
 
             await TorrentClientService.DeleteDownloadAsync(download.HashString);
-
-            ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], Loc["Toaster.DownloadEnded"], ToastType.Success, 2));
         }
         catch (Exception)
         {
@@ -116,7 +133,51 @@ public partial class Downloads : BlazorPageComponentBase
         }
     }
 
-    public async Task RenameEpisodeOnDiskAsync(
+    private string GetDisplayNameForMovie(
+        string movieTitle)
+    {
+        return $"{movieTitle}";
+    }
+
+    private string GetDisplayNameForEpisode(
+        string tvShowTitle,
+        int seasonNumber,
+        int episodeNumber)
+    {
+        var seasonNumberPrefix = seasonNumber < 10 ? "0" : string.Empty;
+        var episodeNumberPrefix = episodeNumber < 10 ? "0" : string.Empty;
+        return $"{tvShowTitle} S{seasonNumberPrefix}{seasonNumber}E{episodeNumberPrefix}{episodeNumber}";
+    }
+
+    private async Task RenameMovieOnDiskAsync(
+        string inputFolder,
+        string movieStorageTitle,
+        int? movieYear)
+    {
+        var files = await DirectoryWrapper.GetFilesFromFolderAsync(inputFolder, recursive: true, includePath: true);
+        files = files.Where(file => AppSettings.Value.torrentConfig.videoExtensions.Contains(FormatHelper.GetExtensionFromNameOrPath(file))).OrderBy(obj => obj).ToList();
+
+        if (files.Count() == 1)
+        {
+            foreach (var file in files)
+            {
+                var extension = FormatHelper.GetExtensionFromNameOrPath(file);
+                File.Move(file, GetMovieVideoFile(movieStorageTitle, movieYear, extension));
+            }
+        }
+        else if (files.Count() > 1)
+        {
+            var i = 1;
+            foreach (var file in files)
+            {
+                var extension = FormatHelper.GetExtensionFromNameOrPath(file);
+                File.Move(file, GetMovieVideoFile(movieStorageTitle, movieYear, extension, i));
+                i++;
+            }
+        }
+    }
+
+    private async Task RenameEpisodeOnDiskAsync(
         string inputFolder,
         string tvShowStorageTitle,
         int seasonNumber,
@@ -136,6 +197,17 @@ public partial class Downloads : BlazorPageComponentBase
         var extension = FormatHelper.GetExtensionFromNameOrPath(fileToRename);
         var episodeVideoFile = GetEpisodeVideoFile(tvShowStorageTitle, seasonNumber, episodeNumber, language, extension);
         File.Move(fileToRename, episodeVideoFile);
+    }
+
+    private string GetMovieVideoFile(
+        string storageTitle,
+        int? year,
+        string extension,
+        int part = 0)
+    {
+        var partNumber = part == 0 ? string.Empty : $" - Part{part}";
+        var fileName = $"{storageTitle} - {year}{partNumber}.{extension}";
+        return Path.Combine(GetMovieBaseFolder(), fileName.TransformForStorage());
     }
 
     private string GetEpisodeVideoFile(
@@ -168,6 +240,11 @@ public partial class Downloads : BlazorPageComponentBase
         string tvShowStorageTitle)
     {
         return Path.Combine(GetTvShowBaseFolder(), tvShowStorageTitle);
+    }
+
+    private string GetMovieBaseFolder()
+    {
+        return AppSettings.Value.computer.moviesFolder;
     }
 
     private string GetTvShowBaseFolder()
