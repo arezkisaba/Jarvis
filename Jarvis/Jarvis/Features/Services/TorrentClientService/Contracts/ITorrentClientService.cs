@@ -12,7 +12,7 @@ public interface ITorrentClientService
         string name,
         string torrentUrl,
         string downloadDirectory,
-        string size,
+        long size,
         int seeds);
 
     Task DeleteDownloadAsync(

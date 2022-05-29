@@ -37,7 +37,7 @@ else
                                                 <div>
                                                     <span class="badge badge-info">@downloadItem.Provider</span>
                                                     <span class="badge badge-primary">@downloadItem.Seeds @loc["Seeds"]</span>
-                                                    <span class="badge badge-secondary">@downloadItem.Size</span>
+                                                    <span class="badge badge-secondary">@downloadItem.SizeDisplayed</span>
                                                 </div>
                                                 <div class="progress mt-2">
                                                     <div class="progress-bar progress-bar-animated @(downloadItem.PercentDone < 1 ? "progress-bar-striped" : "bg-success")" role="progressbar" aria-valuenow="@(downloadItem.PercentDone * 100)" aria-valuemin="0" aria-valuemax="100" style="width: @(downloadItem.PercentDone * 100)%"></div>

@@ -5,4 +5,4 @@ public readonly record struct TorrentDto(
     string Name,
     string Provider,
     int Seeds,
-    double Size);
+    long Size);

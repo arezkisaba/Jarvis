@@ -3,6 +3,7 @@ using Jarvis.Features.Services.MediaMatchingService.Contracts;
 using Jarvis.Features.Services.MediaMatchingService.Models;
 using Jarvis.Features.Services.MediaNamingService.Contracts;
 using Jarvis.Features.Services.MediaRenamerService.Contracts;
+using Jarvis.Features.Services.MediaSizingService.Contracts;
 using Jarvis.Features.Services.TorrentClientService.Contracts;
 using Jarvis.Features.Services.TorrentClientService.Models;
 using Jarvis.Pages.Downloads.ViewModels;
@@ -10,7 +11,6 @@ using Jarvis.Shared.Components.Toaster.Models;
 using Jarvis.Shared.Components.Toaster.Services;
 using Jarvis.Technical;
 using Jarvis.Technical.Configuration.AppSettings.Models;
-using Jarvis.Technical.Helpers;
 using Lib.ApiServices.Tmdb;
 using Lib.Core;
 using Microsoft.AspNetCore.Components;
@@ -20,9 +20,6 @@ namespace Jarvis.Pages.Downloads;
 
 public partial class Downloads : BlazorPageComponentBase
 {
-    [Inject]
-    private IOptions<AppSettingsModel> AppSettings { get; set; }
-
     [Inject]
     public IStringLocalizer<App> AppLoc { get; set; }
 
@@ -37,6 +34,9 @@ public partial class Downloads : BlazorPageComponentBase
 
     [Inject]
     private ITmdbApiService MediaDatabaseService { get; set; }
+
+    [Inject]
+    private IMediaSizingService MediaSizingService { get; set; }
 
     [Inject]
     private IMediaNamingService MediaNamingService { get; set; }
@@ -74,6 +74,7 @@ public partial class Downloads : BlazorPageComponentBase
     {
         DownloadsViewModel = new DownloadsViewModel(
             TorrentClientService.TorrentDownloads.Select(obj => new DownloadViewModel(
+                mediaSizingService: MediaSizingService,
                 name: obj.Name,
                 url: obj.Url,
                 downloadDirectory: obj.DownloadDirectory,

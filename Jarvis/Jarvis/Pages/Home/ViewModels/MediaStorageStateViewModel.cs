@@ -1,10 +1,12 @@
 using Jarvis.Features.Agents.MediaStorageAgent.Models;
-using Jarvis.Technical.Helpers;
+using Jarvis.Features.Services.MediaSizingService.Contracts;
 
 namespace Jarvis.Pages.Home.ViewModels;
 
 public sealed class MediaStorageStateViewModel
 {
+    private readonly IMediaSizingService _mediaSizingService;
+
     public IEnumerable<string> DefaultChartColors = new List<string>() { "#E89725", "#25CFAF", "#DC3545", "#259DE8", "#54C6FF", "#28A745", "#CA45FF", "#4B594E", "#C4DB2E" };
 
     public IEnumerable<(string DisplayName, long Size, string Color)> Folders { get; private set; }
@@ -20,8 +22,10 @@ public sealed class MediaStorageStateViewModel
     public string PieChartCssStyle { get; private set; }
 
     public MediaStorageStateViewModel(
+        IMediaSizingService mediaSizingService,
         MediaStorageStateModel model)
     {
+        _mediaSizingService = mediaSizingService;
         Update(model);
     }
 
@@ -42,7 +46,7 @@ public sealed class MediaStorageStateViewModel
 
     private void ComputeTitle()
     {
-        Title = $"{FormatHelper.GetStringWithUnitFromSize(UsedSpace)} / {FormatHelper.GetStringWithUnitFromSize(TotalSpace)}";
+        Title = $"{_mediaSizingService.ConvertBytesToStringWithUnit(UsedSpace)} / {_mediaSizingService.ConvertBytesToStringWithUnit(TotalSpace)}";
     }
 
     private void ComputePieChartCssStyle()

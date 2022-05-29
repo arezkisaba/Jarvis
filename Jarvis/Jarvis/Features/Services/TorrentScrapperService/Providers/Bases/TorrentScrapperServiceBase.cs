@@ -72,7 +72,7 @@ public abstract class TorrentScrapperServiceBase
         return string.Empty;
     }
 
-    protected double ConvertSizeStringToNumber(
+    protected long ConvertSizeStringToNumber(
         string sizeString)
     {
         sizeString = sizeString.Replace("K", " K");
@@ -85,9 +85,9 @@ public abstract class TorrentScrapperServiceBase
         sizeString = sizeString.RemoveDoubleSpacesAndTrim();
 
         var parts = sizeString.Split(' ');
-        var number = Convert.ToDouble(parts[0], CultureInfo.InvariantCulture);
+        var number = Convert.ToInt32(parts[0], CultureInfo.InvariantCulture);
         var unit = parts[1];
-        double torrentSize;
+        long torrentSize;
 
         switch (unit)
         {
@@ -95,19 +95,19 @@ public abstract class TorrentScrapperServiceBase
             case "KB":
             case "Ko":
             case "KO":
-                torrentSize = (double)(number * 1024);
+                torrentSize = number * 1024;
                 break;
             case "Mb":
             case "MB":
             case "Mo":
             case "MO":
-                torrentSize = (double)(number * 1024 * 1024);
+                torrentSize = number * 1024 * 1024;
                 break;
             case "Gb":
             case "GB":
             case "Go":
             case "GO":
-                torrentSize = (double)(number * 1024 * 1024 * 1024);
+                torrentSize = number * 1024 * 1024 * 1024;
                 break;
             default:
                 torrentSize = 0;

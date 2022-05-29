@@ -10,7 +10,7 @@ public class TorrentDownloadModel
 
     public double PercentDone { get; internal set; }
 
-    public string Size { get; }
+    public long Size { get; }
 
     public int Seeds { get; }
 
@@ -24,7 +24,7 @@ public class TorrentDownloadModel
         string name,
         string url,
         string downloadDirectory,
-        string size,
+        long size,
         int seeds,
         string provider,
         string id,

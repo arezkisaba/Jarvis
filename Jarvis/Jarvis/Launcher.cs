@@ -19,6 +19,8 @@ using Jarvis.Features.Services.MediaNamingService;
 using Jarvis.Features.Services.MediaNamingService.Contracts;
 using Jarvis.Features.Services.MediaRenamerService;
 using Jarvis.Features.Services.MediaRenamerService.Contracts;
+using Jarvis.Features.Services.MediaSizingService;
+using Jarvis.Features.Services.MediaSizingService.Contracts;
 using Jarvis.Features.Services.TorrentClientService;
 using Jarvis.Features.Services.TorrentClientService.Contracts;
 using Jarvis.Features.Services.TorrentScrapperService;
@@ -111,6 +113,7 @@ public class Launcher
             }
         ));
 
+        services.AddScoped<IMediaSizingService, MediaSizingService>();
         services.AddScoped<IMediaNamingService, MediaNamingService>();
         services.AddScoped<IMediaMatchingService, MediaMatchingService>();
         services.AddScoped<IMediaRenamerService, MediaRenamerService>();

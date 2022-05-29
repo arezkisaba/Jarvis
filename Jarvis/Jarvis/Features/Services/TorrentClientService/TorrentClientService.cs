@@ -30,7 +30,7 @@ public class TorrentClientService : ITorrentClientService
         string name,
         string url,
         string downloadDirectory,
-        string size,
+        long size,
         int seeds)
     {
         try

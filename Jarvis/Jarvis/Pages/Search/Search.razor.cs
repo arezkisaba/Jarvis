@@ -1,4 +1,5 @@
 using Jarvis.Features.Agents.TorrentClientAgent.Contracts;
+using Jarvis.Features.Services.MediaSizingService.Contracts;
 using Jarvis.Features.Services.TorrentClientService.Contracts;
 using Jarvis.Features.Services.TorrentScrapperService.Contracts;
 using Jarvis.Pages.Search.ViewModels;
@@ -23,13 +24,13 @@ public partial class Search : BlazorPageComponentBase
     public IStringLocalizer<Search> Loc { get; set; }
 
     [Inject]
-    private ITorrentClientAgent TorrentClientBackgroundAgent { get; set; }
-
-    [Inject]
     private ITorrentClientService TorrentClientService { get; set; }
 
     [Inject]
     private ITorrentScrapperService TorrentScrapperService { get; set; }
+
+    [Inject]
+    private IMediaSizingService MediaSizingService { get; set; }
 
     [Inject]
     public ToasterService ToasterService { get; set; }
@@ -58,11 +59,12 @@ public partial class Search : BlazorPageComponentBase
 
                 var items = await TorrentScrapperService.GetResultsAsync(searchPattern);
                 SearchViewModel.SearchResults = items.Select(obj => new SearchResultViewModel(
-                    obj.Name,
-                    obj.Size,
-                    obj.Seeds,
-                    obj.Provider,
-                    obj.DescriptionUrl)
+                    mediaSizingService: MediaSizingService,
+                    name: obj.Name,
+                    size: obj.Size,
+                    seeds: obj.Seeds,
+                    provider: obj.Provider,
+                    descriptionUrl: obj.DescriptionUrl)
                 ).OrderByDescending(obj => obj.Seeds).ToList();
             }
             catch (Exception)

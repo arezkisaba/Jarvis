@@ -7,6 +7,7 @@ using Jarvis.Features.Agents.TorrentClientAgent.Contracts;
 using Jarvis.Features.Agents.TorrentClientAgent.Models;
 using Jarvis.Features.Agents.VPNClientAgent.Contracts;
 using Jarvis.Features.Agents.VPNClientAgent.Models;
+using Jarvis.Features.Services.MediaSizingService.Contracts;
 using Jarvis.Pages.Home.ViewModels;
 using Jarvis.Technical;
 using Microsoft.AspNetCore.Components;
@@ -31,6 +32,9 @@ public partial class Home : BlazorPageComponentBase
     [Inject]
     private ITorrentClientAgent TorrentClientBackgroundAgent { get; set; }
 
+    [Inject]
+    private IMediaSizingService MediaSizingService { get; set; }
+
     private string PublicIPAddress { get; set; }
 
     private MediaStorageStateViewModel MediaStorageStateViewModel { get; set; }
@@ -52,7 +56,7 @@ public partial class Home : BlazorPageComponentBase
             PublicIPAddress = (string)sender;
             await UpdateUIAsync();
         };
-        MediaStorageStateViewModel = new MediaStorageStateViewModel(MediaStorageBackgroundAgent.CurrentState);
+        MediaStorageStateViewModel = new MediaStorageStateViewModel(MediaSizingService, MediaStorageBackgroundAgent.CurrentState);
         MediaStorageBackgroundAgent.StateChanged += async (sender, __) =>
         {
             MediaStorageStateViewModel.Update((MediaStorageStateModel)sender);

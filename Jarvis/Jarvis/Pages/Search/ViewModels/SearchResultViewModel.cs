@@ -1,12 +1,16 @@
-using Jarvis.Technical.Helpers;
+using Jarvis.Features.Services.MediaSizingService.Contracts;
 
 namespace Jarvis.Pages.Search.ViewModels;
 
 public sealed class SearchResultViewModel
 {
+    private readonly IMediaSizingService _mediaSizingService;
+
     public string Name { get; private set; }
 
-    public string Size { get; private set; }
+    public long Size { get; private set; }
+
+    public string SizeDisplayed { get; }
 
     public int Seeds { get; private set; }
 
@@ -15,14 +19,17 @@ public sealed class SearchResultViewModel
     public string DescriptionUrl { get; private set; }
 
     public SearchResultViewModel(
+        IMediaSizingService mediaSizingService,
         string name,
-        double size,
+        long size,
         int seeds,
         string provider,
         string descriptionUrl)
     {
+        _mediaSizingService = mediaSizingService;
         Name = name;
-        Size = FormatHelper.GetStringWithUnitFromSize(size);
+        Size = size;
+        SizeDisplayed = _mediaSizingService.ConvertBytesToStringWithUnit(size);
         Seeds = seeds;
         Provider = provider;
         DescriptionUrl = descriptionUrl;
