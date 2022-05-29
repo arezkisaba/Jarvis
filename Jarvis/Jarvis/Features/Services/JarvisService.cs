@@ -11,52 +11,52 @@ public class JarvisService
 {
     private readonly ILogger<TransmissionAgent> _logger;
 
-    public IIPResolverAgent IPResolverBackgroundAgent { get; }
+    public IIPResolverAgent IPResolverAgent { get; }
 
-    public IMediaStorageAgent MediaStorageBackgroundAgent { get; }
+    public IMediaStorageAgent MediaStorageAgent { get; }
 
-    public IGameControllerClientAgent GameControllerClientBackgroundAgent { get; }
+    public IGameControllerClientAgent GameControllerClientAgent { get; }
 
-    public IVPNClientAgent VPNClientBackgroundAgent { get; }
+    public IVPNClientAgent VPNClientAgent { get; }
 
-    public ITorrentClientAgent TorrentClientBackgroundAgent { get; }
+    public ITorrentClientAgent TorrentClientAgent { get; }
 
     public JarvisService(
         ILogger<TransmissionAgent> logger,
-        IIPResolverAgent ipResolverBackgroundAgent,
-        IMediaStorageAgent mediaStorageBackgroundAgent,
-        IGameControllerClientAgent gameControllerClientBackgroundAgent,
-        IVPNClientAgent vpnClientBackgroundAgent,
-        ITorrentClientAgent torrentClientBackgroundAgent)
+        IIPResolverAgent ipResolverAgent,
+        IMediaStorageAgent mediaStorageAgent,
+        IGameControllerClientAgent gameControllerClientAgent,
+        IVPNClientAgent vpnClientAgent,
+        ITorrentClientAgent torrentClientAgent)
     {
         _logger = logger;
-        IPResolverBackgroundAgent = ipResolverBackgroundAgent;
-        MediaStorageBackgroundAgent = mediaStorageBackgroundAgent;
-        GameControllerClientBackgroundAgent = gameControllerClientBackgroundAgent;
-        VPNClientBackgroundAgent = vpnClientBackgroundAgent;
-        TorrentClientBackgroundAgent = torrentClientBackgroundAgent;
+        IPResolverAgent = ipResolverAgent;
+        MediaStorageAgent = mediaStorageAgent;
+        GameControllerClientAgent = gameControllerClientAgent;
+        VPNClientAgent = vpnClientAgent;
+        TorrentClientAgent = torrentClientAgent;
     }
 
     public async Task StartAsync()
     {
-        IPResolverBackgroundAgent.StartBackgroundLoop();
-        MediaStorageBackgroundAgent.StartBackgroundLoop();
-        GameControllerClientBackgroundAgent.StartBackgroundLoopForControllerDetection();
-        GameControllerClientBackgroundAgent.StartBackgroundLoopForCommands();
-        GameControllerClientBackgroundAgent.StartBackgroundLoopForSoundAndMouseManagement();
-        VPNClientBackgroundAgent.StartBackgroundLoop();
-        TorrentClientBackgroundAgent.StartBackgroundLoop();
+        IPResolverAgent.StartBackgroundLoop();
+        MediaStorageAgent.StartBackgroundLoop();
+        GameControllerClientAgent.StartBackgroundLoopForControllerDetection();
+        GameControllerClientAgent.StartBackgroundLoopForCommands();
+        GameControllerClientAgent.StartBackgroundLoopForSoundAndMouseManagement();
+        VPNClientAgent.StartBackgroundLoop();
+        TorrentClientAgent.StartBackgroundLoop();
 
         _ = Task.Run(() => StartArcomShieldAsync());
 
-        await VPNClientBackgroundAgent.StartClientAsync();
-        await TorrentClientBackgroundAgent.StartClientAsync();
+        await VPNClientAgent.StartClientAsync();
+        await TorrentClientAgent.StartClientAsync();
     }
 
     public async Task StopAsync()
     {
-        await VPNClientBackgroundAgent.StopClientAsync();
-        await TorrentClientBackgroundAgent.StopClientAsync();
+        await VPNClientAgent.StopClientAsync();
+        await TorrentClientAgent.StopClientAsync();
     }
 
     #region Private use
@@ -67,19 +67,19 @@ public class JarvisService
         {
             try
             {
-                if (VPNClientBackgroundAgent.CurrentState == null || TorrentClientBackgroundAgent.CurrentState == null)
+                if (VPNClientAgent.CurrentState == null || TorrentClientAgent.CurrentState == null)
                 {
                     continue;
                 }
 
-                if (VPNClientBackgroundAgent.CurrentState.IsActive && !TorrentClientBackgroundAgent.CurrentState.IsActive)
+                if (VPNClientAgent.CurrentState.IsActive && !TorrentClientAgent.CurrentState.IsActive)
                 {
-                    await TorrentClientBackgroundAgent.StartClientAsync();
+                    await TorrentClientAgent.StartClientAsync();
                 }
 
-                if (!VPNClientBackgroundAgent.CurrentState.IsActive && TorrentClientBackgroundAgent.CurrentState.IsActive)
+                if (!VPNClientAgent.CurrentState.IsActive && TorrentClientAgent.CurrentState.IsActive)
                 {
-                    await TorrentClientBackgroundAgent.StopClientAsync();
+                    await TorrentClientAgent.StopClientAsync();
                 }
             }
             catch (Exception ex)
