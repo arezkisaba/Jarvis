@@ -107,12 +107,12 @@ public class Launcher
             }
         ));
 
-        services.AddSingleton<ICECService, CECService>();
         services.AddSingleton<IMediaMatchingService, MediaMatchingService>();
+
+        services.AddSingleton<ICECService, CECService>();
         services.AddSingleton<IMediaStorageService, MediaStorageService>();
         services.AddSingleton<ITorrentClientService, TorrentClientService>();
-        ////services.AddSingleton<IMediaCenterService, MediaCenterService>();
-        ////services.AddSingleton<IMediaService, MediaService>();
+
         services.AddSingleton<IIPResolverBackgroundAgent, IPResolverBackgroundAgent>();
         services.AddSingleton<IMediaStorageBackgroundAgent, MediaStorageBackgroundAgent>();
         services.AddSingleton<IGameControllerClientBackgroundAgent, XboxControllerBackgroundAgent>();
