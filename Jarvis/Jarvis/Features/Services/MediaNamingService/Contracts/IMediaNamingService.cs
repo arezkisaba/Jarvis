@@ -2,7 +2,7 @@ namespace Jarvis.Features.Services.MediaNamingService.Contracts;
 
 public interface IMediaNamingService
 {
-    string[] GetPossibleMovieTitles(
+    string[] GetPossibleMediaTitles(
         string torrentTitle);
 
     string GetDisplayNameForMovie(
@@ -11,5 +11,11 @@ public interface IMediaNamingService
     string GetDisplayNameForEpisode(
         string tvShowTitle,
         int seasonNumber,
+        int episodeNumber);
+
+    string GetShortNameForSeason(
+        int seasonNumber);
+
+    string GetShortNameForEpisode(
         int episodeNumber);
 }

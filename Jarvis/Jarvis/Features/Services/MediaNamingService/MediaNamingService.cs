@@ -4,18 +4,18 @@ namespace Jarvis.Features.Services.MediaNamingService;
 
 public class MediaNamingService : IMediaNamingService
 {
-    public string[] GetPossibleMovieTitles(
-        string torrentTitle)
+    public string[] GetPossibleMediaTitles(
+        string foundTitle)
     {
         var indexes = new List<int>();
         var titles = new List<string>()
         {
-            torrentTitle
+            foundTitle
         };
         
-        for (var i = torrentTitle.Length - 1; i >= 0; i--)
+        for (var i = foundTitle.Length - 1; i >= 0; i--)
         {
-            if (torrentTitle[i] == ' ' || torrentTitle[i] == '.')
+            if (foundTitle[i] == ' ' || foundTitle[i] == '.')
             {
                 indexes.Add(i);
             }
@@ -23,7 +23,7 @@ public class MediaNamingService : IMediaNamingService
 
         foreach (var index in indexes)
         {
-            titles.Add(torrentTitle[..index]);
+            titles.Add(foundTitle[..index]);
         }
 
         return titles.ToArray();
@@ -44,4 +44,28 @@ public class MediaNamingService : IMediaNamingService
         var episodeNumberPrefix = episodeNumber < 10 ? "0" : string.Empty;
         return $"{tvShowTitle} S{seasonNumberPrefix}{seasonNumber}E{episodeNumberPrefix}{episodeNumber}";
     }
+
+    public string GetShortNameForSeason(
+        int seasonNumber)
+    {
+        return GetShortNameForLetter("S", seasonNumber);
+    }
+
+    public string GetShortNameForEpisode(
+        int episodeNumber)
+    {
+        return GetShortNameForLetter("E", episodeNumber);
+    }
+
+    #region Private use
+
+    private string GetShortNameForLetter(
+        string letter,
+        int number)
+    {
+        var prefix = number < 10 ? "0" : string.Empty;
+        return $"{letter}{prefix}{number}";
+    }
+
+    #endregion
 }

@@ -27,7 +27,7 @@ public class MediaNamingServiceTU
     public void GetPossibleMovieTitles_TestCase_1()
     {
         var mediaNamingService = new MediaNamingService();
-        var titles = mediaNamingService.GetPossibleMovieTitles("Avengers : L'Ère d'Ultron FRENCH HDTV 2021");
+        var titles = mediaNamingService.GetPossibleMediaTitles("Avengers : L'Ère d'Ultron FRENCH HDTV 2021");
         Assert.AreEqual(7, titles.Count());
         Assert.AreEqual("Avengers : L'Ère d'Ultron FRENCH HDTV 2021", titles[0]);
         Assert.AreEqual("Avengers : L'Ère d'Ultron FRENCH HDTV", titles[1]);

@@ -17,6 +17,8 @@ using Jarvis.Features.Services.MediaMatchingService;
 using Jarvis.Features.Services.MediaMatchingService.Contracts;
 using Jarvis.Features.Services.MediaNamingService;
 using Jarvis.Features.Services.MediaNamingService.Contracts;
+using Jarvis.Features.Services.MediaRenamerService;
+using Jarvis.Features.Services.MediaRenamerService.Contracts;
 using Jarvis.Features.Services.TorrentClientService;
 using Jarvis.Features.Services.TorrentClientService.Contracts;
 using Jarvis.Features.Services.TorrentScrapperService;
@@ -111,6 +113,7 @@ public class Launcher
 
         services.AddScoped<IMediaNamingService, MediaNamingService>();
         services.AddScoped<IMediaMatchingService, MediaMatchingService>();
+        services.AddScoped<IMediaRenamerService, MediaRenamerService>();
 
         services.AddSingleton<ICECService, CECService>();
         services.AddSingleton<IMediaStorageService, MediaStorageService>();

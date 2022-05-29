@@ -20,15 +20,13 @@
 		<PackageReference Include="Lib.ApiServices.Tmdb" Version="1.1.2" />
 		<PackageReference Include="Lib.ApiServices.Transmission" Version="1.1.1" />
 		<PackageReference Include="InputSimulatorCore" Version="1.0.5" />
-		<PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
-		<PackageReference Include="System.ServiceProcess.ServiceController" Version="5.0.0" />
 		<PackageReference Include="SharpDX" Version="4.2.0" />
 		<PackageReference Include="SharpDX.XInput" Version="4.2.0" />
-		<PackageReference Include="MonoTorrent" Version="1.0.28" />
+		<PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+		<PackageReference Include="System.ServiceProcess.ServiceController" Version="5.0.0" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0-release-20220113-05" />
 		<PackageReference Include="NUnit" Version="3.13.2" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
-		<PackageReference Include="FakeItEasy" Version="7.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
