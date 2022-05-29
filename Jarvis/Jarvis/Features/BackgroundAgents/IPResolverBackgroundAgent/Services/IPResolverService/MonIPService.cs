@@ -1,8 +1,8 @@
-using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.IPResolverService.Contracts;
+using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.Services.IPResolverService.Contracts;
 using Lib.Core;
 using System.Text.RegularExpressions;
 
-namespace Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.IPResolverService;
+namespace Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.Services.IPResolverService;
 
 public class MonIPService : IIPResolverService
 {

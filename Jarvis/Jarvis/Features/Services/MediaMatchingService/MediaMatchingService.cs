@@ -60,29 +60,4 @@ public class MediaMatchingService : IMediaMatchingService
 
         return (null, null);
     }
-
-    public string[] GetPossibleMovieTitles(
-        string torrentTitle)
-    {
-        var indexes = new List<int>();
-        var titles = new List<string>()
-        {
-            torrentTitle
-        };
-        
-        for (var i = torrentTitle.Length - 1; i >= 0; i--)
-        {
-            if (torrentTitle[i] == ' ' || torrentTitle[i] == '.')
-            {
-                indexes.Add(i);
-            }
-        }
-
-        foreach (var index in indexes)
-        {
-            titles.Add(torrentTitle[..index]);
-        }
-
-        return titles.ToArray();
-    }
 }

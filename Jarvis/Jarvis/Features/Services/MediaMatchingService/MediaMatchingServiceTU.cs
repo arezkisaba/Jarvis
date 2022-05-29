@@ -70,19 +70,4 @@ public class MediaMatchingServiceTU
         Assert.AreEqual("Visitors", match.Groups[1].Value);
         Assert.AreEqual(1, int.Parse(match.Groups[2].Value));
     }
-
-    [TestCase(TestName = "GetPossibleMovieTitles : Cas 1")]
-    public void GetPossibleMovieTitles_TestCase_1()
-    {
-        var mediaMatchingService = new MediaMatchingService();
-        var titles = mediaMatchingService.GetPossibleMovieTitles("Avengers : L'Ère d'Ultron FRENCH HDTV 2021");
-        Assert.AreEqual(7, titles.Count());
-        Assert.AreEqual("Avengers : L'Ère d'Ultron FRENCH HDTV 2021", titles[0]);
-        Assert.AreEqual("Avengers : L'Ère d'Ultron FRENCH HDTV", titles[1]);
-        Assert.AreEqual("Avengers : L'Ère d'Ultron FRENCH", titles[2]);
-        Assert.AreEqual("Avengers : L'Ère d'Ultron", titles[3]);
-        Assert.AreEqual("Avengers : L'Ère", titles[4]);
-        Assert.AreEqual("Avengers :", titles[5]);
-        Assert.AreEqual("Avengers", titles[6]);
-    }
 }

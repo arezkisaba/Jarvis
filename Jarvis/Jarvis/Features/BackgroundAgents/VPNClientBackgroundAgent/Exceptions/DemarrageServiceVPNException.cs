@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Exceptions;
+﻿namespace Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Exceptions;
 
 [Serializable]
 public class DemarrageServiceVPNException : Exception

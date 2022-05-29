@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService;
+namespace Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Services.MediaStorageService;
 
 [TestFixture]
 public class MediaStorageServiceTU

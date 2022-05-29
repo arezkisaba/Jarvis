@@ -1,4 +1,4 @@
-namespace Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService.Contracts;
+namespace Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Services.MediaStorageService.Contracts;
 
 public interface IMediaStorageService
 {

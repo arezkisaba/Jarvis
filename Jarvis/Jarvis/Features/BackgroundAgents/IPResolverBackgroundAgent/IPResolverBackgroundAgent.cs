@@ -1,6 +1,6 @@
 using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.IPResolverService;
-using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.IPResolverService.Contracts;
+using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.Services.IPResolverService;
+using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.Services.IPResolverService.Contracts;
 
 namespace Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent;
 

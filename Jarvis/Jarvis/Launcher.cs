@@ -6,8 +6,8 @@ using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent;
 using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.Contracts;
 using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent;
 using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService;
-using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService.Contracts;
+using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Services.MediaStorageService;
+using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Services.MediaStorageService.Contracts;
 using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent;
 using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
 using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent;
@@ -15,6 +15,8 @@ using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Contracts;
 using Jarvis.Features.Services;
 using Jarvis.Features.Services.MediaMatchingService;
 using Jarvis.Features.Services.MediaMatchingService.Contracts;
+using Jarvis.Features.Services.MediaNamingService;
+using Jarvis.Features.Services.MediaNamingService.Contracts;
 using Jarvis.Features.Services.TorrentClientService;
 using Jarvis.Features.Services.TorrentClientService.Contracts;
 using Jarvis.Features.Services.TorrentScrapperService;
@@ -107,7 +109,8 @@ public class Launcher
             }
         ));
 
-        services.AddSingleton<IMediaMatchingService, MediaMatchingService>();
+        services.AddScoped<IMediaNamingService, MediaNamingService>();
+        services.AddScoped<IMediaMatchingService, MediaMatchingService>();
 
         services.AddSingleton<ICECService, CECService>();
         services.AddSingleton<IMediaStorageService, MediaStorageService>();

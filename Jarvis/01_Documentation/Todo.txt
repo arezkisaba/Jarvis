@@ -16,6 +16,9 @@ Navigateur :
 - WASM
 - WebSocket
 
+AzureDevOps :
+- Correct Production build
+
 UnitTests => TU
 IntegrationTests => TI
 analyse dépendances

@@ -1,6 +1,7 @@
 using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
 using Jarvis.Features.Services.MediaMatchingService.Contracts;
 using Jarvis.Features.Services.MediaMatchingService.Models;
+using Jarvis.Features.Services.MediaNamingService.Contracts;
 using Jarvis.Features.Services.TorrentClientService.Contracts;
 using Jarvis.Features.Services.TorrentClientService.Models;
 using Jarvis.Pages.Downloads.ViewModels;
@@ -35,6 +36,9 @@ public partial class Downloads : BlazorPageComponentBase
 
     [Inject]
     private ITmdbApiService MediaDatabaseService { get; set; }
+
+    [Inject]
+    private IMediaNamingService MediaNamingService { get; set; }
 
     [Inject]
     private IMediaMatchingService MediaMatchingService { get; set; }
@@ -87,7 +91,7 @@ public partial class Downloads : BlazorPageComponentBase
             var (mediaType, match) = MediaMatchingService.GetMediaTypeAndInformations(download.Name);
             if (mediaType == MediaTypeModel.Episode)
             {
-                var torrentTitles = MediaMatchingService.GetPossibleMovieTitles(match.Groups[1].Value);
+                var torrentTitles = MediaNamingService.GetPossibleMovieTitles(match.Groups[1].Value);
                 foreach (var torrentTitle in torrentTitles)
                 {
                     var seasonNumber = int.Parse(match.Groups[2].Value);
@@ -101,7 +105,7 @@ public partial class Downloads : BlazorPageComponentBase
                         if (season != null)
                         {
                             await RenameEpisodeOnDiskAsync(download.DownloadDirectory, tvShow.Title, seasonNumber, episodeNumber, "FRENCH");
-                            var message = string.Format(Loc["Toaster.DownloadEnded"], $"{GetDisplayNameForEpisode(tvShow.Title, seasonNumber, episodeNumber)}");
+                            var message = string.Format(Loc["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForEpisode(tvShow.Title, seasonNumber, episodeNumber)}");
                             ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], message, ToastType.Success, 2));
                             break;
                         }
@@ -110,7 +114,7 @@ public partial class Downloads : BlazorPageComponentBase
             }
             else if (mediaType == MediaTypeModel.Movie)
             {
-                var torrentTitles = MediaMatchingService.GetPossibleMovieTitles(match.Groups[1].Value);
+                var torrentTitles = MediaNamingService.GetPossibleMovieTitles(match.Groups[1].Value);
                 foreach (var torrentTitle in torrentTitles)
                 {
                     var movies = await MediaDatabaseService.SearchMovieAsync(torrentTitle);
@@ -118,7 +122,7 @@ public partial class Downloads : BlazorPageComponentBase
                     {
                         var movie = movies.ElementAt(0);
                         await RenameMovieOnDiskAsync(download.DownloadDirectory, torrentTitle, movie.Year);
-                        var message = string.Format(Loc["Toaster.DownloadEnded"], $"{GetDisplayNameForMovie(movie.Title)}");
+                        var message = string.Format(Loc["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForMovie(movie.Title)}");
                         ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], message, ToastType.Success, 2));
                         break;
                     }
@@ -131,22 +135,6 @@ public partial class Downloads : BlazorPageComponentBase
         {
             ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.ErrorTitle"], AppLoc["Toaster.ErrorMessage"], ToastType.Danger, 2));
         }
-    }
-
-    private string GetDisplayNameForMovie(
-        string movieTitle)
-    {
-        return $"{movieTitle}";
-    }
-
-    private string GetDisplayNameForEpisode(
-        string tvShowTitle,
-        int seasonNumber,
-        int episodeNumber)
-    {
-        var seasonNumberPrefix = seasonNumber < 10 ? "0" : string.Empty;
-        var episodeNumberPrefix = episodeNumber < 10 ? "0" : string.Empty;
-        return $"{tvShowTitle} S{seasonNumberPrefix}{seasonNumber}E{episodeNumberPrefix}{episodeNumber}";
     }
 
     private async Task RenameMovieOnDiskAsync(

@@ -1,6 +1,6 @@
 using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.MediaStorageService.Contracts;
 using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Models;
+using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Services.MediaStorageService.Contracts;
 using Jarvis.Technical.Configuration.AppSettings.Models;
 
 namespace Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent;
