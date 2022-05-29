@@ -91,7 +91,7 @@ public class OpenVPNAgent : IVPNClientAgent
             {
                 if (counter >= timeoutDelay)
                 {
-                    throw new DemarrageServiceVPNException("Unable to start VPN client", null);
+                    throw new VPNClientStartException("Unable to start VPN client", null);
                 }
 
                 await Task.Delay(500);
@@ -121,7 +121,7 @@ public class OpenVPNAgent : IVPNClientAgent
             {
                 if (counter >= timeoutDelay)
                 {
-                    throw new ArretServiceVPNException("Unable to stop VPN client", null);
+                    throw new VPNClientStopException("Unable to stop VPN client", null);
                 }
 
                 await Task.Delay(500);

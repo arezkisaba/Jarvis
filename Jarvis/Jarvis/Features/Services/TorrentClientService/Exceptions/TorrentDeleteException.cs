@@ -1,8 +1,8 @@
 ﻿namespace Jarvis.Features.Services.TorrentClientService.Exceptions;
 
-public class SuppressionTorrentException : Exception
+public class TorrentDeleteException : Exception
 {
-    public SuppressionTorrentException(
+    public TorrentDeleteException(
         string message,
         Exception innerException)
         : base(message, innerException)

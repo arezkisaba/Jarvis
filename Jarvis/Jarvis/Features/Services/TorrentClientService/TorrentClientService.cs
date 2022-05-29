@@ -67,7 +67,7 @@ public class TorrentClientService : ITorrentClientService
         }
         catch (Exception ex)
         {
-            throw new AjoutTorrentException("Failed to add torrent.", ex);
+            throw new Exceptions.TorrentAddException("Failed to add torrent.", ex);
         }
     }
 
@@ -82,7 +82,7 @@ public class TorrentClientService : ITorrentClientService
         }
         catch (Exception ex)
         {
-            throw new SuppressionTorrentException("Failed to delete torrent from downloads.", ex);
+            throw new TorrentDeleteException("Failed to delete torrent from downloads.", ex);
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace Jarvis.Features.Agents.VPNClientAgent.Exceptions;
 
 [Serializable]
-public class ArretServiceVPNException : Exception
+public class VPNClientStartException : Exception
 {
-    public ArretServiceVPNException(
+    public VPNClientStartException(
         string message,
         Exception innerException)
         : base(message, innerException)

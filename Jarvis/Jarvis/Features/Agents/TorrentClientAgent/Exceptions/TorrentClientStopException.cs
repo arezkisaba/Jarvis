@@ -1,8 +1,8 @@
 ﻿namespace Jarvis.Features.Agents.TorrentClientAgent.Exceptions;
 
-public class ArretServiceTorrentException : Exception
+public class TorrentClientStopException : Exception
 {
-    public ArretServiceTorrentException(
+    public TorrentClientStopException(
         string message,
         Exception innerException)
         : base(message, innerException)

@@ -1,8 +1,8 @@
 ﻿namespace Jarvis.Features.Agents.TorrentClientAgent.Exceptions;
 
-public class DemarrageServiceTorrentException : Exception
+public class TorrentClientStartException : Exception
 {
-    public DemarrageServiceTorrentException(
+    public TorrentClientStartException(
         string message,
         Exception innerException)
         : base(message, innerException)

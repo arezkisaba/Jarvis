@@ -74,7 +74,7 @@ public class TransmissionAgent : ITorrentClientAgent
             {
                 if (counter >= timeoutDelay)
                 {
-                    throw new DemarrageServiceTorrentException("Unable to start torrent client", null);
+                    throw new TorrentClientStartException("Unable to start torrent client", null);
                 }
 
                 await Task.Delay(500);
@@ -103,7 +103,7 @@ public class TransmissionAgent : ITorrentClientAgent
             {
                 if (counter >= timeoutDelay)
                 {
-                    throw new ArretServiceTorrentException("Unable to stop torrent client", null);
+                    throw new TorrentClientStopException("Unable to stop torrent client", null);
                 }
 
                 await Task.Delay(500);

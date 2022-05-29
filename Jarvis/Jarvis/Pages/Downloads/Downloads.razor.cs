@@ -104,7 +104,7 @@ public partial class Downloads : BlazorPageComponentBase
                         var season = seasons.SingleOrDefault(obj => obj.Number == seasonNumber);
                         if (season != null)
                         {
-                            await RenameEpisodeOnDiskAsync(download.DownloadDirectory, tvShow.Title, seasonNumber, episodeNumber, "FRENCH");
+                            await RenameEpisodeOnDiskAsync(download.DownloadDirectory, tvShow.Title.TransformForStorage(), seasonNumber, episodeNumber, "FRENCH");
                             var message = string.Format(Loc["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForEpisode(tvShow.Title, seasonNumber, episodeNumber)}");
                             ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], message, ToastType.Success, 2));
                             break;
@@ -121,7 +121,7 @@ public partial class Downloads : BlazorPageComponentBase
                     if (movies.Any())
                     {
                         var movie = movies.ElementAt(0);
-                        await RenameMovieOnDiskAsync(download.DownloadDirectory, torrentTitle, movie.Year);
+                        await RenameMovieOnDiskAsync(download.DownloadDirectory, movie.Title.TransformForStorage(), movie.Year);
                         var message = string.Format(Loc["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForMovie(movie.Title)}");
                         ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], message, ToastType.Success, 2));
                         break;
