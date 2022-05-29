@@ -1,4 +1,4 @@
-using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
+using Jarvis.Features.Agents.TorrentClientAgent.Contracts;
 using Jarvis.Features.Services.MediaMatchingService.Contracts;
 using Jarvis.Features.Services.MediaMatchingService.Models;
 using Jarvis.Features.Services.MediaNamingService.Contracts;
@@ -29,7 +29,7 @@ public partial class Downloads : BlazorPageComponentBase
     public IStringLocalizer<Downloads> Loc { get; set; }
 
     [Inject]
-    private ITorrentClientBackgroundAgent TorrentClientBackgroundAgent { get; set; }
+    private ITorrentClientAgent TorrentClientBackgroundAgent { get; set; }
 
     [Inject]
     private ITorrentClientService TorrentClientService { get; set; }

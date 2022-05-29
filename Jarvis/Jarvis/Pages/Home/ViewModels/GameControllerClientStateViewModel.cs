@@ -1,4 +1,4 @@
-using Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent.Models;
+using Jarvis.Features.Agents.GameControllerAgent.Models;
 
 namespace Jarvis.Pages.Home.ViewModels;
 

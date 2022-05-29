@@ -1,33 +1,33 @@
-using Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent;
-using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Contracts;
+using Jarvis.Features.Agents.GameControllerAgent.Contracts;
+using Jarvis.Features.Agents.IPResolverAgent.Contracts;
+using Jarvis.Features.Agents.MediaStorageAgent.Contracts;
+using Jarvis.Features.Agents.TorrentClientAgent;
+using Jarvis.Features.Agents.TorrentClientAgent.Contracts;
+using Jarvis.Features.Agents.VPNClientAgent.Contracts;
 
 namespace Jarvis.Features.Services;
 
 public class JarvisService
 {
-    private readonly ILogger<TransmissionBackgroundAgent> _logger;
+    private readonly ILogger<TransmissionAgent> _logger;
 
-    public IIPResolverBackgroundAgent IPResolverBackgroundAgent { get; }
+    public IIPResolverAgent IPResolverBackgroundAgent { get; }
 
-    public IMediaStorageBackgroundAgent MediaStorageBackgroundAgent { get; }
+    public IMediaStorageAgent MediaStorageBackgroundAgent { get; }
 
-    public IGameControllerClientBackgroundAgent GameControllerClientBackgroundAgent { get; }
+    public IGameControllerClientAgent GameControllerClientBackgroundAgent { get; }
 
-    public IVPNClientBackgroundAgent VPNClientBackgroundAgent { get; }
+    public IVPNClientAgent VPNClientBackgroundAgent { get; }
 
-    public ITorrentClientBackgroundAgent TorrentClientBackgroundAgent { get; }
+    public ITorrentClientAgent TorrentClientBackgroundAgent { get; }
 
     public JarvisService(
-        ILogger<TransmissionBackgroundAgent> logger,
-        IIPResolverBackgroundAgent ipResolverBackgroundAgent,
-        IMediaStorageBackgroundAgent mediaStorageBackgroundAgent,
-        IGameControllerClientBackgroundAgent gameControllerClientBackgroundAgent,
-        IVPNClientBackgroundAgent vpnClientBackgroundAgent,
-        ITorrentClientBackgroundAgent torrentClientBackgroundAgent)
+        ILogger<TransmissionAgent> logger,
+        IIPResolverAgent ipResolverBackgroundAgent,
+        IMediaStorageAgent mediaStorageBackgroundAgent,
+        IGameControllerClientAgent gameControllerClientBackgroundAgent,
+        IVPNClientAgent vpnClientBackgroundAgent,
+        ITorrentClientAgent torrentClientBackgroundAgent)
     {
         _logger = logger;
         IPResolverBackgroundAgent = ipResolverBackgroundAgent;

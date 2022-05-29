@@ -1,4 +1,4 @@
-using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Models;
+using Jarvis.Features.Agents.MediaStorageAgent.Models;
 using Jarvis.Technical.Helpers;
 
 namespace Jarvis.Pages.Home.ViewModels;

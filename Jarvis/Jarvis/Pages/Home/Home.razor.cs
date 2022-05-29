@@ -1,12 +1,12 @@
-using Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent.Models;
-using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Models;
-using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Models;
-using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Models;
+using Jarvis.Features.Agents.GameControllerAgent.Contracts;
+using Jarvis.Features.Agents.GameControllerAgent.Models;
+using Jarvis.Features.Agents.IPResolverAgent.Contracts;
+using Jarvis.Features.Agents.MediaStorageAgent.Contracts;
+using Jarvis.Features.Agents.MediaStorageAgent.Models;
+using Jarvis.Features.Agents.TorrentClientAgent.Contracts;
+using Jarvis.Features.Agents.TorrentClientAgent.Models;
+using Jarvis.Features.Agents.VPNClientAgent.Contracts;
+using Jarvis.Features.Agents.VPNClientAgent.Models;
 using Jarvis.Pages.Home.ViewModels;
 using Jarvis.Technical;
 using Microsoft.AspNetCore.Components;
@@ -17,19 +17,19 @@ namespace Jarvis.Pages.Home;
 public partial class Home : BlazorPageComponentBase
 {
     [Inject]
-    private IIPResolverBackgroundAgent IPResolverBackgroundAgent { get; set; }
+    private IIPResolverAgent IPResolverBackgroundAgent { get; set; }
 
     [Inject]
-    private IMediaStorageBackgroundAgent MediaStorageBackgroundAgent { get; set; }
+    private IMediaStorageAgent MediaStorageBackgroundAgent { get; set; }
 
     [Inject]
-    private IGameControllerClientBackgroundAgent GameControllerClientBackgroundAgent { get; set; }
+    private IGameControllerClientAgent GameControllerClientBackgroundAgent { get; set; }
 
     [Inject]
-    private IVPNClientBackgroundAgent VPNClientBackgroundAgent { get; set; }
+    private IVPNClientAgent VPNClientBackgroundAgent { get; set; }
 
     [Inject]
-    private ITorrentClientBackgroundAgent TorrentClientBackgroundAgent { get; set; }
+    private ITorrentClientAgent TorrentClientBackgroundAgent { get; set; }
 
     private string PublicIPAddress { get; set; }
 

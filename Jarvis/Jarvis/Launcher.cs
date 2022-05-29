@@ -1,17 +1,17 @@
-using Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent;
-using Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService;
-using Jarvis.Features.BackgroundAgents.GameControllerBackgroundAgent.Services.CECService.Contracts;
-using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent;
-using Jarvis.Features.BackgroundAgents.IPResolverBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent;
-using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Services.MediaStorageService;
-using Jarvis.Features.BackgroundAgents.MediaStorageBackgroundAgent.Services.MediaStorageService.Contracts;
-using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent;
-using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
-using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent;
-using Jarvis.Features.BackgroundAgents.VPNClientBackgroundAgent.Contracts;
+using Jarvis.Features.Agents.GameControllerAgent;
+using Jarvis.Features.Agents.GameControllerAgent.Contracts;
+using Jarvis.Features.Agents.GameControllerAgent.Services.CECService;
+using Jarvis.Features.Agents.GameControllerAgent.Services.CECService.Contracts;
+using Jarvis.Features.Agents.IPResolverAgent;
+using Jarvis.Features.Agents.IPResolverAgent.Contracts;
+using Jarvis.Features.Agents.MediaStorageAgent;
+using Jarvis.Features.Agents.MediaStorageAgent.Contracts;
+using Jarvis.Features.Agents.MediaStorageAgent.Services.MediaStorageService;
+using Jarvis.Features.Agents.MediaStorageAgent.Services.MediaStorageService.Contracts;
+using Jarvis.Features.Agents.TorrentClientAgent;
+using Jarvis.Features.Agents.TorrentClientAgent.Contracts;
+using Jarvis.Features.Agents.VPNClientAgent;
+using Jarvis.Features.Agents.VPNClientAgent.Contracts;
 using Jarvis.Features.Services;
 using Jarvis.Features.Services.MediaMatchingService;
 using Jarvis.Features.Services.MediaMatchingService.Contracts;
@@ -116,11 +116,11 @@ public class Launcher
         services.AddSingleton<IMediaStorageService, MediaStorageService>();
         services.AddSingleton<ITorrentClientService, TorrentClientService>();
 
-        services.AddSingleton<IIPResolverBackgroundAgent, IPResolverBackgroundAgent>();
-        services.AddSingleton<IMediaStorageBackgroundAgent, MediaStorageBackgroundAgent>();
-        services.AddSingleton<IGameControllerClientBackgroundAgent, XboxControllerBackgroundAgent>();
-        services.AddSingleton<IVPNClientBackgroundAgent, OpenVPNBackgroundAgent>();
-        services.AddSingleton<ITorrentClientBackgroundAgent, TransmissionBackgroundAgent>();
+        services.AddSingleton<IIPResolverAgent, IPResolverAgent>();
+        services.AddSingleton<IMediaStorageAgent, MediaStorageAgent>();
+        services.AddSingleton<IGameControllerClientAgent, XboxControllerAgent>();
+        services.AddSingleton<IVPNClientAgent, OpenVPNAgent>();
+        services.AddSingleton<ITorrentClientAgent, TransmissionAgent>();
 
         services.AddScoped<ModalerService>();
         services.AddScoped<ToasterService>();

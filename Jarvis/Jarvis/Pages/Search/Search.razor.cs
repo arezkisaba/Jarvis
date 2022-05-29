@@ -1,4 +1,4 @@
-using Jarvis.Features.BackgroundAgents.TorrentClientBackgroundAgent.Contracts;
+using Jarvis.Features.Agents.TorrentClientAgent.Contracts;
 using Jarvis.Features.Services.TorrentClientService.Contracts;
 using Jarvis.Features.Services.TorrentScrapperService.Contracts;
 using Jarvis.Pages.Search.ViewModels;
@@ -23,7 +23,7 @@ public partial class Search : BlazorPageComponentBase
     public IStringLocalizer<Search> Loc { get; set; }
 
     [Inject]
-    private ITorrentClientBackgroundAgent TorrentClientBackgroundAgent { get; set; }
+    private ITorrentClientAgent TorrentClientBackgroundAgent { get; set; }
 
     [Inject]
     private ITorrentClientService TorrentClientService { get; set; }
