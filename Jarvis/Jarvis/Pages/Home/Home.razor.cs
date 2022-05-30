@@ -22,19 +22,19 @@ public partial class Home : BlazorPageComponentBase
     private IStringLocalizer<Home> Localizer { get; set; }
 
     [Inject]
-    private IIPResolverAgent IPResolverBackgroundAgent { get; set; }
+    private IIPResolverAgent IPResolverAgent { get; set; }
     
     [Inject]
-    private IMediaStorageAgent MediaStorageBackgroundAgent { get; set; }
+    private IMediaStorageAgent MediaStorageAgent { get; set; }
     
     [Inject]
-    private IGameControllerClientAgent GameControllerClientBackgroundAgent { get; set; }
+    private IGameControllerClientAgent GameControllerClientAgent { get; set; }
     
     [Inject]
-    private IVPNClientAgent VPNClientBackgroundAgent { get; set; }
+    private IVPNClientAgent VPNClientAgent { get; set; }
     
     [Inject]
-    private ITorrentClientAgent TorrentClientBackgroundAgent { get; set; }
+    private ITorrentClientAgent TorrentClientAgent { get; set; }
     
     [Inject]
     private IMediaSizingService MediaSizingService { get; set; }
@@ -54,39 +54,39 @@ public partial class Home : BlazorPageComponentBase
         await base.OnInitializedAsync();
 
         PageTitle = "Home";
-        PublicIPAddress = IPResolverBackgroundAgent.CurrentState;
-        IPResolverBackgroundAgent.StateChanged += async (sender, __) =>
+        PublicIPAddress = IPResolverAgent.CurrentState;
+        IPResolverAgent.StateChanged += async (sender, __) =>
         {
             PublicIPAddress = (string)sender;
             await UpdateUIAsync();
         };
-        MediaStorageStateViewModel = new MediaStorageStateViewModel(MediaSizingService, MediaStorageBackgroundAgent.CurrentState);
-        MediaStorageBackgroundAgent.StateChanged += async (sender, __) =>
+        MediaStorageStateViewModel = new MediaStorageStateViewModel(MediaSizingService, MediaStorageAgent.CurrentState);
+        MediaStorageAgent.StateChanged += async (sender, __) =>
         {
             MediaStorageStateViewModel.Update((MediaStorageStateModel)sender);
             await UpdateUIAsync();
         };
-        GameControllerClientStateViewModel = new GameControllerClientStateViewModel(GameControllerClientBackgroundAgent.CurrentState);
-        GameControllerClientBackgroundAgent.StateChanged += async (sender, __) =>
+        GameControllerClientStateViewModel = new GameControllerClientStateViewModel(GameControllerClientAgent.CurrentState);
+        GameControllerClientAgent.StateChanged += async (sender, __) =>
         {
             var model = (GameControllerClientStateModel)sender;
             GameControllerClientStateViewModel.UpdateInternalData(model);
             await UpdateUIAsync();
         };
-        VPNClientStateViewModel = new VPNClientStateViewModel(VPNClientBackgroundAgent.CurrentState);
-        VPNClientBackgroundAgent.RefreshIsClientActive();
-        VPNClientBackgroundAgent.StateChanged += async (sender, __) =>
+        VPNClientStateViewModel = new VPNClientStateViewModel(VPNClientAgent.CurrentState);
+        VPNClientAgent.RefreshIsClientActive();
+        VPNClientAgent.StateChanged += async (sender, __) =>
         {
-            await IPResolverBackgroundAgent.UpdateCurrentStateAsync();
+            await IPResolverAgent.UpdateCurrentStateAsync();
 
             var model = (VPNClientStateModel)sender;
             VPNClientStateViewModel.UpdateInternalData((VPNClientStateModel)sender);
             await UpdateUIAsync();
         };
 
-        TorrentClientStateViewModel = new TorrentClientStateViewModel(TorrentClientBackgroundAgent.CurrentState);
-        TorrentClientBackgroundAgent.RefreshIsClientActive();
-        TorrentClientBackgroundAgent.StateChanged += async (sender, __) =>
+        TorrentClientStateViewModel = new TorrentClientStateViewModel(TorrentClientAgent.CurrentState);
+        TorrentClientAgent.RefreshIsClientActive();
+        TorrentClientAgent.StateChanged += async (sender, __) =>
         {
             var model = (TorrentClientStateModel)sender;
             TorrentClientStateViewModel.UpdateInternalData((TorrentClientStateModel)sender);
@@ -97,26 +97,26 @@ public partial class Home : BlazorPageComponentBase
     private async Task ToggleVPNClientStatusAsync(
         MouseEventArgs e)
     {
-        if (VPNClientBackgroundAgent.CurrentState.IsActive)
+        if (VPNClientAgent.CurrentState.IsActive)
         {
-            await VPNClientBackgroundAgent.StopClientAsync();
+            await VPNClientAgent.StopClientAsync();
         }
         else
         {
-            await VPNClientBackgroundAgent.StartClientAsync();
+            await VPNClientAgent.StartClientAsync();
         }
     }
 
     private async Task ToggleTorrentClientStatusAsync(
         MouseEventArgs e)
     {
-        if (TorrentClientBackgroundAgent.CurrentState.IsActive)
+        if (TorrentClientAgent.CurrentState.IsActive)
         {
-            await TorrentClientBackgroundAgent.StopClientAsync();
+            await TorrentClientAgent.StopClientAsync();
         }
         else
         {
-            await TorrentClientBackgroundAgent.StartClientAsync();
+            await TorrentClientAgent.StartClientAsync();
         }
     }
 }

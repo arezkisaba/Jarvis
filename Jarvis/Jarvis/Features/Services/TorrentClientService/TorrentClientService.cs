@@ -55,8 +55,18 @@ public class TorrentClientService : ITorrentClientService
             }
             else if (torrendAdded?.arguments?.torrentduplicate != null)
             {
-                ////var id = torrendAdded.arguments.torrentduplicate.id;
-                ////var hashString = torrendAdded.arguments.torrentduplicate.hashString;
+                var id = torrendAdded.arguments.torrentduplicate.id;
+                var hashString = torrendAdded.arguments.torrentduplicate.hashString;
+                TorrentDownloads.Add(new TorrentDownloadModel(
+                    name: name,
+                    url: url,
+                    downloadDirectory: downloadDirectory,
+                    size: size,
+                    seeds: seeds,
+                    provider: "Torrent9",
+                    id: id.ToString(),
+                    hashString: hashString)
+                );
             }
             else
             {

@@ -120,4 +120,7 @@
   <data name="ConfirmTmdbAuthenticationUrl" xml:space="preserve">
     <value>Cliquez ici pour confirmer l'authentification TMDB</value>
   </data>
+  <data name="Toaster.DownloadEnded" xml:space="preserve">
+    <value>{0} ajouté à la bibilothèque</value>
+  </data>
 </root>

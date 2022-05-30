@@ -21,34 +21,16 @@ namespace Jarvis.Pages.Downloads;
 public partial class Downloads : BlazorPageComponentBase
 {
     [Inject]
-    private IStringLocalizer<App> AppLocalizer { get; set; }
-    
-    [Inject]
     private IStringLocalizer<Downloads> Localizer { get; set; }
     
     [Inject] 
-    private ITorrentClientAgent TorrentClientBackgroundAgent { get; set; }
+    private ITorrentClientAgent TorrentClientAgent { get; set; }
     
     [Inject]
     private ITorrentClientService TorrentClientService { get; set; }
     
     [Inject]
-    private ITmdbApiService MediaDatabaseService { get; set; }
-    
-    [Inject]
     private IMediaSizingService MediaSizingService { get; set; }
-    
-    [Inject]
-    private IMediaNamingService MediaNamingService { get; set; }
-    
-    [Inject]
-    private IMediaMatchingService MediaMatchingService { get; set; }
-    
-    [Inject]
-    private IMediaRenamerService MediaRenamerService { get; set; }
-    
-    [Inject]
-    private ToasterService ToasterService { get; set; }
 
     private DownloadsViewModel DownloadsViewModel { get; set; }
 
@@ -56,15 +38,10 @@ public partial class Downloads : BlazorPageComponentBase
     {
         PageTitle = "Downloads";
 
-        TorrentClientBackgroundAgent.DownloadStateChangedAction = async () =>
+        TorrentClientAgent.DownloadStateChangedAction = async () =>
         {
             UpdateDownloads();
             await UpdateUIAsync();
-        };
-
-        TorrentClientBackgroundAgent.DownloadFinishedAction = async (download) =>
-        {
-            await HandleDownloadFinishedAsync(download);
         };
 
         UpdateDownloads();
@@ -86,85 +63,5 @@ public partial class Downloads : BlazorPageComponentBase
                 hashString: obj.HashString)
             )
         );
-    }
-
-    private async Task HandleDownloadFinishedAsync(
-        TorrentDownloadModel download)
-    {
-        try
-        {
-            var (mediaType, match) = MediaMatchingService.GetMediaTypeAndInformations(download.Name);
-            if (mediaType == MediaTypeModel.Episode)
-            {
-                var torrentTitles = MediaNamingService.GetPossibleMediaTitles(match.Groups[1].Value);
-                foreach (var torrentTitle in torrentTitles)
-                {
-                    var seasonNumber = int.Parse(match.Groups[2].Value);
-                    var episodeNumber = int.Parse(match.Groups[3].Value);
-                    var tvShows = await MediaDatabaseService.SearchTvShowAsync(torrentTitle);
-                    if (tvShows.Any())
-                    {
-                        var tvShow = tvShows.ElementAt(0);
-                        var seasons = await MediaDatabaseService.GetSeasonsAsync(tvShow.Id);
-                        var season = seasons.SingleOrDefault(obj => obj.Number == seasonNumber);
-                        if (season != null)
-                        {
-                            await MediaRenamerService.RenameEpisodeAsync(download.DownloadDirectory, tvShow.Title.TransformForStorage(), seasonNumber, episodeNumber, "FRENCH");
-                            var message = string.Format(Localizer["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForEpisode(tvShow.Title, seasonNumber, episodeNumber)}");
-                            ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.InformationTitle"], message, ToastType.Success, 2));
-                            break;
-                        }
-                    }
-                }
-            }
-            else if (mediaType == MediaTypeModel.Season)
-            {
-                var torrentTitles = MediaNamingService.GetPossibleMediaTitles(match.Groups[1].Value);
-                foreach (var torrentTitle in torrentTitles)
-                {
-                    var seasonNumber = int.Parse(match.Groups[2].Value);
-                    var tvShows = await MediaDatabaseService.SearchTvShowAsync(torrentTitle);
-                    if (tvShows.Any())
-                    {
-                        var tvShow = tvShows.ElementAt(0);
-                        var seasons = await MediaDatabaseService.GetSeasonsAsync(tvShow.Id);
-                        var season = seasons.SingleOrDefault(obj => obj.Number == seasonNumber);
-                        if (season != null)
-                        {
-                            for (var i = 1; i <= season.Episodes.Count(); i++)
-                            {
-                                await MediaRenamerService.RenameEpisodeAsync(download.DownloadDirectory, tvShow.Title.TransformForStorage(), seasonNumber, i, "FRENCH");
-                            }
-
-                            var message = string.Format(Localizer["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForSeason(tvShow.Title, seasonNumber)}");
-                            ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.InformationTitle"], message, ToastType.Success, 2));
-                            break;
-                        }
-                    }
-                }
-            }
-            else if (mediaType == MediaTypeModel.Movie)
-            {
-                var torrentTitles = MediaNamingService.GetPossibleMediaTitles(match.Groups[1].Value);
-                foreach (var torrentTitle in torrentTitles)
-                {
-                    var movies = await MediaDatabaseService.SearchMovieAsync(torrentTitle);
-                    if (movies.Any())
-                    {
-                        var movie = movies.ElementAt(0);
-                        await MediaRenamerService.RenameMovieAsync(download.DownloadDirectory, movie.Title.TransformForStorage(), movie.Year);
-                        var message = string.Format(Localizer["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForMovie(movie.Title)}");
-                        ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.InformationTitle"], message, ToastType.Success, 2));
-                        break;
-                    }
-                }
-            }
-
-            await TorrentClientService.DeleteDownloadAsync(download.HashString);
-        }
-        catch (Exception)
-        {
-            ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.ErrorTitle"], AppLocalizer["Toaster.ErrorMessage"], ToastType.Danger, 2));
-        }
     }
 }
