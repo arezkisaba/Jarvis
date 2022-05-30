@@ -12,11 +12,15 @@ using Jarvis.Pages.Home.ViewModels;
 using Jarvis.Technical;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 
 namespace Jarvis.Pages.Home;
 
 public partial class Home : BlazorPageComponentBase
 {
+    [Inject]
+    private IStringLocalizer<Home> Localizer { get; set; }
+
     [Inject]
     private IIPResolverAgent IPResolverBackgroundAgent { get; set; }
     

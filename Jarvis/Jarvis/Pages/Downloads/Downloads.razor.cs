@@ -119,25 +119,29 @@ public partial class Downloads : BlazorPageComponentBase
             }
             else if (mediaType == MediaTypeModel.Season)
             {
-                ////var torrentTitles = MediaNamingService.GetPossibleMediaTitles(match.Groups[1].Value);
-                ////foreach (var torrentTitle in torrentTitles)
-                ////{
-                ////    var seasonNumber = int.Parse(match.Groups[2].Value);
-                ////    var tvShows = await MediaDatabaseService.SearchTvShowAsync(torrentTitle);
-                ////    if (tvShows.Any())
-                ////    {
-                ////        var tvShow = tvShows.ElementAt(0);
-                ////        var seasons = await MediaDatabaseService.GetSeasonsAsync(tvShow.Id);
-                ////        var season = seasons.SingleOrDefault(obj => obj.Number == seasonNumber);
-                ////        if (season != null)
-                ////        {
-                ////            await RenameEpisodeOnDiskAsync(download.DownloadDirectory, tvShow.Title.TransformForStorage(), seasonNumber, episodeNumber, "FRENCH");
-                ////            var message = string.Format(Localizer["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForEpisode(tvShow.Title, seasonNumber, episodeNumber)}");
-                ////            ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], message, ToastType.Success, 2));
-                ////            break;
-                ////        }
-                ////    }
-                ////}
+                var torrentTitles = MediaNamingService.GetPossibleMediaTitles(match.Groups[1].Value);
+                foreach (var torrentTitle in torrentTitles)
+                {
+                    var seasonNumber = int.Parse(match.Groups[2].Value);
+                    var tvShows = await MediaDatabaseService.SearchTvShowAsync(torrentTitle);
+                    if (tvShows.Any())
+                    {
+                        var tvShow = tvShows.ElementAt(0);
+                        var seasons = await MediaDatabaseService.GetSeasonsAsync(tvShow.Id);
+                        var season = seasons.SingleOrDefault(obj => obj.Number == seasonNumber);
+                        if (season != null)
+                        {
+                            for (var i = 1; i <= season.Episodes.Count(); i++)
+                            {
+                                await MediaRenamerService.RenameEpisodeAsync(download.DownloadDirectory, tvShow.Title.TransformForStorage(), seasonNumber, i, "FRENCH");
+                            }
+
+                            var message = string.Format(Localizer["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForSeason(tvShow.Title, seasonNumber)}");
+                            ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.InformationTitle"], message, ToastType.Success, 2));
+                            break;
+                        }
+                    }
+                }
             }
             else if (mediaType == MediaTypeModel.Movie)
             {

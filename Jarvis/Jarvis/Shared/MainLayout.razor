@@ -7,7 +7,6 @@
 @using Microsoft.Extensions.Options
 
 @inherits BlazorLayoutComponentBase
-@inject IStringLocalizer<MainLayout> loc
 
 <CascadingValue Value="AppName">
     <PageTitle>@AppName.ToUpperInvariant()</PageTitle>
@@ -28,7 +27,7 @@
 
 @*    <Modal Show=@ShowTmdbModal>
         <Body>
-            <a href="@TmdbAuthenticationUrl" target="_blank">@loc["ConfirmTmdbAuthenticationUrl"]</a>
+            <a href="@TmdbAuthenticationUrl" target="_blank">@Localizer["ConfirmTmdbAuthenticationUrl"]</a>
         </Body>
     </Modal>*@
     

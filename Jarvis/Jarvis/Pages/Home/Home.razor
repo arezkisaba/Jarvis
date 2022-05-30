@@ -5,7 +5,6 @@
 @using Jarvis.Technical
 
 @inherits BlazorPageComponentBase
-@inject IStringLocalizer<Home> loc
 
 <PageTitle>@PageTitle</PageTitle>
 
@@ -65,7 +64,7 @@ else
             <div class="col-12 col-lg-6 mb-4">
                 <div class="card h-100">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">@loc["PublicIPAddress.Title"]</h5>
+                        <h5 class="card-title">@Localizer["PublicIPAddress.Title"]</h5>
                         <hr />
                         <div class="ipaddress d-flex flex-column flex-grow-1 justify-content-center">
                             @PublicIPAddress

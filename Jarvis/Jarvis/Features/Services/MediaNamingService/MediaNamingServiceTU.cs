@@ -15,6 +15,14 @@ public class MediaNamingServiceTU
         Assert.AreEqual("Avengers : L'Ère d'Ultron FRENCH HDTV 2021", displayName);
     }
 
+    [TestCase(TestName = "GetDisplayNameForSeason : Cas 1")]
+    public void GetDisplayNameForSeason_TestCase_1()
+    {
+        var mediaNamingService = new MediaNamingService();
+        var displayName = mediaNamingService.GetDisplayNameForSeason("Visitors", 1);
+        Assert.AreEqual("Visitors S01", displayName);
+    }
+
     [TestCase(TestName = "GetDisplayNameForEpisode : Cas 1")]
     public void GetDisplayNameForEpisode_TestCase_1()
     {

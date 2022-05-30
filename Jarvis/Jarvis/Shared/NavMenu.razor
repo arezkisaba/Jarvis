@@ -1,4 +1,4 @@
-﻿@inject IStringLocalizer<NavMenu> loc
+﻿@inject IStringLocalizer<NavMenu> Localizer
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -13,22 +13,22 @@
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span>@loc["Home"]
+                <span class="oi oi-home" aria-hidden="true"></span>@Localizer["Home"]
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="search">
-                <span class="oi oi-magnifying-glass" aria-hidden="true"></span>@loc["Search"]
+                <span class="oi oi-magnifying-glass" aria-hidden="true"></span>@Localizer["Search"]
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="downloads">
-                <span class="oi oi-data-transfer-download" aria-hidden="true"></span>@loc["Downloads"]
+                <span class="oi oi-data-transfer-download" aria-hidden="true"></span>@Localizer["Downloads"]
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="configuration">
-                <span class="oi oi-cog" aria-hidden="true"></span>@loc["Configuration"]
+                <span class="oi oi-cog" aria-hidden="true"></span>@Localizer["Configuration"]
             </NavLink>
         </div>
     </nav>

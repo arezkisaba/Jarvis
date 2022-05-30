@@ -35,6 +35,14 @@ public class MediaNamingService : IMediaNamingService
         return $"{movieTitle}";
     }
 
+    public string GetDisplayNameForSeason(
+        string tvShowTitle,
+        int seasonNumber)
+    {
+        var seasonNumberPrefix = seasonNumber < 10 ? "0" : string.Empty;
+        return $"{tvShowTitle} S{seasonNumberPrefix}{seasonNumber}";
+    }
+
     public string GetDisplayNameForEpisode(
         string tvShowTitle,
         int seasonNumber,

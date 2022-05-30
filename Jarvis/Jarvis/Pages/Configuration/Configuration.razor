@@ -4,7 +4,6 @@
 @using Jarvis.Technical
 
 @inherits BlazorPageComponentBase
-@inject IStringLocalizer<Configuration> loc
 
 <PageTitle>@PageTitle</PageTitle>
 
@@ -24,47 +23,47 @@ else
                         <div class="row">
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.OpenVPNUsername)">@loc["OpenVPNUsername.Label"]</label>
-                                    <InputText id="@nameof(SecureAppSettingsViewModel.OpenVPNUsername)" @bind-Value="SecureAppSettingsViewModel.OpenVPNUsername" class="form-control" placeholder="@loc["OpenVPNUsername.Placeholder"]" />
+                                    <label for="@nameof(SecureAppSettingsViewModel.OpenVPNUsername)">@Localizer["OpenVPNUsername.Label"]</label>
+                                    <InputText id="@nameof(SecureAppSettingsViewModel.OpenVPNUsername)" @bind-Value="SecureAppSettingsViewModel.OpenVPNUsername" class="form-control" placeholder="@Localizer["OpenVPNUsername.Placeholder"]" />
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.OpenVPNPassword)">@loc["OpenVPNPassword.Label"]</label>
-                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.OpenVPNPassword)" @bind-Value="SecureAppSettingsViewModel.OpenVPNPassword" class="form-control" placeholder="@loc["OpenVPNPassword.Placeholder"]" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-lg-6">
-                                <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.TmdbApiKey)">@loc["TmdbApiKey.Label"]</label>
-                                    <InputText id="@nameof(SecureAppSettingsViewModel.TmdbApiKey)" @bind-Value="SecureAppSettingsViewModel.TmdbApiKey" class="form-control" placeholder="@loc["TmdbApiKey.Placeholder"]" />
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.TmdbAccessToken)">@loc["TmdbAccessToken.Label"]</label>
-                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.TmdbAccessToken)" @bind-Value="SecureAppSettingsViewModel.TmdbAccessToken" class="form-control" placeholder="@loc["TmdbAccessToken.Placeholder"]" />
+                                    <label for="@nameof(SecureAppSettingsViewModel.OpenVPNPassword)">@Localizer["OpenVPNPassword.Label"]</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.OpenVPNPassword)" @bind-Value="SecureAppSettingsViewModel.OpenVPNPassword" class="form-control" placeholder="@Localizer["OpenVPNPassword.Placeholder"]" />
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.PlexUsername)">@loc["PlexUsername.Label"]</label>
-                                    <InputText id="@nameof(SecureAppSettingsViewModel.PlexUsername)" @bind-Value="SecureAppSettingsViewModel.PlexUsername" class="form-control" placeholder="@loc["PlexUsername.Placeholder"]" />
+                                    <label for="@nameof(SecureAppSettingsViewModel.TmdbApiKey)">@Localizer["TmdbApiKey.Label"]</label>
+                                    <InputText id="@nameof(SecureAppSettingsViewModel.TmdbApiKey)" @bind-Value="SecureAppSettingsViewModel.TmdbApiKey" class="form-control" placeholder="@Localizer["TmdbApiKey.Placeholder"]" />
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="@nameof(SecureAppSettingsViewModel.PlexPassword)">@loc["PlexPassword.Label"]</label>
-                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.PlexPassword)" @bind-Value="SecureAppSettingsViewModel.PlexPassword" class="form-control" placeholder="@loc["PlexPassword.Placeholder"]" />
+                                    <label for="@nameof(SecureAppSettingsViewModel.TmdbAccessToken)">@Localizer["TmdbAccessToken.Label"]</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.TmdbAccessToken)" @bind-Value="SecureAppSettingsViewModel.TmdbAccessToken" class="form-control" placeholder="@Localizer["TmdbAccessToken.Placeholder"]" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="@nameof(SecureAppSettingsViewModel.PlexUsername)">@Localizer["PlexUsername.Label"]</label>
+                                    <InputText id="@nameof(SecureAppSettingsViewModel.PlexUsername)" @bind-Value="SecureAppSettingsViewModel.PlexUsername" class="form-control" placeholder="@Localizer["PlexUsername.Placeholder"]" />
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="@nameof(SecureAppSettingsViewModel.PlexPassword)">@Localizer["PlexPassword.Label"]</label>
+                                    <InputText type="password" id="@nameof(SecureAppSettingsViewModel.PlexPassword)" @bind-Value="SecureAppSettingsViewModel.PlexPassword" class="form-control" placeholder="@Localizer["PlexPassword.Placeholder"]" />
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <button type="submit" class="btn btn-primary">@loc["UpdateConfiguration"]</button>
+                            <button type="submit" class="btn btn-primary">@Localizer["UpdateConfiguration"]</button>
                         </div>
                     </EditForm>
                 </div>

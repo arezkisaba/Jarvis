@@ -4,7 +4,6 @@
 @using Jarvis.Technical
 
 @inherits BlazorPageComponentBase
-@inject IStringLocalizer<Search> loc
 
 <PageTitle>@PageTitle</PageTitle>
 
@@ -17,7 +16,7 @@ else
     <div class="d-flex container">
         <div class='row'>
             <div class="col-12">
-                <input type="search" id="@nameof(SearchViewModel.SearchPattern)" @bind="SearchViewModel.SearchPattern" @bind:event="oninput" class="form-control" placeholder="@loc["SearchPattern.Placeholder"]" />
+                <input type="search" id="@nameof(SearchViewModel.SearchPattern)" @bind="SearchViewModel.SearchPattern" @bind:event="oninput" class="form-control" placeholder="@Localizer["SearchPattern.Placeholder"]" />
             </div>
         </div>
         @if (SearchViewModel.IsLoading)
@@ -49,7 +48,7 @@ else
                                             </div>
                                             <div>
                                                 <span class="badge badge-info">@searchResult.Provider</span>
-                                                <span class="badge badge-primary">@searchResult.Seeds @loc["Seeds"]</span>
+                                                <span class="badge badge-primary">@searchResult.Seeds @Localizer["Seeds"]</span>
                                                 <span class="badge badge-secondary">@searchResult.SizeDisplayed</span>
                                             </div>
                                         </td>
@@ -66,7 +65,7 @@ else
             else
             {
                 <div class="d-flex flex-grow-1 flex-center">
-                    @loc["NoResults"]
+                    @Localizer["NoResults"]
                 </div>
             }
         }

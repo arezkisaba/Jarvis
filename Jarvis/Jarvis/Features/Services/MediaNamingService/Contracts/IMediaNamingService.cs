@@ -8,6 +8,10 @@ public interface IMediaNamingService
     string GetDisplayNameForMovie(
         string movieTitle);
 
+    string GetDisplayNameForSeason(
+        string tvShowTitle,
+        int seasonNumber);
+
     string GetDisplayNameForEpisode(
         string tvShowTitle,
         int seasonNumber,

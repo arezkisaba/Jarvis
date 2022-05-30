@@ -4,7 +4,6 @@
 @using Jarvis.Technical
 
 @inherits BlazorPageComponentBase
-@inject IStringLocalizer<Downloads> loc
 
 <PageTitle>@PageTitle</PageTitle>
 
@@ -36,7 +35,7 @@ else
                                                 </div>
                                                 <div>
                                                     <span class="badge badge-info">@downloadItem.Provider</span>
-                                                    <span class="badge badge-primary">@downloadItem.Seeds @loc["Seeds"]</span>
+                                                    <span class="badge badge-primary">@downloadItem.Seeds @Localizer["Seeds"]</span>
                                                     <span class="badge badge-secondary">@downloadItem.SizeDisplayed</span>
                                                 </div>
                                                 <div class="progress mt-2">
@@ -55,7 +54,7 @@ else
         else
         {
             <div class="d-flex flex-grow-1 flex-center">
-                @loc["NoResults"]
+                @Localizer["NoResults"]
             </div>
         }
     </div>
