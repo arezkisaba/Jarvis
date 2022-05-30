@@ -19,7 +19,3 @@ Code :
 - UnitTests => TU
 - IntegrationTests => TI
 - Analyse dépendances
-
-
-Supprimer FormatHelper
-Mutualiser MediaMatchingService dans MediaRenamerService
