@@ -1,4 +1,5 @@
 using Jarvis.Features.Services.MediaSizingService.Contracts;
+using System.Globalization;
 
 namespace Jarvis.Features.Services.MediaSizingService;
 
@@ -9,7 +10,7 @@ public class MediaSizingService : IMediaSizingService
     {
         var unit = "B";
         var coef = 1024d;
-        var newSize = Convert.ToDouble(bytesCount);
+        var newSize = Convert.ToDouble(bytesCount, CultureInfo.InvariantCulture);
 
         if (newSize / coef >= 1)
         {

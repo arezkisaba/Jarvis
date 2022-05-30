@@ -15,27 +15,27 @@ namespace Jarvis.Pages.Search;
 public partial class Search : BlazorPageComponentBase
 {
     [Inject]
-    public IOptions<AppSettingsModel> AppSettings { get; set; }
-
+    private IOptions<AppSettingsModel> AppSettings { get; set; }
+    
     [Inject]
-    public IStringLocalizer<App> AppLoc { get; set; }
-
+    private IStringLocalizer<App> AppLocalizer { get; set; }
+    
     [Inject]
-    public IStringLocalizer<Search> Loc { get; set; }
-
+    private IStringLocalizer<Search> Localizer { get; set; }
+    
     [Inject]
     private ITorrentClientService TorrentClientService { get; set; }
-
+    
     [Inject]
     private ITorrentScrapperService TorrentScrapperService { get; set; }
-
+    
     [Inject]
     private IMediaSizingService MediaSizingService { get; set; }
-
+    
     [Inject]
-    public ToasterService ToasterService { get; set; }
+    private ToasterService ToasterService { get; set; }
 
-    public SearchViewModel SearchViewModel { get; set; }
+    private SearchViewModel SearchViewModel { get; set; }
 
     protected override void OnInitialized()
     {
@@ -69,7 +69,7 @@ public partial class Search : BlazorPageComponentBase
             }
             catch (Exception)
             {
-                ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.ErrorTitle"], AppLoc["Toaster.ErrorMessage"], ToastType.Danger, 2));
+                ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.ErrorTitle"], AppLocalizer["Toaster.ErrorMessage"], ToastType.Danger, 2));
             }
         };
         SearchViewModel.SearchResultClickedActionAsync = async (searchResult) =>
@@ -86,11 +86,11 @@ public partial class Search : BlazorPageComponentBase
                 var delayTask = Task.Delay(500);
                 await Task.WhenAll(addDownloadTask, delayTask);
 
-                ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], Loc["Toaster.DownloadAdded"], ToastType.Success, 2));
+                ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.InformationTitle"], Localizer["Toaster.DownloadAdded"], ToastType.Success, 2));
             }
             catch (Exception)
             {
-                ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.ErrorTitle"], AppLoc["Toaster.ErrorMessage"], ToastType.Danger, 2));
+                ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.ErrorTitle"], AppLocalizer["Toaster.ErrorMessage"], ToastType.Danger, 2));
             }
         };
     }

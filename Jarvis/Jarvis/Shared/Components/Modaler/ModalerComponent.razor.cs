@@ -8,7 +8,7 @@ public partial class ModalerComponent : ComponentBase, IDisposable
     [Inject]
     private ModalerService _modalerService { get; set; }
 
-    private ModalerService modalerService => _modalerService!;
+    private ModalerService modalerService => _modalerService;
 
     protected override void OnInitialized()
     {

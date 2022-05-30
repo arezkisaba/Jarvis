@@ -14,8 +14,6 @@ public record Toast
 
     public bool IsBurnt => TimeToBurn < DateTimeOffset.Now;
 
-    private TimeSpan elapsedTime => Posted - DateTimeOffset.Now;
-
     public readonly DateTimeOffset Posted = DateTimeOffset.Now;
 
     public static Toast CreateToast(

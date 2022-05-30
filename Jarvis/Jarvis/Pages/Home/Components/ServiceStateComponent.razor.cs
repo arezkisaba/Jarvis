@@ -18,7 +18,7 @@ public partial class ServiceStateComponent : BlazorComponentBase
     [Parameter]
     public EventCallback<MouseEventArgs> OnStatusChangeRequestedCallback { get; set; }
 
-    public bool HasPendingAction { get; set; }
+    private bool HasPendingAction { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

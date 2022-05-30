@@ -13,28 +13,28 @@ namespace Jarvis.Shared;
 public partial class MainLayout : BlazorLayoutComponentBase
 {
     [Inject]
-    public NavigationManager NavigationManager { get; set; }
+    private NavigationManager NavigationManager { get; set; }
 
     [Inject]
-    public ModalerService ModalerService { get; set; }
+    private ModalerService ModalerService { get; set; }
 
     [Inject]
-    public ToasterService ToasterService { get; set; }
+    private ToasterService ToasterService { get; set; }
 
     [Inject]
-    public IOptions<AppSettingsModel> AppSettings { get; set; }
+    private IOptions<AppSettingsModel> AppSettings { get; set; }
 
     [Inject]
-    public ISecureAppSettingsService SecureAppSettingsService { get; set; }
+    private ISecureAppSettingsService SecureAppSettingsService { get; set; }
 
     [Inject]
-    public ITmdbApiService TmdbApiService { get; set; }
+    private ITmdbApiService TmdbApiService { get; set; }
 
-    public bool ShowAlert { get; set; }
+    private bool ShowAlert { get; set; }
 
-    public string TmdbAuthenticationUrl { get; set; }
+    private string TmdbAuthenticationUrl { get; set; }
 
-    public string AppName { get; set; }
+    private string AppName { get; set; }
 
     protected override void OnInitialized()
     {

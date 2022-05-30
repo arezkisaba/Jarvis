@@ -21,34 +21,34 @@ namespace Jarvis.Pages.Downloads;
 public partial class Downloads : BlazorPageComponentBase
 {
     [Inject]
-    public IStringLocalizer<App> AppLoc { get; set; }
-
+    private IStringLocalizer<App> AppLocalizer { get; set; }
+    
     [Inject]
-    public IStringLocalizer<Downloads> Loc { get; set; }
-
-    [Inject]
+    private IStringLocalizer<Downloads> Localizer { get; set; }
+    
+    [Inject] 
     private ITorrentClientAgent TorrentClientBackgroundAgent { get; set; }
-
+    
     [Inject]
     private ITorrentClientService TorrentClientService { get; set; }
-
+    
     [Inject]
     private ITmdbApiService MediaDatabaseService { get; set; }
-
+    
     [Inject]
     private IMediaSizingService MediaSizingService { get; set; }
-
+    
     [Inject]
     private IMediaNamingService MediaNamingService { get; set; }
-
+    
     [Inject]
     private IMediaMatchingService MediaMatchingService { get; set; }
-
+    
     [Inject]
     private IMediaRenamerService MediaRenamerService { get; set; }
-
+    
     [Inject]
-    public ToasterService ToasterService { get; set; }
+    private ToasterService ToasterService { get; set; }
 
     private DownloadsViewModel DownloadsViewModel { get; set; }
 
@@ -110,8 +110,8 @@ public partial class Downloads : BlazorPageComponentBase
                         if (season != null)
                         {
                             await MediaRenamerService.RenameEpisodeAsync(download.DownloadDirectory, tvShow.Title.TransformForStorage(), seasonNumber, episodeNumber, "FRENCH");
-                            var message = string.Format(Loc["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForEpisode(tvShow.Title, seasonNumber, episodeNumber)}");
-                            ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], message, ToastType.Success, 2));
+                            var message = string.Format(Localizer["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForEpisode(tvShow.Title, seasonNumber, episodeNumber)}");
+                            ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.InformationTitle"], message, ToastType.Success, 2));
                             break;
                         }
                     }
@@ -132,7 +132,7 @@ public partial class Downloads : BlazorPageComponentBase
                 ////        if (season != null)
                 ////        {
                 ////            await RenameEpisodeOnDiskAsync(download.DownloadDirectory, tvShow.Title.TransformForStorage(), seasonNumber, episodeNumber, "FRENCH");
-                ////            var message = string.Format(Loc["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForEpisode(tvShow.Title, seasonNumber, episodeNumber)}");
+                ////            var message = string.Format(Localizer["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForEpisode(tvShow.Title, seasonNumber, episodeNumber)}");
                 ////            ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], message, ToastType.Success, 2));
                 ////            break;
                 ////        }
@@ -149,8 +149,8 @@ public partial class Downloads : BlazorPageComponentBase
                     {
                         var movie = movies.ElementAt(0);
                         await MediaRenamerService.RenameMovieAsync(download.DownloadDirectory, movie.Title.TransformForStorage(), movie.Year);
-                        var message = string.Format(Loc["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForMovie(movie.Title)}");
-                        ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], message, ToastType.Success, 2));
+                        var message = string.Format(Localizer["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForMovie(movie.Title)}");
+                        ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.InformationTitle"], message, ToastType.Success, 2));
                         break;
                     }
                 }
@@ -160,7 +160,7 @@ public partial class Downloads : BlazorPageComponentBase
         }
         catch (Exception)
         {
-            ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.ErrorTitle"], AppLoc["Toaster.ErrorMessage"], ToastType.Danger, 2));
+            ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.ErrorTitle"], AppLocalizer["Toaster.ErrorMessage"], ToastType.Danger, 2));
         }
     }
 }

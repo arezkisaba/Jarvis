@@ -85,9 +85,9 @@ public abstract class TorrentScrapperServiceBase
         sizeString = sizeString.RemoveDoubleSpacesAndTrim();
 
         var parts = sizeString.Split(' ');
-        var number = Convert.ToInt32(parts[0], CultureInfo.InvariantCulture);
+        var number = Convert.ToDouble(parts[0], CultureInfo.InvariantCulture);
         var unit = parts[1];
-        long torrentSize;
+        double torrentSize;
 
         switch (unit)
         {
@@ -114,7 +114,7 @@ public abstract class TorrentScrapperServiceBase
                 break;
         }
 
-        return torrentSize;
+        return (long)Math.Round(torrentSize);
     }
 
     protected Tuple<string, string> GetParamsFromLink(

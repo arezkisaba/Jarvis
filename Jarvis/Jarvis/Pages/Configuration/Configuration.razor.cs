@@ -13,23 +13,23 @@ namespace Jarvis.Pages.Configuration;
 public partial class Configuration : BlazorPageComponentBase
 {
     [Inject]
-    public IOptions<SecureAppSettingsModel> SecureAppSettings { get; set; }
-
+    private IOptions<SecureAppSettingsModel> SecureAppSettings { get; set; }
+    
     [Inject]
-    public IStringLocalizer<App> AppLoc { get; set; }
-
+    private IStringLocalizer<App> AppLocalizer { get; set; }
+    
     [Inject]
-    public IStringLocalizer<Configuration> Loc { get; set; }
-
+    private IStringLocalizer<Configuration> Localizer { get; set; }
+    
     [Inject]
-    public ISecureAppSettingsService SecureAppSettingsService { get; set; }
-
-    public SecureAppSettingsViewModel SecureAppSettingsViewModel { get; set; }
-
+    private ISecureAppSettingsService SecureAppSettingsService { get; set; }
+    
     [Inject]
-    public ToasterService ToasterService { get; set; }
+    private ToasterService ToasterService { get; set; }
 
-    public EditContext EditContext { get; set; }
+    private SecureAppSettingsViewModel SecureAppSettingsViewModel { get; set; }
+
+    private EditContext EditContext { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -39,7 +39,7 @@ public partial class Configuration : BlazorPageComponentBase
         EditContext = new(SecureAppSettingsViewModel);
     }
 
-    public async Task HandleOnValidSubmitAsync()
+    private async Task HandleOnValidSubmitAsync()
     {
         try
         {
@@ -47,11 +47,11 @@ public partial class Configuration : BlazorPageComponentBase
             domain.TmdbSessionId = SecureAppSettings.Value.TmdbSessionId;
             await SecureAppSettingsService.WriteAsync(domain);
 
-            ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.InformationTitle"], Loc["Toaster.ConfigurationUpdated"], ToastType.Success, 2));
+            ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.InformationTitle"], Localizer["Toaster.ConfigurationUpdated"], ToastType.Success, 2));
         }
         catch (Exception)
         {
-            ToasterService.AddToast(Toast.CreateToast(AppLoc["Toaster.ErrorTitle"], AppLoc["Toaster.ErrorMessage"], ToastType.Danger, 2));
+            ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.ErrorTitle"], AppLocalizer["Toaster.ErrorMessage"], ToastType.Danger, 2));
         }
     }
 }

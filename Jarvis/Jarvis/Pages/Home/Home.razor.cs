@@ -19,23 +19,21 @@ public partial class Home : BlazorPageComponentBase
 {
     [Inject]
     private IIPResolverAgent IPResolverBackgroundAgent { get; set; }
-
+    
     [Inject]
     private IMediaStorageAgent MediaStorageBackgroundAgent { get; set; }
-
+    
     [Inject]
     private IGameControllerClientAgent GameControllerClientBackgroundAgent { get; set; }
-
+    
     [Inject]
     private IVPNClientAgent VPNClientBackgroundAgent { get; set; }
-
+    
     [Inject]
     private ITorrentClientAgent TorrentClientBackgroundAgent { get; set; }
-
+    
     [Inject]
     private IMediaSizingService MediaSizingService { get; set; }
-
-    private string PublicIPAddress { get; set; }
 
     private MediaStorageStateViewModel MediaStorageStateViewModel { get; set; }
 
@@ -44,6 +42,8 @@ public partial class Home : BlazorPageComponentBase
     private VPNClientStateViewModel VPNClientStateViewModel { get; set; }
 
     private TorrentClientStateViewModel TorrentClientStateViewModel { get; set; }
+
+    private string PublicIPAddress { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

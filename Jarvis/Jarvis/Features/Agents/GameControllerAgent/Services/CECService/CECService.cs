@@ -55,10 +55,10 @@ public class CECService : ICECService
         return "tx 10:04";
     }
 
-    private string GetPowerOffCommand()
-    {
-        return "tx 10:36";
-    }
+    ////private string GetPowerOffCommand()
+    ////{
+    ////    return "tx 10:36";
+    ////}
 
     private string GetSwitchHDMISourceCommand(
         int hdmiSource)
