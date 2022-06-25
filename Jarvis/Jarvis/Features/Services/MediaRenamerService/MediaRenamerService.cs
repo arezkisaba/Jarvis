@@ -69,7 +69,11 @@ public class MediaRenamerService : IMediaRenamerService
 
         var extension = GetExtensionFromNameOrPath(fileToRename);
         var episodeVideoFile = GetEpisodeVideoFile(titleForStorage, seasonNumber, episodeNumber, language, extension);
-        File.Move(fileToRename, episodeVideoFile);
+
+        if (!File.Exists(episodeVideoFile))
+        {
+            File.Move(fileToRename, episodeVideoFile);
+        }
     }
 
     #region Private use

@@ -1,3 +1,4 @@
+- Mettre ça sur Raspberry Pie
 - Interface de saisie des credentials & DataProtection OU injection depuis les releases
 - Isoler paramètres variables appsettings
 - Radial charts

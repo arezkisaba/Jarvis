@@ -1,4 +1,5 @@
 using Jarvis.Features.Agents.TorrentClientAgent.Contracts;
+using Jarvis.Features.Services.MediaDatabaseService.Contracts;
 using Jarvis.Features.Services.MediaMatchingService.Contracts;
 using Jarvis.Features.Services.MediaMatchingService.Models;
 using Jarvis.Features.Services.MediaNamingService.Contracts;
@@ -44,6 +45,9 @@ public partial class MainLayout : BlazorLayoutComponentBase
     private ITorrentClientService TorrentClientService { get; set; }
 
     [Inject]
+    private IMediaDatabaseService MediaDatabaseService { get; set; }
+
+    [Inject]
     private IMediaNamingService MediaNamingService { get; set; }
 
     [Inject]
@@ -51,9 +55,6 @@ public partial class MainLayout : BlazorLayoutComponentBase
 
     [Inject]
     private IMediaRenamerService MediaRenamerService { get; set; }
-
-    [Inject]
-    private ITmdbApiService TmdbApiService { get; set; }
 
     [Inject]
     private ModalerService ModalerService { get; set; }
@@ -80,18 +81,18 @@ public partial class MainLayout : BlazorLayoutComponentBase
             await HandleDownloadFinishedAsync(download);
         };
 
-        TmdbApiService.AuthenticationInformationsAvailable += async (sender, e) =>
+        MediaDatabaseService.AuthenticationInformationsAvailable += async (sender, authenticationUrl) =>
         {
-            TmdbAuthenticationUrl = e.AuthenticationUrl;
+            TmdbAuthenticationUrl = authenticationUrl;
             ////await UpdateUIAsync();
         };
 
-        TmdbApiService.AuthenticationSuccessfull += async (sender, e) =>
+        MediaDatabaseService.AuthenticationSuccessfull += async (sender, sessionId) =>
         {
             try
             {
                 var secureAppSettings = await SecureAppSettingsService.ReadAsync();
-                secureAppSettings.TmdbSessionId = e.SessionId;
+                secureAppSettings.TmdbSessionId = sessionId;
                 await SecureAppSettingsService.WriteAsync(secureAppSettings);
             }
             catch (Exception)
@@ -129,16 +130,16 @@ public partial class MainLayout : BlazorLayoutComponentBase
                 {
                     var seasonNumber = int.Parse(match.Groups[2].Value);
                     var episodeNumber = int.Parse(match.Groups[3].Value);
-                    var tvShows = await TmdbApiService.SearchTvShowAsync(torrentTitle);
+                    var tvShows = await MediaDatabaseService.SearchTvShowAsync(torrentTitle);
                     if (tvShows.Any())
                     {
                         var tvShow = tvShows.ElementAt(0);
-                        var seasons = await TmdbApiService.GetSeasonsAsync(tvShow.Id);
+                        var seasons = await MediaDatabaseService.GetSeasonsAsync(tvShow.Id);
                         var season = seasons.SingleOrDefault(obj => obj.Number == seasonNumber);
                         if (season != null)
                         {
-                            await MediaRenamerService.RenameEpisodeAsync(download.DownloadDirectory, tvShow.Title.TransformForStorage(), seasonNumber, episodeNumber, "FRENCH");
-                            var message = string.Format(Localizer["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForEpisode(tvShow.Title, seasonNumber, episodeNumber)}");
+                            await MediaRenamerService.RenameEpisodeAsync(download.DownloadDirectory, tvShow.Title.TransformForStorage(), season.Number, episodeNumber, "FRENCH");
+                            var message = string.Format(Localizer["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForEpisode(tvShow.Title, season.Number, episodeNumber)}");
                             ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.InformationTitle"], message, ToastType.Success, 2));
                             break;
                         }
@@ -151,21 +152,21 @@ public partial class MainLayout : BlazorLayoutComponentBase
                 foreach (var torrentTitle in torrentTitles)
                 {
                     var seasonNumber = int.Parse(match.Groups[2].Value);
-                    var tvShows = await TmdbApiService.SearchTvShowAsync(torrentTitle);
+                    var tvShows = await MediaDatabaseService.SearchTvShowAsync(torrentTitle);
                     if (tvShows.Any())
                     {
                         var tvShow = tvShows.ElementAt(0);
-                        var seasons = await TmdbApiService.GetSeasonsAsync(tvShow.Id);
+                        var seasons = await MediaDatabaseService.GetSeasonsAsync(tvShow.Id);
                         var season = seasons.SingleOrDefault(obj => obj.Number == seasonNumber);
                         if (season != null)
                         {
-                            var episodes = await TmdbApiService.GetEpisodesAsync(tvShow.Id, seasonNumber);
+                            var episodes = await MediaDatabaseService.GetEpisodesAsync(tvShow.Id, season.Number);
                             for (var i = 1; i <= episodes.Count(); i++)
                             {
-                                await MediaRenamerService.RenameEpisodeAsync(download.DownloadDirectory, tvShow.Title.TransformForStorage(), seasonNumber, i, "FRENCH");
+                                await MediaRenamerService.RenameEpisodeAsync(download.DownloadDirectory, tvShow.Title.TransformForStorage(), season.Number, i, "FRENCH");
                             }
 
-                            var message = string.Format(Localizer["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForSeason(tvShow.Title, seasonNumber)}");
+                            var message = string.Format(Localizer["Toaster.DownloadEnded"], $"{MediaNamingService.GetDisplayNameForSeason(tvShow.Title, season.Number)}");
                             ToasterService.AddToast(Toast.CreateToast(AppLocalizer["Toaster.InformationTitle"], message, ToastType.Success, 2));
                             break;
                         }
@@ -177,7 +178,7 @@ public partial class MainLayout : BlazorLayoutComponentBase
                 var torrentTitles = MediaNamingService.GetPossibleMediaTitles(match.Groups[1].Value);
                 foreach (var torrentTitle in torrentTitles)
                 {
-                    var movies = await TmdbApiService.SearchMovieAsync(torrentTitle);
+                    var movies = await MediaDatabaseService.SearchMovieAsync(torrentTitle);
                     if (movies.Any())
                     {
                         var movie = movies.ElementAt(0);

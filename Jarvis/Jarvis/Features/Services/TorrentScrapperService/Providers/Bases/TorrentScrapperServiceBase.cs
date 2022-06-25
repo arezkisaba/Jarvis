@@ -35,14 +35,14 @@ public abstract class TorrentScrapperServiceBase
         string cookies,
         string userAgent)
     {
-        var regex = new Regex("href=['\"]magnet:(.*?)['\"]");
+        var regex = new Regex("['\"](magnet:(.*?))['\"]");
         var matches = regex.Matches(text);
         if (matches.Count <= 0)
         {
             return null;
         }
 
-        return Task.FromResult($"magnet:{matches[0].Groups[1].Value}");
+        return Task.FromResult($"{matches[0].Groups[1].Value}");
     }
 
     protected virtual Task<string> GetTorrentLinkFromHtmlAsync(

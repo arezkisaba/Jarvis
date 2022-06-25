@@ -13,6 +13,8 @@ using Jarvis.Features.Agents.TorrentClientAgent.Contracts;
 using Jarvis.Features.Agents.VPNClientAgent;
 using Jarvis.Features.Agents.VPNClientAgent.Contracts;
 using Jarvis.Features.Services;
+using Jarvis.Features.Services.MediaDatabaseService;
+using Jarvis.Features.Services.MediaDatabaseService.Contracts;
 using Jarvis.Features.Services.MediaMatchingService;
 using Jarvis.Features.Services.MediaMatchingService.Contracts;
 using Jarvis.Features.Services.MediaNamingService;
@@ -106,9 +108,9 @@ public class Launcher
         services.AddSingleton<ITorrentScrapperService>(new TorrentScrapperService(
             new List<TorrentScrapperServiceBase>
             {
-                new GkTorrentTorrentScrapperService("https://www.gktorrents.org"),
+                new GkTorrentTorrentScrapperService("https://www.gktorrents.cc"),
                 new OxTorrentTorrentScrapperService("https://www.oxtorrent.si"),
-                new Torrent9TorrentScrapperService("https://www.torrent9.nl"),
+                new Torrent9TorrentScrapperService("https://www.torrent9.am"),
                 new ZeTorrentsTorrentScrapperService("https://www.zetorrents.nl"),
             }
         ));
@@ -117,6 +119,7 @@ public class Launcher
         services.AddScoped<IMediaNamingService, MediaNamingService>();
         services.AddScoped<IMediaMatchingService, MediaMatchingService>();
         services.AddScoped<IMediaRenamerService, MediaRenamerService>();
+        services.AddSingleton<IMediaDatabaseService, MediaDatabaseService>();
 
         services.AddSingleton<ICECService, CECService>();
         services.AddSingleton<IMediaStorageService, MediaStorageService>();
